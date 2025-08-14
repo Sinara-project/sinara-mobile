@@ -5,6 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#0B1B54"
+    android:backgroundTint="#0B1B54"
     tools:context=".SplashScreen">
 
 </androidx.constraintlayout.widget.ConstraintLayout>
