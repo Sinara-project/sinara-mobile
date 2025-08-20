@@ -20,7 +20,7 @@ public class SplashScreen extends AppCompatActivity {
     }
 
     private void abrirTelaInicial() {
-        Intent rota = new Intent(SplashScreen.this, MainActivity.class);
+        Intent rota = new Intent(SplashScreen.this, TelaOpcoes.class);
         startActivity(rota);
         finish();
     }

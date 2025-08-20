@@ -1,0 +1,52 @@
+package com.example.mobilesinara.cadastro.adm;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.ImageButton;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.example.mobilesinara.R;
+import com.example.mobilesinara.TelaOpcoes;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
+
+public class CadastroAdm extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_cadastro_adm);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        TextInputEditText emailEdit = findViewById(R.id.mostrar_email);
+        Button btAvancar = findViewById(R.id.bt_avancar);
+        ImageButton btVoltar = findViewById(R.id.bt_voltar);
+
+        btAvancar.setOnClickListener(v -> {
+            String emailInput = emailEdit.getText().toString().trim();
+            //enviando os dados para a tela de adm2
+            Intent intent = new Intent(CadastroAdm.this, CadastroAdm2.class);
+            intent.putExtra("emailUsuario", emailInput);
+            startActivity(intent);
+        });
+
+        btVoltar.setOnClickListener(v -> {
+            String emailInput = emailEdit.getText().toString().trim();
+            //enviando os dados para a tela de adm2
+            Intent intent = new Intent(CadastroAdm.this, TelaOpcoes.class);
+            intent.putExtra("emailUsuario", emailInput);
+            startActivity(intent);
+        });
+    }
+}
