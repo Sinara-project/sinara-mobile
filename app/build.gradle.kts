@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.sinaramobile"
+    namespace = "com.example.mobilesinara"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.sinaramobile"
+        applicationId = "com.example.mobilesinara"
         minSdk = 33
         targetSdk = 35
         versionCode = 1

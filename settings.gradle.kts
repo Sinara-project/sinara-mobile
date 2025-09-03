@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "SinaraMobile"
+rootProject.name = "MobileSinara"
 include(":app")
  

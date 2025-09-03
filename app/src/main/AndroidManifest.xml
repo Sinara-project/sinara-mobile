@@ -10,8 +10,20 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SinaraMobile"
+        android:theme="@style/Theme.MobileSinara"
         tools:targetApi="31">
+        <activity
+            android:name=".cadastro.operario.CadastroOperarioSucesso"
+            android:exported="false" />
+        <activity
+            android:name=".cadastro.operario.CadastroOperarioPermissoes"
+            android:exported="false" />
+        <activity
+            android:name=".cadastro.operario.CadastroOperario"
+            android:exported="false" />
+        <activity
+            android:name=".TelaOpcoes"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
@@ -24,6 +36,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
