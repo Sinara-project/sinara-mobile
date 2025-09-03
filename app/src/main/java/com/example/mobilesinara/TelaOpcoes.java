@@ -22,9 +22,6 @@ public class TelaOpcoes extends AppCompatActivity {
         Button btEmpresa = findViewById(R.id.bt_empresa);
         Button btOperario = findViewById(R.id.bt_operario);
 
-//        btEmpresa.setOnClickListener(v -> {
-//            startActivity(new Intent(TelaOpcoes.this, loginAdm.class));
-//        });
 
         btOperario.setOnClickListener(v -> {
             startActivity(new Intent(TelaOpcoes.this, CadastroOperario.class));
