@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity;
 //import com.example.mobilesinara.cadastro.adm.CadastroAdm;
 //import com.example.mobilesinara.Login.adm.loginAdm;
 import com.example.mobilesinara.cadastro.operario.CadastroOperario;
+import com.example.mobilesinara.login.adm.LoginADM;
+import com.example.mobilesinara.login.operario.LoginOperario;
 
 public class TelaOpcoes extends AppCompatActivity {
 
@@ -23,8 +25,12 @@ public class TelaOpcoes extends AppCompatActivity {
         Button btOperario = findViewById(R.id.bt_operario);
 
 
+        btEmpresa.setOnClickListener(v -> {
+            startActivity(new Intent(TelaOpcoes.this, LoginADM.class));
+        });
+
         btOperario.setOnClickListener(v -> {
-            startActivity(new Intent(TelaOpcoes.this, CadastroOperario.class));
+            startActivity(new Intent(TelaOpcoes.this, LoginOperario.class));
         });
     }
 }
