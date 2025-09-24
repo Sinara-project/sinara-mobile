@@ -27,7 +27,7 @@
         android:gravity="center"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Cadastre um operário!"
-        android:textColor="@color/white"
+        android:textColor="#0B1B54"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -40,6 +40,7 @@
         android:layout_height="62dp"
         android:layout_marginTop="50dp"
         android:textColor="#0B1B54"
+        android:textColorHint="#0B1B54"
 
         app:boxBackgroundColor="#8594D4"
         app:boxBackgroundMode="filled"
@@ -48,6 +49,7 @@
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
         app:boxStrokeColor="@android:color/transparent"
+        app:hintTextColor="#0B1B54"
         app:boxStrokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,6 +72,7 @@
         android:layout_height="62dp"
         android:layout_marginTop="12dp"
         android:textColor="#0B1B54"
+        android:textColorHint="#0B1B54"
 
         app:boxBackgroundColor="#8594D4"
         app:boxBackgroundMode="filled"
@@ -78,6 +81,7 @@
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
         app:boxStrokeColor="@android:color/transparent"
+        app:hintTextColor="#0B1B54"
         app:boxStrokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -101,6 +105,7 @@
         android:layout_height="62dp"
         android:layout_marginTop="12dp"
         android:textColor="#0B1B54"
+        android:textColorHint="#0B1B54"
 
         app:boxBackgroundColor="#8594D4"
         app:boxBackgroundMode="filled"
@@ -108,6 +113,7 @@
         app:boxCornerRadiusBottomStart="30dp"
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
+        app:hintTextColor="#0B1B54"
         app:boxStrokeColor="@android:color/transparent"
         app:boxStrokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,47 +131,6 @@
             tools:layout_editor_absoluteY="478dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutPermissoes"
-        android:layout_width="300dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="12dp"
-        android:textColor="#0B1B54"
-
-        app:boxBackgroundColor="#8594D4"
-        app:boxBackgroundMode="filled"
-        app:boxCornerRadiusBottomEnd="30dp"
-        app:boxCornerRadiusBottomStart="30dp"
-        app:boxCornerRadiusTopEnd="30dp"
-        app:boxCornerRadiusTopStart="30dp"
-        app:boxStrokeColor="@android:color/transparent"
-        app:boxStrokeWidth="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/montserrat"
-            android:hint="Permissões"
-            android:textColor="#0B1B54"
-            android:textSize="18sp"
-            tools:layout_editor_absoluteX="40dp"
-            tools:layout_editor_absoluteY="478dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <ImageView
-        android:id="@+id/seta_permissoes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:layout_marginLeft="230dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
-        app:srcCompat="@drawable/vector" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_cadastrar"
         android:layout_width="300dp"
@@ -180,6 +145,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_permissoes"
+        android:layout_width="300dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Permissões"
+        android:textAlignment="textStart"
+        android:textColor="#0B1B54"
+        android:textSize="18sp"
+        app:backgroundTint="#8493D2"
+        app:cornerRadius="50dp"
+        app:icon="@drawable/vector"
+        app:iconGravity="end"
+        app:iconTint="#0B1B54"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
 
     <ImageButton
         android:id="@+id/bt_voltar"
