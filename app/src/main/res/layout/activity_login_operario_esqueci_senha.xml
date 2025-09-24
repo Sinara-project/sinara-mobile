@@ -28,6 +28,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
+        android:textColorHint="#0B1B54"
 
         android:textColor="#0B1B54"
         app:boxBackgroundColor="#8594D4"
@@ -38,6 +39,7 @@
         app:boxCornerRadiusTopStart="30dp"
         app:boxStrokeColor="@android:color/transparent"
         app:boxStrokeWidth="0dp"
+        app:hintTextColor="#0B1B54"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8">

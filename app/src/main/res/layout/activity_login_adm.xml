@@ -28,6 +28,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
+        android:textColorHint="#0B1B54"
 
         android:textColor="#0B1B54"
         app:boxBackgroundColor="#8594D4"
@@ -36,6 +37,7 @@
         app:boxCornerRadiusBottomStart="30dp"
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
+        app:hintTextColor="#0B1B54"
         app:boxStrokeColor="@android:color/transparent"
         app:boxStrokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,6 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:textColor="#0B1B54"
+        android:textColorHint="#0B1B54"
 
         app:boxBackgroundColor="#8594D4"
         app:boxBackgroundMode="filled"
@@ -68,6 +71,7 @@
         app:boxCornerRadiusTopStart="30dp"
         app:boxStrokeColor="@android:color/transparent"
         app:boxStrokeWidth="0dp"
+        app:hintTextColor="#0B1B54"
         app:endIconDrawable="@drawable/olho_aberto"
         app:endIconMode="password_toggle"
         app:endIconTint="#0B1B54"

@@ -48,27 +48,68 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
         });
 
 
-        //senha visivel ou nao
-//        final boolean[] senhaVisivel = {false};
-//
-//        textInputLayout.setEndIconOnClickListener(v -> {
-//            senhaVisivel[0] = !senhaVisivel[0];
-//
-//            if (senhaVisivel[0]) {
-//                // Mostra a senha
-//                editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-//                textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_fechado));
-//            } else {
-//                // Esconde a senha
-//                editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-//                textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_aberto));
-//            }
-//
-//            // Mantém o cursor no fim
-//            if (editTextSenha.getText() != null) {
-//                editTextSenha.setSelection(editTextSenha.getText().length());
-//            }
-//        });
+        final boolean[] senhaVisivel1 = {false};
+
+        textInputLayout1.setEndIconOnClickListener(v -> {
+            senhaVisivel1[0] = !senhaVisivel1[0];
+
+            if (senhaVisivel1[0]) {
+                // Mostra a senha
+                editTextSenha1.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                textInputLayout1.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_fechado));
+            } else {
+                // Esconde a senha
+                editTextSenha1.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                textInputLayout1.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_aberto));
+            }
+
+            // Mantém o cursor no fim
+            if (editTextSenha1.getText() != null) {
+                editTextSenha1.setSelection(editTextSenha1.getText().length());
+            }
+        });
+
+        final boolean[] senhaVisivel2 = {false};
+
+        textInputLayout2.setEndIconOnClickListener(v -> {
+            senhaVisivel2[0] = !senhaVisivel2[0];
+
+            if (senhaVisivel2[0]) {
+                // Mostra a senha
+                editTextSenha2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                textInputLayout2.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_fechado));
+            } else {
+                // Esconde a senha
+                editTextSenha2.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                textInputLayout2.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_aberto));
+            }
+
+            // Mantém o cursor no fim
+            if (editTextSenha2.getText() != null) {
+                editTextSenha2.setSelection(editTextSenha2.getText().length());
+            }
+        });
+
+        final boolean[] senhaVisivel3 = {false};
+
+        textInputLayout3.setEndIconOnClickListener(v -> {
+            senhaVisivel3[0] = !senhaVisivel3[0];
+
+            if (senhaVisivel3[0]) {
+                // Mostra a senha
+                editTextSenha3.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                textInputLayout3.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_fechado));
+            } else {
+                // Esconde a senha
+                editTextSenha3.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                textInputLayout3.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_aberto));
+            }
+
+            // Mantém o cursor no fim
+            if (editTextSenha3.getText() != null) {
+                editTextSenha3.setSelection(editTextSenha3.getText().length());
+            }
+        });
         //https://chatgpt.com/share/68bcc05c-66c0-800f-8e25-4866a9628c7e
     }
 }

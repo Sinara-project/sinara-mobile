@@ -17,8 +17,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
-import com.example.mobilesinara.login.adm.LoginADM;
-import com.example.mobilesinara.login.adm.LoginADM2;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 

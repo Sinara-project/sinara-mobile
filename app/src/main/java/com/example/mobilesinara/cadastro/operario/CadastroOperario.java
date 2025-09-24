@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +29,7 @@ public class CadastroOperario extends AppCompatActivity {
         });
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         Button btCadastrar = findViewById(R.id.bt_cadastrar);
-        ImageView setaPermissoes = findViewById(R.id.seta_permissoes);
+        Button btPermissoes = findViewById(R.id.bt_permissoes);
 
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,13 +45,13 @@ public class CadastroOperario extends AppCompatActivity {
             }
         });
 
-        setaPermissoes.setOnClickListener(new View.OnClickListener() {
+        //avança para as permissões
+        btPermissoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CadastroOperario.this, CadastroOperarioPermissoes.class);
                 startActivity(intent);
             }
         });
-
     }
 }
