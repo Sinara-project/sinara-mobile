@@ -27,8 +27,8 @@ public class CadastroOperarioPermissoes extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        ImageButton bt_voltar = findViewById(R.id.bt_voltar3);
-        Button bt_salvar = findViewById(R.id.bt_salvar);
+        ImageButton btVoltar = findViewById(R.id.bt_voltar3);
+        Button btSalvar = findViewById(R.id.bt_salvar);
         CheckBox opc1 = findViewById(R.id.formsCap);
         CheckBox opc2 = findViewById(R.id.formsCap2);
         CheckBox opc3 = findViewById(R.id.formsCap3);
@@ -49,9 +49,9 @@ public class CadastroOperarioPermissoes extends AppCompatActivity {
         opc6.setOnCheckedChangeListener((compoundButton, b) ->
                 Toast.makeText(CadastroOperarioPermissoes.this, "O teste deu certo", Toast.LENGTH_SHORT).show());
         
-        bt_voltar.setOnClickListener(view ->
+        btVoltar.setOnClickListener(view ->
                 startActivity(new Intent(CadastroOperarioPermissoes.this, CadastroOperario.class)));
-        bt_salvar.setOnClickListener(view ->
+        btSalvar.setOnClickListener(view ->
                 startActivity(new Intent(CadastroOperarioPermissoes.this, CadastroOperario.class)));
     }
 }

@@ -1,6 +1,9 @@
 package com.example.mobilesinara.cadastro.operario;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,5 +25,13 @@ public class CadastroOperarioSucesso extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        ImageButton btVoltar = findViewById(R.id.bt_voltar_sucesso);
+        btVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(CadastroOperarioSucesso.this, CadastroOperario.class));
+            }
+        });
+
     }
 }

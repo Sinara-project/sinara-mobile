@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0B1B54"
+    tools:context=".login.adm.LoginADM">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_avancar"
+        android:layout_width="590dp"
+        android:layout_height="110dp"
+        android:layout_marginBottom="180dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Avançar"
+        android:textColor="@android:color/white"
+        android:textSize="40sp"
+        app:backgroundTint="#384994"
+        app:cornerRadius="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout3"
+        android:layout_width="600dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="70dp"
+        android:textColor="#0B1B54"
+
+        app:boxBackgroundColor="#8594D4"
+        app:boxBackgroundMode="filled"
+        app:boxCornerRadiusBottomEnd="70dp"
+        app:boxCornerRadiusBottomStart="70dp"
+        app:boxCornerRadiusTopEnd="70dp"
+        app:boxCornerRadiusTopStart="70dp"
+        app:boxStrokeColor="@android:color/transparent"
+        app:boxStrokeWidth="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:fontFamily="@font/montserrat"
+            android:hint="CNPJ"
+            android:inputType="textPassword"
+            android:textColor="#0B1B54"
+            android:textSize="40sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutSenha"
+        android:layout_width="600dp"
+        android:layout_height="110dp"
+        android:layout_marginTop="20dp"
+        android:textColor="#0B1B54"
+
+        app:boxBackgroundColor="#8594D4"
+        app:boxBackgroundMode="filled"
+        app:boxCornerRadiusBottomEnd="70dp"
+        app:boxCornerRadiusBottomStart="70dp"
+        app:boxCornerRadiusTopEnd="70dp"
+        app:boxCornerRadiusTopStart="70dp"
+        app:boxStrokeColor="@android:color/transparent"
+        app:boxStrokeWidth="0dp"
+        app:endIconDrawable="@drawable/icone_olho_tablet"
+        app:endIconMode="password_toggle"
+        app:endIconTint="#0B1B54"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/mostrar_senha"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:fontFamily="@font/montserrat"
+            android:hint="Senha"
+            android:inputType="textPassword"
+            android:textColor="#0B1B54"
+            android:textSize="40sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/bt_voltar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="100dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bt_voltar"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="510dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:gravity="center"
+        android:letterSpacing="@dimen/material_emphasis_disabled_background"
+        android:text="Entre como uma empresa!"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/icone_tela_opcoes"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/texto_cadastro"
+        android:layout_width="569dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="90dp"
+        android:gravity="center"
+        android:text="Não possui conta para a sua empresa? Cadastre-se"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

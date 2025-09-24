@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,26 +27,30 @@ public class CadastroOperario extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        ImageButton bt_voltar = findViewById(R.id.bt_voltar7);
-        ImageView bt_permissoes = findViewById(R.id.bt_permissoes);
-        Button bt_cadastrar = findViewById(R.id.bt_cadastrar);
-        bt_cadastrar.setOnClickListener(new View.OnClickListener() {
+        ImageButton btVoltar = findViewById(R.id.bt_voltar);
+        Button btCadastrar = findViewById(R.id.bt_cadastrar);
+        Button btPermissoes = findViewById(R.id.bt_permissoes);
+
+        btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //lembrete: adicionar verificação de que nenhum campo está vazio posteriormente
                 startActivity(new Intent(CadastroOperario.this, CadastroOperarioSucesso.class));
             }
         });
-        bt_permissoes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(CadastroOperario.this, CadastroOperarioPermissoes.class));
-            }
-        });
-        bt_voltar.setOnClickListener(new View.OnClickListener() {
+        btVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CadastroOperario.this, TelaOpcoes.class));
+            }
+        });
+
+        //avança para as permissões
+        btPermissoes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CadastroOperario.this, CadastroOperarioPermissoes.class);
+                startActivity(intent);
             }
         });
     }
