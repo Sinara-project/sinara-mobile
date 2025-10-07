@@ -23,5 +23,6 @@ public class SplashScreen extends AppCompatActivity {
         Intent rota = new Intent(SplashScreen.this, TelaOpcoes.class);
         startActivity(rota);
         finish();
+        overridePendingTransition(0, 0);
     }
 }

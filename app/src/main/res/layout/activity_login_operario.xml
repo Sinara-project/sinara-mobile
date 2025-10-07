@@ -5,7 +5,7 @@ xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/main"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:background="#0B1B54"
+android:background="@color/md_theme_primaryContainer"
 tools:context=".cadastro.operario.CadastroOperario">
 
     <ImageView
@@ -28,7 +28,7 @@ tools:context=".cadastro.operario.CadastroOperario">
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Seja bem vindo
                         de volta!"
-        android:textColor="@color/white"
+        android:textColor="@color/md_theme_onPrimary"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -42,11 +42,11 @@ tools:context=".cadastro.operario.CadastroOperario">
         android:layout_marginStart="42dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="42dp"
-        android:textColor="#0B1B54"
-        android:textColorHint="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textColorHint="@color/md_theme_primaryContainer"
 
-        app:hintTextColor="#0B1B54"
-        app:boxBackgroundColor="#8594D4"
+        app:hintTextColor="@color/md_theme_primaryContainer"
+        app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxStrokeColor="@android:color/transparent"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="30dp"
@@ -60,15 +60,16 @@ tools:context=".cadastro.operario.CadastroOperario">
         app:layout_constraintTop_toBottomOf="@+id/textView12">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_cpf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:hint="CPF"
-            android:textColor="#0B1B54"
+            android:textColor="@color/md_theme_primaryContainer"
+            android:textCursorDrawable="@null"
             android:textSize="18sp"
             tools:layout_editor_absoluteX="40dp"
-            tools:layout_editor_absoluteY="322dp"
-            android:textCursorDrawable="@null"/>
+            tools:layout_editor_absoluteY="322dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 <com.google.android.material.textfield.TextInputLayout
@@ -78,12 +79,12 @@ tools:context=".cadastro.operario.CadastroOperario">
     android:layout_marginStart="42dp"
     android:layout_marginTop="12dp"
     android:layout_marginEnd="42dp"
-    android:textColor="#0B1B54"
-    android:textColorHint="#0B1B54"
+    android:textColor="@color/md_theme_primaryContainer"
+    android:textColorHint="@color/md_theme_primaryContainer"
 
-    app:boxBackgroundColor="#8594D4"
+    app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
     app:boxBackgroundMode="filled"
-    app:hintTextColor="#0B1B54"
+    app:hintTextColor="@color/md_theme_primaryContainer"
     app:boxCornerRadiusBottomEnd="30dp"
     app:boxCornerRadiusBottomStart="30dp"
     app:boxCornerRadiusTopEnd="30dp"
@@ -96,15 +97,16 @@ tools:context=".cadastro.operario.CadastroOperario">
     app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/text_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
         android:hint="E-mail"
-        android:textColor="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textCursorDrawable="@null"
         android:textSize="18sp"
         tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="400dp"
-        android:textCursorDrawable="@null"/>
+        tools:layout_editor_absoluteY="400dp" />
 </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -114,34 +116,34 @@ tools:context=".cadastro.operario.CadastroOperario">
         android:layout_marginStart="42dp"
         android:layout_marginTop="12dp"
         android:layout_marginEnd="42dp"
-        android:textColorHint="#0B1B54"
+        android:textColorHint="@color/md_theme_primaryContainer"
 
-        android:textColor="#0B1B54"
-        app:boxBackgroundColor="#8594D4"
+        android:textColor="@color/md_theme_primaryContainer"
+        app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusBottomStart="30dp"
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
-        app:hintTextColor="#0B1B54"
+        app:hintTextColor="@color/md_theme_primaryContainer"
         app:boxStrokeColor="@android:color/transparent"
         app:boxStrokeWidth="0dp"
         app:endIconDrawable="@drawable/olho_aberto"
         app:endIconMode="password_toggle"
-        app:endIconTint="#0B1B54"
+        app:endIconTint="@color/md_theme_primaryContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutSenha">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mostrar_senha"
+            android:id="@+id/text_senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:hint="Senha"
             android:textSize="18sp"
-            android:textColor="#0B1B54"
+            android:textColor="@color/md_theme_primaryContainer"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="478dp"
             android:textCursorDrawable="@null"/>
@@ -153,17 +155,17 @@ tools:context=".cadastro.operario.CadastroOperario">
     android:layout_height="wrap_content"
     android:layout_marginStart="42dp"
     android:layout_marginTop="12dp"
-    android:textColorHint="#0B1B54"
+    android:textColorHint="@color/md_theme_primaryContainer"
 
     android:layout_marginEnd="42dp"
-    android:textColor="#0B1B54"
-    app:boxBackgroundColor="#8594D4"
+    android:textColor="@color/md_theme_primaryContainer"
+    app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
     app:boxBackgroundMode="filled"
     app:boxCornerRadiusBottomEnd="30dp"
     app:boxCornerRadiusBottomStart="30dp"
     app:boxCornerRadiusTopEnd="30dp"
     app:boxCornerRadiusTopStart="30dp"
-    app:hintTextColor="#0B1B54"
+    app:hintTextColor="@color/md_theme_primaryContainer"
     app:boxStrokeColor="@android:color/transparent"
     app:boxStrokeWidth="0dp"
     app:layout_constraintEnd_toEndOf="parent"
@@ -172,15 +174,16 @@ tools:context=".cadastro.operario.CadastroOperario">
     app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/text_cod_empresa"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat"
         android:hint="Código da empresa"
-        android:textColor="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textCursorDrawable="@null"
         android:textSize="18sp"
         tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="478dp"
-        android:textCursorDrawable="@null"/>
+        tools:layout_editor_absoluteY="478dp" />
 </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -190,9 +193,9 @@ tools:context=".cadastro.operario.CadastroOperario">
         android:layout_marginBottom="73dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Fazer login"
-        android:textColor="@android:color/white"
+        android:textColor="@color/md_theme_onPrimary"
         android:textSize="18sp"
-        app:backgroundTint="#384994"
+        app:backgroundTint="@color/md_theme_primaryFixed_highContrast"
         app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -219,7 +222,7 @@ tools:context=".cadastro.operario.CadastroOperario">
     android:layout_height="wrap_content"
     android:layout_marginBottom="24dp"
     android:text="Esqueci minha senha"
-    android:textColor="#8594D4"
+    android:textColor="@color/md_theme_tertiaryContainer"
     android:textSize="18dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"

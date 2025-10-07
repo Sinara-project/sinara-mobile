@@ -5,49 +5,56 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cadastro.operario.CadastroOperario">
+    tools:context=".login.adm.LoginADM">
 
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="150dp"
-        android:layout_height="97dp"
-        android:layout_marginTop="65dp"
-        android:src="@drawable/icone_tela_opcoes"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView12"
-        android:layout_width="289dp"
-        android:layout_height="wrap_content"
+        android:id="@+id/textView8"
+        android:layout_width="363dp"
+        android:layout_height="94dp"
         android:layout_marginTop="34dp"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
-        android:text="Deseja mesmo cadastrar esse rosto?"
+        android:text="Modifique sua senha!"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="22sp"
+        android:textSize="40sp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView8" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView7" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_cadastrar"
-        android:layout_width="300dp"
-        android:layout_height="62dp"
-        android:layout_marginBottom="73dp"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Cadastrar"
-        android:textColor="@color/md_theme_surfaceVariant"
-        android:textSize="18sp"
-        app:backgroundTint="@color/md_theme_primaryFixed_highContrast"
-        app:cornerRadius="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:gravity="center"
+        android:letterSpacing="@dimen/material_emphasis_disabled_background"
+        android:text="Enviamos um e-mail para o endereço
+            exemplo@gmail.com
+            para que sua senha seja redefinida"
+        android:textColor="@color/md_theme_onPrimary"
+        android:textSize="40sp"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.549"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="150dp"
+        android:src="@drawable/icone_tela_opcoes"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/bt_voltar"
@@ -62,5 +69,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bt_voltar"
         tools:ignore="SpeakableTextPresentCheck" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

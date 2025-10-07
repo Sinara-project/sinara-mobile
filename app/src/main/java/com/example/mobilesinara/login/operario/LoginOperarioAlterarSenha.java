@@ -37,6 +37,7 @@ public class LoginOperarioAlterarSenha extends AppCompatActivity {
                 Intent intent = new Intent(LoginOperarioAlterarSenha.this, LoginOperarioCadastroRosto2.class);
                 startActivity(intent);
                 finish(); // remove a tela atual da pilha
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -45,6 +46,7 @@ public class LoginOperarioAlterarSenha extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginOperarioAlterarSenha.this, LoginOperarioAlterarSenha2.class));
+                overridePendingTransition(0, 0);
             }
         });
 

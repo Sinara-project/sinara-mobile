@@ -37,6 +37,7 @@ public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginOperarioCadastroRosto2.this, LoginOperarioCadastroRosto.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -44,6 +45,7 @@ public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginOperarioCadastroRosto2.this, LoginOperarioAlterarSenha.class));
+                overridePendingTransition(0, 0);
             }
         });
     }

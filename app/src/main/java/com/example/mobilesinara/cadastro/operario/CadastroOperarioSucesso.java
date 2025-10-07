@@ -30,8 +30,8 @@ public class CadastroOperarioSucesso extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CadastroOperarioSucesso.this, CadastroOperario.class));
+                overridePendingTransition(0, 0);
             }
         });
-
     }
 }

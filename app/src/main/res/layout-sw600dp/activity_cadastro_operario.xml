@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B1B54"
     tools:context=".cadastro.operario.CadastroOperario">
 
     <ImageView
@@ -27,7 +26,7 @@
         android:gravity="center"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Cadastre um operário!"
-        android:textColor="@color/white"
+        android:textColor="@color/md_theme_onPrimary"
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -39,9 +38,11 @@
         android:layout_width="600dp"
         android:layout_height="110dp"
         android:layout_marginTop="70dp"
-        android:textColor="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textColorHint="@color/md_theme_primaryContainer"
 
-        app:boxBackgroundColor="#8594D4"
+        app:hintTextColor="@color/md_theme_primaryContainer"
+        app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="70dp"
         app:boxCornerRadiusBottomStart="70dp"
@@ -58,7 +59,7 @@
             android:layout_height="110dp"
             android:fontFamily="@font/montserrat"
             android:hint="CPF"
-            android:textColor="#0B1B54"
+            android:textColor="@color/md_theme_primaryContainer"
             android:textSize="40sp"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="322dp" />
@@ -69,9 +70,11 @@
         android:layout_width="600dp"
         android:layout_height="110dp"
         android:layout_marginTop="20dp"
-        android:textColor="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textColorHint="@color/md_theme_primaryContainer"
 
-        app:boxBackgroundColor="#8594D4"
+        app:hintTextColor="@color/md_theme_primaryContainer"
+        app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="60dp"
         app:boxCornerRadiusBottomStart="60dp"
@@ -84,12 +87,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mostrar_senha"
+            android:id="@+id/text_senha"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:fontFamily="@font/montserrat"
             android:hint="Nome"
-            android:textColor="#0B1B54"
+            android:textColor="@color/md_theme_primaryContainer"
             android:textSize="40sp"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="400dp" />
@@ -100,9 +103,11 @@
         android:layout_width="600dp"
         android:layout_height="110dp"
         android:layout_marginTop="20dp"
-        android:textColor="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textColorHint="@color/md_theme_primaryContainer"
 
-        app:boxBackgroundColor="#8594D4"
+        app:hintTextColor="@color/md_theme_primaryContainer"
+        app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="70dp"
         app:boxCornerRadiusBottomStart="70dp"
@@ -119,52 +124,31 @@
             android:layout_height="110dp"
             android:fontFamily="@font/montserrat"
             android:hint="E-mail"
-            android:textColor="#0B1B54"
+            android:textColor="@color/md_theme_primaryContainer"
             android:textSize="40sp"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="478dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutPermissoes"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/bt_permissoes"
         android:layout_width="600dp"
         android:layout_height="110dp"
-        android:layout_marginTop="20dp"
-        android:textColor="#0B1B54"
-
-        app:boxBackgroundColor="#8594D4"
-        app:boxBackgroundMode="filled"
-        app:boxCornerRadiusBottomEnd="70dp"
-        app:boxCornerRadiusBottomStart="70dp"
-        app:boxCornerRadiusTopEnd="70dp"
-        app:boxCornerRadiusTopStart="70dp"
-        app:boxStrokeColor="@android:color/transparent"
-        app:boxStrokeWidth="0dp"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Permissões"
+        android:textAlignment="textStart"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textSize="40sp"
+        app:backgroundTint="@color/md_theme_tertiaryContainer"
+        app:cornerRadius="50dp"
+        app:icon="@drawable/vector"
+        app:iconGravity="end"
+        app:iconSize="30dp"
+        app:iconTint="@color/md_theme_primaryContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:fontFamily="@font/montserrat"
-            android:hint="Permissões"
-            android:textColor="#0B1B54"
-            android:textSize="40sp"
-            tools:layout_editor_absoluteX="40dp"
-            tools:layout_editor_absoluteY="478dp" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <ImageView
-        android:id="@+id/seta_permissoes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:layout_marginLeft="455dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5"
-        app:srcCompat="@drawable/seta_tablet" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_cadastrar"
@@ -173,9 +157,9 @@
         android:layout_marginBottom="80dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Cadastrar"
-        android:textColor="@android:color/white"
+        android:textColor="@color/md_theme_surfaceVariant"
         android:textSize="40sp"
-        app:backgroundTint="#384994"
+        app:backgroundTint="@color/md_theme_primaryFixed_highContrast"
         app:cornerRadius="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

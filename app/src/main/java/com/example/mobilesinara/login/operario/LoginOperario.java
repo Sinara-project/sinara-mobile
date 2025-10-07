@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,6 +18,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
+import com.example.mobilesinara.login.adm.LoginADM;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -34,7 +36,10 @@ public class LoginOperario extends AppCompatActivity {
         });
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout5);
-        TextInputEditText editTextSenha = findViewById(R.id.mostrar_senha);
+        TextInputEditText editTextSenha = findViewById(R.id.text_senha);
+        TextInputEditText editTextCpf = findViewById(R.id.text_cpf);
+        TextInputEditText editTextEmail = findViewById(R.id.text_email);
+        TextInputEditText editTextCodEmpresa = findViewById(R.id.text_cod_empresa);
         Button login = findViewById(R.id.bt_fazer_login);
         TextView esqueciSenha = findViewById(R.id.esqueci_minha_senha);
 
@@ -48,7 +53,13 @@ public class LoginOperario extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginOperario.this, LoginOperarioCadastroRosto.class));
+                if(!editTextCpf.getText().toString().isEmpty()&&!editTextEmail.getText().toString().isEmpty()&&!editTextSenha.getText().toString().isEmpty()&&!editTextCodEmpresa.getText().toString().isEmpty()){
+                    startActivity(new Intent(LoginOperario.this, LoginOperarioCadastroRosto.class));
+                    overridePendingTransition(0, 0);
+                }
+                else{
+                    Toast.makeText(LoginOperario.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -57,6 +68,7 @@ public class LoginOperario extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginOperario.this, TelaOpcoes.class));
+                overridePendingTransition(0, 0);
             }
         });
 

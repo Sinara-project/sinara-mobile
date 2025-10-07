@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,12 +40,27 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
         TextInputEditText editTextSenha3 = findViewById(R.id.confirmar_senha);
 
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
+        Button btContinuar = findViewById(R.id.bt_continuar);
+
+        btContinuar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (editTextSenha1.getText().toString().isEmpty()
+                        || editTextSenha2.getText().toString().isEmpty()
+                        || editTextSenha3.getText().toString().isEmpty()) {
+                    Toast.makeText(LoginOperarioAlterarSenha2.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                } else if (!editTextSenha2.getText().toString().equals(editTextSenha3.getText().toString())) {
+                    Toast.makeText(LoginOperarioAlterarSenha2.this, "As senhas não correspondem", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         //botão de voltar
         btVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginOperarioAlterarSenha2.this, LoginOperarioAlterarSenha.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -110,6 +127,5 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
                 editTextSenha3.setSelection(editTextSenha3.getText().length());
             }
         });
-        //https://chatgpt.com/share/68bcc05c-66c0-800f-8e25-4866a9628c7e
     }
 }
