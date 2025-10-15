@@ -12,6 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mobilesinara.HomeOperario;
 import com.example.mobilesinara.R;
 
 public class LoginOperarioAlterarSenha extends AppCompatActivity {
@@ -28,6 +29,7 @@ public class LoginOperarioAlterarSenha extends AppCompatActivity {
         });
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         Button btSim = findViewById(R.id.bt_sim);
+        Button btNao = findViewById(R.id.bt_nao);
 
         //botão de voltar
         btVoltar.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +48,15 @@ public class LoginOperarioAlterarSenha extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginOperarioAlterarSenha.this, LoginOperarioAlterarSenha2.class));
+                overridePendingTransition(0, 0);
+            }
+        });
+
+        //botão não
+        btNao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginOperarioAlterarSenha.this, HomeOperario.class));
                 overridePendingTransition(0, 0);
             }
         });

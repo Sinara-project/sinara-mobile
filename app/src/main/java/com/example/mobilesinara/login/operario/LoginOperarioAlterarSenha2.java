@@ -15,6 +15,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mobilesinara.HomeOperario;
 import com.example.mobilesinara.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -42,26 +43,24 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         Button btContinuar = findViewById(R.id.bt_continuar);
 
-        btContinuar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (editTextSenha1.getText().toString().isEmpty()
-                        || editTextSenha2.getText().toString().isEmpty()
-                        || editTextSenha3.getText().toString().isEmpty()) {
-                    Toast.makeText(LoginOperarioAlterarSenha2.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                } else if (!editTextSenha2.getText().toString().equals(editTextSenha3.getText().toString())) {
-                    Toast.makeText(LoginOperarioAlterarSenha2.this, "As senhas não correspondem", Toast.LENGTH_SHORT).show();
-                }
+        btContinuar.setOnClickListener(v -> {
+            if (editTextSenha1.getText().toString().isEmpty()
+                    || editTextSenha2.getText().toString().isEmpty()
+                    || editTextSenha3.getText().toString().isEmpty()) {
+                Toast.makeText(LoginOperarioAlterarSenha2.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+            } else if (!editTextSenha2.getText().toString().equals(editTextSenha3.getText().toString())) {
+                Toast.makeText(LoginOperarioAlterarSenha2.this, "As senhas não correspondem", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                startActivity(new Intent(LoginOperarioAlterarSenha2.this, HomeOperario.class));
+                overridePendingTransition(0, 0);
             }
         });
 
         //botão de voltar
-        btVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginOperarioAlterarSenha2.this, LoginOperarioAlterarSenha.class));
-                overridePendingTransition(0, 0);
-            }
+        btVoltar.setOnClickListener(view -> {
+            startActivity(new Intent(LoginOperarioAlterarSenha2.this, LoginOperarioAlterarSenha.class));
+            overridePendingTransition(0, 0);
         });
 
 
