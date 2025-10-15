@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B1B54"
     tools:context=".cadastro.operario.CadastroOperarioSucesso">
 
     <TextView
@@ -17,7 +16,7 @@
         android:gravity="left"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Operario cadastrado!"
-        android:textColor="@color/white"
+        android:textColor="@color/md_theme_onPrimary"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.427"
@@ -33,7 +32,7 @@
         android:gravity="left"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Um e-mail com as informações de cadastro foi enviado ao endereço cadastrado."
-        android:textColor="@color/white"
+        android:textColor="@color/md_theme_onPrimary"
         android:textSize="25sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"

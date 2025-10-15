@@ -33,6 +33,7 @@ public class LoginOperarioEsqueciSenha2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginOperarioEsqueciSenha2.this, LoginOperarioEsqueciSenha.class));
+                overridePendingTransition(0, 0);
             }
         });
     }

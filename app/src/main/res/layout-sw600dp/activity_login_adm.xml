@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B1B54"
     tools:context=".login.adm.LoginADM">
 
     <com.google.android.material.button.MaterialButton
@@ -15,9 +14,9 @@
         android:layout_marginBottom="180dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Avançar"
-        android:textColor="@android:color/white"
+        android:textColor="@color/md_theme_surfaceVariant"
         android:textSize="40sp"
-        app:backgroundTint="#384994"
+        app:backgroundTint="@color/md_theme_primaryFixed_highContrast"
         app:cornerRadius="70dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,9 +27,11 @@
         android:layout_width="600dp"
         android:layout_height="110dp"
         android:layout_marginTop="70dp"
-        android:textColor="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textColorHint="@color/md_theme_primaryContainer"
 
-        app:boxBackgroundColor="#8594D4"
+        app:hintTextColor="@color/md_theme_primaryContainer"
+        app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="70dp"
         app:boxCornerRadiusBottomStart="70dp"
@@ -43,12 +44,13 @@
         app:layout_constraintTop_toBottomOf="@+id/textView8">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_cnpj"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:fontFamily="@font/montserrat"
             android:hint="CNPJ"
             android:inputType="textPassword"
-            android:textColor="#0B1B54"
+            android:textColor="@color/md_theme_primaryContainer"
             android:textSize="40sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -58,9 +60,11 @@
         android:layout_width="600dp"
         android:layout_height="110dp"
         android:layout_marginTop="20dp"
-        android:textColor="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textColorHint="@color/md_theme_primaryContainer"
 
-        app:boxBackgroundColor="#8594D4"
+        app:hintTextColor="@color/md_theme_primaryContainer"
+        app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="70dp"
         app:boxCornerRadiusBottomStart="70dp"
@@ -70,19 +74,19 @@
         app:boxStrokeWidth="0dp"
         app:endIconDrawable="@drawable/icone_olho_tablet"
         app:endIconMode="password_toggle"
-        app:endIconTint="#0B1B54"
+        app:endIconTint="@color/md_theme_primaryContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mostrar_senha"
+            android:id="@+id/text_senha"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:fontFamily="@font/montserrat"
             android:hint="Senha"
             android:inputType="textPassword"
-            android:textColor="#0B1B54"
+            android:textColor="@color/md_theme_primaryContainer"
             android:textSize="40sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -110,7 +114,7 @@
         android:gravity="center"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Entre como uma empresa!"
-        android:textColor="@color/white"
+        android:textColor="@color/md_theme_onPrimary"
         android:textSize="40sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
@@ -136,7 +140,7 @@
         android:layout_marginBottom="90dp"
         android:gravity="center"
         android:text="Não possui conta para a sua empresa? Cadastre-se"
-        android:textColor="@color/white"
+        android:textColor="@color/md_theme_onPrimary"
         android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -27,10 +27,12 @@ public class TelaOpcoes extends AppCompatActivity {
 
         btEmpresa.setOnClickListener(v -> {
             startActivity(new Intent(TelaOpcoes.this, LoginADM.class));
+            overridePendingTransition(0, 0);
         });
 
         btOperario.setOnClickListener(v -> {
             startActivity(new Intent(TelaOpcoes.this, LoginOperario.class));
+            overridePendingTransition(0, 0);
         });
     }
 }

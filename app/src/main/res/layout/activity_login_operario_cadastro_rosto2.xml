@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B1B54"
     tools:context=".cadastro.operario.CadastroOperario">
 
     <ImageView
@@ -27,7 +26,7 @@
         android:gravity="center"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Deseja mesmo cadastrar esse rosto?"
-        android:textColor="@color/white"
+        android:textColor="@color/md_theme_onPrimary"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -41,9 +40,9 @@
         android:layout_marginBottom="73dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Cadastrar"
-        android:textColor="@android:color/white"
+        android:textColor="@color/md_theme_surfaceVariant"
         android:textSize="18sp"
-        app:backgroundTint="#384994"
+        app:backgroundTint="@color/md_theme_primaryFixed_highContrast"
         app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

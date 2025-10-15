@@ -2,6 +2,7 @@ package com.example.mobilesinara.cadastro.operario;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
@@ -12,8 +13,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobilesinara.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CadastroOperarioPermissoes extends AppCompatActivity {
 
@@ -29,29 +35,31 @@ public class CadastroOperarioPermissoes extends AppCompatActivity {
         });
         ImageButton btVoltar = findViewById(R.id.bt_voltar3);
         Button btSalvar = findViewById(R.id.bt_salvar);
-        CheckBox opc1 = findViewById(R.id.formsCap);
-        CheckBox opc2 = findViewById(R.id.formsCap2);
-        CheckBox opc3 = findViewById(R.id.formsCap3);
-        CheckBox opc4 = findViewById(R.id.formsCap4);
-        CheckBox opc5 = findViewById(R.id.formsCap5);
-        CheckBox opc6 = findViewById(R.id.formsCap6);
 
-        opc1.setOnCheckedChangeListener((compoundButton, b) ->
-                Toast.makeText(CadastroOperarioPermissoes.this, "O teste deu certo", Toast.LENGTH_SHORT).show());
-        opc2.setOnCheckedChangeListener((compoundButton, b) ->
-                Toast.makeText(CadastroOperarioPermissoes.this, "O teste deu certo", Toast.LENGTH_SHORT).show());
-        opc3.setOnCheckedChangeListener((compoundButton, b) ->
-                Toast.makeText(CadastroOperarioPermissoes.this, "O teste deu certo", Toast.LENGTH_SHORT).show());
-        opc4.setOnCheckedChangeListener((compoundButton, b) ->
-                Toast.makeText(CadastroOperarioPermissoes.this, "O teste deu certo", Toast.LENGTH_SHORT).show());
-        opc5.setOnCheckedChangeListener((compoundButton, b) ->
-                Toast.makeText(CadastroOperarioPermissoes.this, "O teste deu certo", Toast.LENGTH_SHORT).show());
-        opc6.setOnCheckedChangeListener((compoundButton, b) ->
-                Toast.makeText(CadastroOperarioPermissoes.this, "O teste deu certo", Toast.LENGTH_SHORT).show());
-        
-        btVoltar.setOnClickListener(view ->
-                startActivity(new Intent(CadastroOperarioPermissoes.this, CadastroOperario.class)));
-        btSalvar.setOnClickListener(view ->
-                startActivity(new Intent(CadastroOperarioPermissoes.this, CadastroOperario.class)));
+        RecyclerView recyclerView = findViewById(R.id.RecyclerView);
+        //TODO: trocar a lista pelo banco de dados com as permissões corretas do banco
+        List<Permissao> lista = new ArrayList<>();
+        lista.add(new Permissao("Permissão exemplo1", false));
+        lista.add(new Permissao("Permissão exemplo2", false));
+        lista.add(new Permissao("Permissão exemplo3", false));
+        lista.add(new Permissao("Permissão exemplo4", false));
+        PermissaoAdapter permissaoAdapter = new PermissaoAdapter(lista);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(permissaoAdapter);
+
+        btVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CadastroOperarioPermissoes.this, CadastroOperario.class));
+                overridePendingTransition(0, 0);
+            }
+        });
+        btSalvar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CadastroOperarioPermissoes.this, CadastroOperario.class));
+                overridePendingTransition(0, 0);
+            }
+        });
     }
 }

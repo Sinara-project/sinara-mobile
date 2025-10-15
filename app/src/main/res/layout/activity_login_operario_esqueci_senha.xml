@@ -5,7 +5,6 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B1B54"
     tools:context=".login.adm.LoginADM">
 
     <com.google.android.material.button.MaterialButton
@@ -15,9 +14,9 @@
         android:layout_marginTop="70dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Avançar"
-        android:textColor="@android:color/white"
+        android:textColor="@color/md_theme_surfaceVariant"
         android:textSize="18sp"
-        app:backgroundTint="#384994"
+        app:backgroundTint="@color/md_theme_primaryFixed_highContrast"
         app:cornerRadius="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,10 +27,10 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
-        android:textColorHint="#0B1B54"
+        android:textColorHint="@color/md_theme_primaryContainer"
 
-        android:textColor="#0B1B54"
-        app:boxBackgroundColor="#8594D4"
+        android:textColor="@color/md_theme_primaryContainer"
+        app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusBottomStart="30dp"
@@ -39,7 +38,7 @@
         app:boxCornerRadiusTopStart="30dp"
         app:boxStrokeColor="@android:color/transparent"
         app:boxStrokeWidth="0dp"
-        app:hintTextColor="#0B1B54"
+        app:hintTextColor="@color/md_theme_primaryContainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8">
@@ -49,7 +48,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:hint="Digite seu E-mail"
-            android:textColor="#0B1B54"
+            android:textColor="@color/md_theme_primaryContainer"
             android:textSize="18sp"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="322dp" />
@@ -65,7 +64,7 @@
         android:gravity="center"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Modifique sua senha!"
-        android:textColor="@color/white"
+        android:textColor="@color/md_theme_onPrimary"
         android:textSize="22sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"

@@ -5,8 +5,8 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0B1B54"
     tools:context=".cadastro.operario.CadastroOperario">
+
 
     <ImageView
         android:id="@+id/imageView8"
@@ -27,7 +27,7 @@
         android:gravity="center"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Cadastre um operário!"
-        android:textColor="#0B1B54"
+        android:textColor="@color/md_theme_onPrimary"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
@@ -39,28 +39,29 @@
         android:layout_width="300dp"
         android:layout_height="62dp"
         android:layout_marginTop="50dp"
-        android:textColor="#0B1B54"
-        android:textColorHint="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textColorHint="@color/md_theme_primaryContainer"
 
-        app:boxBackgroundColor="#8594D4"
+        app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusBottomStart="30dp"
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
         app:boxStrokeColor="@android:color/transparent"
-        app:hintTextColor="#0B1B54"
+        app:hintTextColor="@color/md_theme_primaryContainer"
         app:boxStrokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_cpf"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:hint="CPF"
-            android:textColor="#0B1B54"
+            android:textColor="@color/md_theme_primaryContainer"
             android:textSize="18sp"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="322dp" />
@@ -71,29 +72,29 @@
         android:layout_width="300dp"
         android:layout_height="62dp"
         android:layout_marginTop="12dp"
-        android:textColor="#0B1B54"
-        android:textColorHint="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textColorHint="@color/md_theme_primaryContainer"
 
-        app:boxBackgroundColor="#8594D4"
+        app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusBottomStart="30dp"
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
         app:boxStrokeColor="@android:color/transparent"
-        app:hintTextColor="#0B1B54"
+        app:hintTextColor="@color/md_theme_primaryContainer"
         app:boxStrokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/mostrar_senha"
+            android:id="@+id/text_senha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:hint="Nome"
-            android:textColor="#0B1B54"
+            android:textColor="@color/md_theme_primaryContainer"
             android:textSize="18sp"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="400dp" />
@@ -104,16 +105,16 @@
         android:layout_width="300dp"
         android:layout_height="62dp"
         android:layout_marginTop="12dp"
-        android:textColor="#0B1B54"
-        android:textColorHint="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textColorHint="@color/md_theme_primaryContainer"
 
-        app:boxBackgroundColor="#8594D4"
+        app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="30dp"
         app:boxCornerRadiusBottomStart="30dp"
         app:boxCornerRadiusTopEnd="30dp"
         app:boxCornerRadiusTopStart="30dp"
-        app:hintTextColor="#0B1B54"
+        app:hintTextColor="@color/md_theme_primaryContainer"
         app:boxStrokeColor="@android:color/transparent"
         app:boxStrokeWidth="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -121,11 +122,12 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutSenha">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/text_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:hint="E-mail"
-            android:textColor="#0B1B54"
+            android:textColor="@color/md_theme_primaryContainer"
             android:textSize="18sp"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="478dp" />
@@ -135,16 +137,18 @@
         android:id="@+id/bt_cadastrar"
         android:layout_width="300dp"
         android:layout_height="62dp"
+        android:layout_marginTop="168dp"
         android:layout_marginBottom="73dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Cadastrar"
-        android:textColor="@android:color/white"
+        android:textColor="@color/md_theme_surfaceVariant"
         android:textSize="18sp"
-        app:backgroundTint="#384994"
+        app:backgroundTint="@color/md_theme_primaryFixed_highContrast"
         app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_permissoes" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_permissoes"
@@ -154,14 +158,15 @@
         android:fontFamily="@font/montserrat"
         android:text="Permissões"
         android:textAlignment="textStart"
-        android:textColor="#0B1B54"
+        android:textColor="@color/md_theme_primaryContainer"
         android:textSize="18sp"
-        app:backgroundTint="#8493D2"
+        app:backgroundTint="@color/md_theme_tertiaryContainer"
         app:cornerRadius="50dp"
         app:icon="@drawable/vector"
         app:iconGravity="end"
-        app:iconTint="#0B1B54"
+        app:iconTint="@color/md_theme_primaryContainer"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5" />
 

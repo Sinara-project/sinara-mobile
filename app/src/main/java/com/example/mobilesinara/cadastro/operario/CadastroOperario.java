@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,18 +32,27 @@ public class CadastroOperario extends AppCompatActivity {
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         Button btCadastrar = findViewById(R.id.bt_cadastrar);
         Button btPermissoes = findViewById(R.id.bt_permissoes);
+        EditText txtNome = findViewById(R.id.text_senha);
+        EditText txtCpf = findViewById(R.id.text_cpf);
+        EditText txtEmail = findViewById(R.id.text_email);
 
         btCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //lembrete: adicionar verificação de que nenhum campo está vazio posteriormente
-                startActivity(new Intent(CadastroOperario.this, CadastroOperarioSucesso.class));
+                if(!txtNome.getText().toString().isEmpty()&&!txtCpf.getText().toString().isEmpty()&&!txtEmail.getText().toString().isEmpty()){
+                    startActivity(new Intent(CadastroOperario.this, CadastroOperarioSucesso.class));
+                    overridePendingTransition(0, 0);
+                }
+                else{
+                    Toast.makeText(CadastroOperario.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         btVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(CadastroOperario.this, TelaOpcoes.class));
+                overridePendingTransition(0, 0);
             }
         });
 
@@ -51,6 +62,7 @@ public class CadastroOperario extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(CadastroOperario.this, CadastroOperarioPermissoes.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
             }
         });
     }
