@@ -67,6 +67,8 @@ public class FormsAdapter extends RecyclerView.Adapter<FormsAdapter.FormsViewHol
             titulo = itemView.findViewById(R.id.textView16);
             dataEHora = itemView.findViewById(R.id.textView15);
             status = itemView.findViewById(R.id.textView20);
+            bt_extra = itemView.findViewById(R.id.button6);
+
         }
     }
 }
