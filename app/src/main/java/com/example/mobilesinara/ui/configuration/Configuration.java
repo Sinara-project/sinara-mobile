@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -25,6 +24,7 @@ import android.widget.ImageView;
 
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentConfigurationBinding;
+import com.example.mobilesinara.login.operario.LoginOperarioAlterarSenha2;
 
 import java.util.Map;
 
@@ -41,6 +41,7 @@ public class Configuration extends Fragment {
         binding = FragmentConfigurationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         ImageView bt_voltar = root.findViewById(R.id.imageView3);
+        Button bt_alterar_senha = root.findViewById(R.id.button12);
         Button bt_camera_permission = root.findViewById(R.id.button14);
         Button bt_sms_permission = root.findViewById(R.id.button15);
         verificarPermissaoSMS(getContext(), bt_sms_permission);
@@ -49,6 +50,13 @@ public class Configuration extends Fragment {
             @Override
             public void onClick(View v) {
                 Navigation.findNavController(v).navigate(R.id.navigation_home);
+            }
+        });
+        bt_alterar_senha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), LoginOperarioAlterarSenha2.class);
+                startActivity(intent);
             }
         });
         return root;
