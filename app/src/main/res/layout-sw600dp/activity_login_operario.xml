@@ -56,7 +56,7 @@ tools:context=".cadastro.operario.CadastroOperario">
         app:layout_constraintTop_toBottomOf="@+id/textView12">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/text_cpf"
+            android:id="@+id/text_pesquisa"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:fontFamily="@font/montserrat"

@@ -1,5 +1,7 @@
 package com.example.mobilesinara.ui.dashboard;
 
+import static android.view.View.INVISIBLE;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,13 +9,13 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobilesinara.FormularioAcao;
 import com.example.mobilesinara.R;
-import com.example.mobilesinara.cadastro.operario.Permissao;
-import com.example.mobilesinara.cadastro.operario.PermissaoAdapter;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class FormsAdapter extends RecyclerView.Adapter<FormsAdapter.FormsViewHolder> {
@@ -36,16 +38,45 @@ public class FormsAdapter extends RecyclerView.Adapter<FormsAdapter.FormsViewHol
     public void onBindViewHolder(@NonNull FormsAdapter.FormsViewHolder holder, int position) {
         FormularioAcao formularioAcao = formularios.get(position);
         holder.titulo.setText(formularioAcao.getTitulo());
-        holder.dataEHora.setText(formularioAcao.getDataPreenchimento().toString());
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
+        String dataFormatada = formatter.format(formularioAcao.getDataPreenchimento());
+        holder.dataEHora.setText(dataFormatada);
         holder.status.setText(formularioAcao.getStatus());
-        if(formularioAcao.getStatus().equals("Respondido")){
-
+        if(holder.status.getText().toString().equals("Respondido")){
+            holder.bt_status.setBackgroundColor(Color.parseColor("#455A64"));
+            holder.bt_extra.setVisibility(INVISIBLE);
+            holder.bt_principal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //NavController navController = NavHostFragment.findNavController(AFragment.this);
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_dashboard_to_monitoramento_respondido);
+                }
+            });
         }
-        else if (formularioAcao.getStatus().equals("Devolvido")) {
-
+        else if (holder.status.getText().toString().equals("Devolvido")) {
+            holder.bt_status.setBackgroundColor(Color.parseColor("#409346"));
+            holder.bt_principal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Navigation.findNavController(v).navigate(R.id.action_navigation_dashboard_to_monitoramento_respondido);
+                }
+            });
+            holder.bt_extra.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Navigation.findNavController(v).navigate(R.id.monitoramentoAguardando);
+                }
+            });
         }
-        else if (formularioAcao.getStatus().equals("Aguardando resposta")) {
-
+        else if (holder.status.getText().toString().equals("Aguardando resposta")) {
+            holder.bt_principal.setText("Preencher");
+            holder.bt_extra.setVisibility(INVISIBLE);
+            holder.bt_principal.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Navigation.findNavController(v).navigate(R.id.monitoramentoAguardando);
+                }
+            });
         }
     }
 
@@ -67,8 +98,9 @@ public class FormsAdapter extends RecyclerView.Adapter<FormsAdapter.FormsViewHol
             titulo = itemView.findViewById(R.id.textView16);
             dataEHora = itemView.findViewById(R.id.textView15);
             status = itemView.findViewById(R.id.textView20);
+            bt_principal = itemView.findViewById(R.id.button8);
             bt_extra = itemView.findViewById(R.id.button6);
-
+            bt_status = itemView.findViewById(R.id.button5);
         }
     }
 }

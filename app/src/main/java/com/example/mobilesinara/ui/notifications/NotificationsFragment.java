@@ -9,8 +9,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobilesinara.FormularioAcao;
+import com.example.mobilesinara.Notificacao;
+import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentNotificationsBinding;
+import com.example.mobilesinara.ui.dashboard.FormsAdapter;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class NotificationsFragment extends Fragment {
 
@@ -23,7 +33,16 @@ public class NotificationsFragment extends Fragment {
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        RecyclerView recyclerView = root.findViewById(R.id.recyclerNotification);
+        List<Notificacao> lista = new ArrayList<>();
+        lista.add(new Notificacao("0", new Date(), "mensagem ai", "tipo ai"));
+        lista.add(new Notificacao("0", new Date(), "mensagem ai", "tipo ai"));
+        lista.add(new Notificacao("0", new Date(), "mensagem ai", "tipo ai"));
+        lista.add(new Notificacao("0", new Date(), "mensagem ai", "tipo ai"));
+        lista.add(new Notificacao("0", new Date(), "mensagem ai", "tipo ai"));
+        NotificationAdapter notificationAdapter = new NotificationAdapter(lista);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(notificationAdapter);
         return root;
     }
 
