@@ -57,6 +57,7 @@ public class Configuration extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), LoginOperarioAlterarSenha2.class);
                 startActivity(intent);
+                overridePendingTransition(0, 0);
             }
         });
         return root;
