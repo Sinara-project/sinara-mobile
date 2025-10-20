@@ -9,14 +9,25 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.mobilesinara.ui.home.HomeFragment"
-        android:label=""
-        tools:layout="@layout/fragment_home" />
+        android:label="Home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_configuration"
+            app:destination="@id/configuration" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.example.mobilesinara.ui.dashboard.DashboardFragment"
         android:label="Formularios"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard" >
+        <action
+            android:id="@+id/action_navigation_dashboard_to_monitoramento_respondido"
+            app:destination="@id/monitoramento_respondido" />
+        <action
+            android:id="@+id/action_navigation_dashboard_to_monitoramentoAguardando"
+            app:destination="@id/monitoramentoAguardando" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
@@ -28,4 +39,37 @@
         android:name="com.example.mobilesinara.ui.profile.ProfileFragment"
         android:label="Perfil"
         tools:layout="@layout/fragment_profile"/>
+    <fragment
+        android:id="@+id/monitoramento_respondido"
+        android:name="com.example.mobilesinara.monitoramento_respondido"
+        android:label="fragment_monitoramento_respondido"
+        tools:layout="@layout/fragment_monitoramento_respondido" />
+    <fragment
+        android:id="@+id/monitoramentoAguardando"
+        android:name="com.example.mobilesinara.monitoramentoAguardando"
+        android:label="fragment_monitoramento_aguardando"
+        tools:layout="@layout/fragment_monitoramento_aguardando" >
+        <action
+            android:id="@+id/action_monitoramentoAguardando_to_formularioRespondido"
+            app:destination="@id/formularioRespondido" />
+    </fragment>
+    <fragment
+        android:id="@+id/configuration"
+        android:name="com.example.mobilesinara.ui.configuration.Configuration"
+        android:label="fragment_configuration"
+        tools:layout="@layout/fragment_configuration" >
+        <action
+            android:id="@+id/action_configuration_to_navigation_home"
+            app:destination="@id/navigation_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/formularioRespondido"
+        android:name="com.example.mobilesinara.FormularioRespondido"
+        android:label="fragment_formulario_respondido"
+        tools:layout="@layout/fragment_formulario_respondido" />
+    <fragment
+        android:id="@+id/ChatBot"
+        android:name="com.example.mobilesinara.ChatBot"
+        android:label="fragment_chat_bot"
+        tools:layout="@layout/fragment_chat_bot" />
 </navigation>

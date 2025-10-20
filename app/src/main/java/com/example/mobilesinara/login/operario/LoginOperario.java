@@ -18,7 +18,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
-import com.example.mobilesinara.login.adm.LoginADM;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -37,7 +36,7 @@ public class LoginOperario extends AppCompatActivity {
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout5);
         TextInputEditText editTextSenha = findViewById(R.id.text_senha);
-        TextInputEditText editTextCpf = findViewById(R.id.text_cpf);
+        TextInputEditText editTextCpf = findViewById(R.id.text_pesquisa);
         TextInputEditText editTextEmail = findViewById(R.id.text_email);
         TextInputEditText editTextCodEmpresa = findViewById(R.id.text_cod_empresa);
         Button login = findViewById(R.id.bt_fazer_login);

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,21 +37,19 @@ public class DashboardFragment extends Fragment {
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        //TODO: adicionar um método de pesquiisa, conectar tudo na api
+        EditText txt_pesquisa = root.findViewById(R.id.text_pesquisa);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerForms);
         List<FormularioAcao> lista = new ArrayList<>();
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Aguardando resposta"));
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Respondido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Devolvido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Aguardando resposta"));
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Respondido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Devolvido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Aguardando resposta"));
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Respondido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Devolvido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Aguardando resposta"));
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Respondido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", LocalDateTime.now(), "Devolvido"));
-
+        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Aguardando resposta"));
+        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Respondido"));
+        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Devolvido"));
+        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Aguardando resposta"));
+        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Respondido"));
+        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Devolvido"));
+        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Aguardando resposta"));
+        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Respondido"));
+        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Devolvido"));
         FormsAdapter formsAdapter = new FormsAdapter(lista);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(formsAdapter);

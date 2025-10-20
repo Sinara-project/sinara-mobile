@@ -33,7 +33,7 @@ public class CadastroOperario extends AppCompatActivity {
         Button btCadastrar = findViewById(R.id.bt_cadastrar);
         Button btPermissoes = findViewById(R.id.bt_permissoes);
         EditText txtNome = findViewById(R.id.text_senha);
-        EditText txtCpf = findViewById(R.id.text_cpf);
+        EditText txtCpf = findViewById(R.id.text_pesquisa);
         EditText txtEmail = findViewById(R.id.text_email);
 
         btCadastrar.setOnClickListener(new View.OnClickListener() {
