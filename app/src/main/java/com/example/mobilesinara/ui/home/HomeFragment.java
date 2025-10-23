@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
         bt_forms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.navigation_dashboard);
+                Navigation.findNavController(v).navigate(R.id.navigation_forms_operario);
             }
         });
         ImageView bt_configuration = root.findViewById(R.id.imageView13);
