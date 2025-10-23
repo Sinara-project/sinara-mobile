@@ -10,24 +10,24 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.example.mobilesinara.databinding.ActivityHomeOperarioBinding;
+import com.example.mobilesinara.databinding.ActivityHomeEmpresaBinding;
 
-public class HomeOperario extends AppCompatActivity {
+public class HomeEmpresa extends AppCompatActivity {
 
-    private ActivityHomeOperarioBinding binding;
+    private ActivityHomeEmpresaBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityHomeOperarioBinding.inflate(getLayoutInflater());
+        binding = ActivityHomeEmpresaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home_operario, R.id.navigation_forms_operario, R.id.navigation_notifications_operario, R.id.navigation_profile_operario)
+                R.id.navigation_home_empresa, R.id.navigation_formulario_empresa, R.id.navigation_notifications_empresa, R.id.profileEmpresa)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_home_operario);
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_home_empresa);
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 

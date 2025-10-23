@@ -16,6 +16,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mobilesinara.HomeEmpresa;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.cadastro.operario.CadastroOperario;
 
@@ -144,7 +145,7 @@ public class LoginADM2 extends AppCompatActivity {
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginADM2.this, CadastroOperario.class));
+                startActivity(new Intent(LoginADM2.this, HomeEmpresa.class));
                 overridePendingTransition(0, 0);
             }
         });
@@ -155,7 +156,5 @@ public class LoginADM2 extends AppCompatActivity {
         // Exibe em um TextView (no seu layout precisa ter um TextView com id txtEmail)
         TextView txtEmail = findViewById(R.id.mostrar_email);
         txtEmail.setText(emailRecebido);
-
-
     }
 }

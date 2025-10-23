@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.textfield.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="6dp"
+    app:boxBackgroundMode="outline"
+    app:boxCornerRadiusTopStart="16dp"
+    app:boxCornerRadiusTopEnd="16dp"
+    app:boxCornerRadiusBottomStart="16dp"
+    app:boxCornerRadiusBottomEnd="16dp"
+    app:boxStrokeColor="@color/md_theme_primaryContainer">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editOpcao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Título da opção"
+        android:textColor="@color/md_theme_primaryContainer"
+        android:textColorHint="@color/md_theme_primaryContainer"
+        android:fontFamily="@font/montserrat_bold" />
+</com.google.android.material.textfield.TextInputLayout>

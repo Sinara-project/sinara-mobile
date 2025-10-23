@@ -49,7 +49,7 @@ public class Configuration extends Fragment {
         bt_voltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.navigation_home);
+                Navigation.findNavController(v).navigate(R.id.navigation_home_operario);
             }
         });
         bt_alterar_senha.setOnClickListener(new View.OnClickListener() {
