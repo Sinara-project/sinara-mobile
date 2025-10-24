@@ -62,37 +62,41 @@
         <!-- Campo de título -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout3"
-            android:layout_width="350dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="49dp"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="49dp"
             app:boxBackgroundMode="outline"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
             app:boxStrokeColor="@color/md_theme_primaryContainer"
             app:boxStrokeWidth="2dp"
-            app:boxCornerRadiusTopStart="20dp"
-            app:boxCornerRadiusTopEnd="20dp"
-            app:boxCornerRadiusBottomStart="20dp"
-            app:boxCornerRadiusBottomEnd="20dp"
             app:hintTextColor="@color/md_theme_primaryContainer"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView19">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/text_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_bold"
                 android:hint="Título do formulário"
                 android:textColor="#8193B1"
-                android:textSize="18sp"
-                android:fontFamily="@font/montserrat_bold" />
+                android:textSize="18sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Campo de descrição -->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayout4"
-            android:layout_width="350dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="49dp"
             android:layout_marginTop="12dp"
+            android:layout_marginEnd="49dp"
             app:boxBackgroundMode="outline"
             app:boxCornerRadiusBottomEnd="20dp"
             app:boxCornerRadiusBottomStart="20dp"
@@ -189,7 +193,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Cadastrar"
+            android:text="Criar formularios"
             android:textColor="@color/md_theme_surfaceVariant"
             android:textSize="18sp"
             app:backgroundTint="@color/md_theme_primaryFixed_highContrast"

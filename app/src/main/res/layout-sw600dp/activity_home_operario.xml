@@ -29,7 +29,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@color/md_theme_primaryFixed_highContrast"
-        app:itemIconSize="60sp"
         app:itemIconTint="@color/md_theme_outline_highContrast"
         app:itemTextColor="#F5F5F5"
         app:layout_constraintBottom_toBottomOf="parent"

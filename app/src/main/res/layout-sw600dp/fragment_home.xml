@@ -9,8 +9,8 @@
 
     <ImageView
         android:id="@+id/imageView9"
-        android:layout_width="76dp"
-        android:layout_height="97dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="32dp"
         android:src="@drawable/sinara_logo_home"
@@ -19,13 +19,15 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="750dp"
-        android:layout_height="150dp"
-        android:layout_marginBottom="30dp"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="150dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Ajuda com SinaraAI"
         android:textColor="#FFFFFF"
-        android:textSize="40sp"
+        android:textSize="18sp"
         app:cornerRadius="20dp"
         app:icon="@drawable/ic_star"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -35,13 +37,15 @@
 
     <Button
         android:id="@+id/button2"
-        android:layout_width="750dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center|start"
         android:text="Registrar ponto"
-        android:textSize="40sp"
+        android:textSize="18sp"
         app:cornerRadius="20dp"
         app:icon="@drawable/ic_plus"
         app:iconGravity="end"
@@ -52,11 +56,13 @@
 
     <Button
         android:id="@+id/button3"
-        android:layout_width="750dp"
-        android:layout_height="150dp"
+        android:layout_width="0dp"
+        android:layout_height="75dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="10dp"
         android:text="Verificar formularios"
-        android:textSize="40sp"
+        android:textSize="18sp"
         app:cornerRadius="20dp"
         app:icon="@drawable/ic_forms"
         app:layout_constraintBottom_toTopOf="@+id/cardRespondidos"
@@ -65,11 +71,11 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardRespondidos"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="157dp"
+        android:layout_height="149dp"
         android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="@color/md_theme_secondaryContainer"
         app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/md_theme_secondaryContainer"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toStartOf="@+id/cardDevolvidos"
         app:layout_constraintStart_toStartOf="parent">
@@ -79,35 +85,34 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:orientation="vertical">
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
-                android:paddingTop="8dp"
+                android:textColor="#FFFFFF"
                 android:text="00"
-                android:textColor="#FFFFFF"
-                android:textSize="40sp" />
+                android:textSize="40sp"
+                android:paddingTop="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
-                android:paddingTop="8dp"
-                android:text="Respondidos"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                android:text="Respondidos"
+                android:textSize="16sp"
+                android:paddingTop="8dp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardDevolvidos"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="157dp"
+        android:layout_height="149dp"
         android:layout_marginBottom="10dp"
-        app:cardBackgroundColor="@color/md_theme_secondaryContainer"
         app:cardCornerRadius="20dp"
+        app:cardBackgroundColor="@color/md_theme_secondaryContainer"
         app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cardRespondidos">
@@ -122,27 +127,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
-                android:paddingTop="8dp"
-                android:text="00"
                 android:textColor="#FFFFFF"
-                android:textSize="40sp" />
+                android:text="00"
+                android:textSize="40sp"
+                android:paddingTop="8dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
-                android:paddingTop="8dp"
-                android:text="Devolvidos"
                 android:textColor="#FFFFFF"
-                android:textSize="16sp" />
+                android:text="Devolvidos"
+                android:textSize="16sp"
+                android:paddingTop="8dp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardValores"
-        android:layout_width="750dp"
-        android:layout_height="300dp"
+        android:layout_width="0dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="10dp"
         app:cardBackgroundColor="@color/md_theme_secondaryContainer"
         app:cardCornerRadius="20dp"
@@ -163,7 +170,7 @@
                 android:paddingTop="8dp"
                 android:text="00"
                 android:textColor="#FFFFFF"
-                android:textSize="80sp" />
+                android:textSize="40sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -173,7 +180,7 @@
                 android:paddingTop="8dp"
                 android:text="Formulários Pendentes"
                 android:textColor="#FFFFFF"
-                android:textSize="40sp" />
+                android:textSize="18sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -181,7 +188,7 @@
     <Button
         android:id="@+id/button7"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="9dp"
         android:backgroundTint="@color/md_theme_tertiaryContainer"
@@ -192,7 +199,7 @@
         android:paddingRight="15dp"
         android:paddingBottom="6dp"
         android:text="Offline"
-        android:textSize="40sp"
+        android:textSize="18sp"
         app:icon="@android:drawable/radiobutton_off_background"
         app:iconGravity="end"
         app:iconTint="@color/md_theme_secondaryContainer"
@@ -201,8 +208,8 @@
 
     <ImageView
         android:id="@+id/iconEmpresa"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="36dp"
         android:src="@drawable/profile_pic_default"
@@ -211,18 +218,18 @@
 
     <ImageView
         android:id="@+id/iconUser"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginEnd="56dp"
         android:src="@drawable/profile_pic_default"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/imageView13"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="10dp"
         android:src="@drawable/ic_config_home"

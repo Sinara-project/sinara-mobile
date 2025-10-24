@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="16dp"
     android:background="#FFDF5E"
@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/textView16"
@@ -22,7 +22,7 @@
             android:fontFamily="@font/montserrat_bold"
             android:text="Titulo"
             android:textColor="#FFFFFF"
-            android:textSize="48sp"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.117"
             app:layout_constraintStart_toStartOf="parent"
@@ -32,12 +32,12 @@
             android:id="@+id/textView17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="49dp"
+            android:layout_marginStart="36dp"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/montserrat_medium"
             android:text="Enviado em:"
             android:textColor="#FFFFFF"
-            android:textSize="34sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16"
@@ -45,15 +45,15 @@
 
         <TextView
             android:id="@+id/textView15"
-            android:layout_width="400dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="20dp"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="49dp"
             android:fontFamily="@font/montserrat"
             android:text="00/00/0000 - 00:00"
             android:textColor="#FFFFFF"
-            android:textSize="34sp"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -65,12 +65,12 @@
             android:id="@+id/textView14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="49dp"
+            android:layout_marginStart="36dp"
             android:layout_marginTop="1dp"
             android:fontFamily="@font/montserrat_medium"
             android:text="Status:"
             android:textColor="#FFFFFF"
-            android:textSize="34sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
@@ -78,21 +78,21 @@
             android:id="@+id/textView20"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="1dp"
             android:fontFamily="@font/montserrat"
             android:text="Status"
             android:textColor="#FFFFFF"
-            android:textSize="34sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/textView14"
             app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
         <Button
             android:id="@+id/button5"
-            android:layout_width="40dp"
-            android:layout_height="54dp"
+            android:layout_width="20dp"
+            android:layout_height="27dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="49dp"
+            android:layout_marginEnd="36dp"
             android:backgroundTint="#FFDF5E"
             app:cornerRadius="20000dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -101,26 +101,24 @@
         <Button
             android:id="@+id/button6"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="35dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="7dp"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
             android:text="Refazer"
-            android:textSize="40sp"
             app:layout_constraintEnd_toStartOf="@+id/button8"
             app:layout_constraintTop_toBottomOf="@+id/textView20" />
 
         <Button
             android:id="@+id/button8"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="35dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="26dp"
             android:paddingTop="2dp"
             android:paddingBottom="2dp"
             android:text="Abrir"
-            android:textSize="40sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView20" />
 

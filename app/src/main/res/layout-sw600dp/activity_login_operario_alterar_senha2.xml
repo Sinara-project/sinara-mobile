@@ -9,9 +9,9 @@
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="400dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="150dp"
+        android:layout_width="150dp"
+        android:layout_height="97dp"
+        android:layout_marginTop="65dp"
         android:src="@drawable/icone_tela_opcoes"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,7 +27,7 @@
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Modifique sua senha!"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="40sp"
+        android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,14 +35,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout1"
-        android:layout_width="600dp"
-        android:layout_height="110dp"
-        android:layout_marginStart="42dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:layout_marginEnd="42dp"
         android:textColor="@color/md_theme_primaryContainer"
-        android:textColorHint="@color/md_theme_primaryContainer"
 
+        android:textColorHint="@color/md_theme_primaryContainer"
         app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="30dp"
@@ -56,33 +54,31 @@
         app:endIconTint="@color/md_theme_primaryContainer"
         app:hintTextColor="@color/md_theme_primaryContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/mostrar_senha_atual"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:hint="Senha atual"
             android:inputType="textPassword"
             android:textColor="@color/md_theme_primaryContainer"
             android:textCursorDrawable="@null"
-            android:textSize="40sp"
+            android:textSize="18sp"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="322dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout2"
-        android:layout_width="600dp"
-        android:layout_height="110dp"
-        android:layout_marginStart="42dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="42dp"
         android:textColor="@color/md_theme_primaryContainer"
 
+        android:textColorHint="@color/md_theme_primaryContainer"
         app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="30dp"
@@ -94,34 +90,33 @@
         app:endIconDrawable="@drawable/olho_aberto"
         app:endIconMode="password_toggle"
         app:endIconTint="@color/md_theme_primaryContainer"
+        app:hintTextColor="@color/md_theme_primaryContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout1">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/mostrar_senha_nova"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:hint="Senha nova"
             android:inputType="textPassword"
             android:textColor="@color/md_theme_primaryContainer"
             android:textCursorDrawable="@null"
-            android:textSize="40sp"
+            android:textSize="18sp"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="400dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
-        android:layout_width="600dp"
-        android:layout_height="110dp"
-        android:layout_marginStart="42dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="42dp"
+        android:textColor="@color/md_theme_primaryContainer"
 
-        android:textColor="@color/md_theme_onPrimary"
+        android:textColorHint="@color/md_theme_primaryContainer"
         app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="30dp"
@@ -133,22 +128,21 @@
         app:endIconDrawable="@drawable/olho_aberto"
         app:endIconMode="password_toggle"
         app:endIconTint="@color/md_theme_primaryContainer"
-        app:hintTextColor="@color/md_theme_onPrimary"
+        app:hintTextColor="@color/md_theme_primaryContainer"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout2">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/confirmar_senha"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:hint="Confirme sua senha"
             android:inputType="textPassword"
             android:textColor="@color/md_theme_primaryContainer"
             android:textCursorDrawable="@null"
-            android:textSize="40sp"
+            android:textSize="18sp"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="478dp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -156,13 +150,13 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_continuar"
-        android:layout_width="590dp"
-        android:layout_height="110dp"
-        android:layout_marginBottom="80dp"
+        android:layout_width="300dp"
+        android:layout_height="62dp"
+        android:layout_marginBottom="73dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Continuar"
         android:textColor="@color/md_theme_surfaceVariant"
-        android:textSize="40sp"
+        android:textSize="18sp"
         app:backgroundTint="@color/md_theme_primaryFixed_highContrast"
         app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
