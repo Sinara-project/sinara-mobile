@@ -189,7 +189,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="40dp"
             android:fontFamily="@font/montserrat_bold"
-            android:text="Cadastrar"
+            android:text="Criar formularios"
             android:textColor="@color/md_theme_surfaceVariant"
             android:textSize="18sp"
             app:backgroundTint="@color/md_theme_primaryFixed_highContrast"

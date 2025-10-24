@@ -10,15 +10,15 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="363dp"
-        android:layout_height="94dp"
+        android:layout_width="266dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Modifique sua senha!"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="40sp"
+        android:textSize="22sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -28,9 +28,9 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="0dp"
+        android:layout_width="339dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="39dp"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
@@ -38,18 +38,18 @@
             exemplo@gmail.com
             para que sua senha seja redefinida"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="40sp"
+        android:textSize="22sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="400dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="150dp"
+        android:layout_width="150dp"
+        android:layout_height="97dp"
+        android:layout_marginTop="65dp"
         android:src="@drawable/icone_tela_opcoes"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"

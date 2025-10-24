@@ -10,8 +10,8 @@
 
     <ImageView
         android:id="@+id/imageView9"
-        android:layout_width="76dp"
-        android:layout_height="97dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="36dp"
         android:layout_marginTop="32dp"
         android:src="@drawable/sinara_logo_home"
@@ -27,7 +27,7 @@
         android:fontFamily="@font/montserrat_bold"
         android:text="Configurações"
         android:textColor="@color/md_theme_primaryContainer"
-        android:textSize="60sp"
+        android:textSize="34sp"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/imageView9" />
 
@@ -36,7 +36,7 @@
         android:layout_width="23dp"
         android:layout_height="45dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="154dp"
+        android:layout_marginTop="104dp"
         android:src="@drawable/bt_voltar"
         android:textColor="@color/md_theme_primaryContainer"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,8 +44,8 @@
 
     <ImageView
         android:id="@+id/imageView11"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="49dp"
         android:layout_marginTop="28dp"
         android:src="@drawable/bt_camera"
@@ -55,8 +55,8 @@
 
     <ImageView
         android:id="@+id/imageView12"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="49dp"
         android:layout_marginTop="20dp"
         android:src="@drawable/bt_sms"
@@ -72,7 +72,7 @@
         android:fontFamily="@font/montserrat_medium"
         android:text="Permissão de câmera:"
         android:textColor="@color/md_theme_primaryContainer"
-        android:textSize="40sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView11" />
 
@@ -85,51 +85,48 @@
         android:fontFamily="@font/montserrat_medium"
         android:text="Permissão de sms:"
         android:textColor="@color/md_theme_primaryContainer"
-        android:textSize="40sp"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView12" />
 
     <Button
         android:id="@+id/button11"
-        android:layout_width="589dp"
-        android:layout_height="76dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="49dp"
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Cadastrar novo rosto"
-        android:textSize="40dp"
+        android:textSize="20dp"
         app:cornerRadius="10dp"
         app:icon="@drawable/ic_cadastrar_rosto"
-        app:iconSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/button12"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button12"
-        android:layout_width="477dp"
-        android:layout_height="76dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginStart="48dp"
         android:layout_marginBottom="49dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Alterar senha"
-        android:textSize="40dp"
+        android:textSize="20dp"
         app:cornerRadius="10dp"
         app:icon="@drawable/ic_alterar_senha"
-        app:iconSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button14"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="96dp"
-        android:backgroundTint="@color/md_theme_secondaryContainer"
+        android:layout_height="37dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="57dp"
         android:fontFamily="@font/montserrat_bold"
         android:padding="2dp"
         android:text="ATIVAR"
-        android:textSize="40sp"
+        android:backgroundTint="@color/md_theme_secondaryContainer"
         app:cornerRadius="10dp"
         app:layout_constraintStart_toEndOf="@+id/textView27"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
@@ -137,15 +134,14 @@
     <Button
         android:id="@+id/button15"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="76dp"
-        android:backgroundTint="#7FD170"
+        android:layout_height="37dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="43dp"
         android:fontFamily="@font/montserrat_bold"
         android:padding="2dp"
         android:text="OK"
+        android:backgroundTint="#7FD170"
         android:textColor="#409346"
-        android:textSize="40sp"
         app:cornerRadius="10dp"
         app:layout_constraintStart_toEndOf="@+id/textView30"
         app:layout_constraintTop_toBottomOf="@+id/button14" />

@@ -9,13 +9,13 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_avancar"
-        android:layout_width="590dp"
-        android:layout_height="110dp"
+        android:layout_width="300dp"
+        android:layout_height="62dp"
         android:layout_marginTop="70dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Avançar"
         android:textColor="@color/md_theme_surfaceVariant"
-        android:textSize="40sp"
+        android:textSize="18sp"
         app:backgroundTint="@color/md_theme_primaryFixed_highContrast"
         app:cornerRadius="50dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -24,12 +24,12 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
-        android:layout_width="600dp"
-        android:layout_height="110dp"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
-        android:textColor="@color/md_theme_primaryContainer"
-
         android:textColorHint="@color/md_theme_primaryContainer"
+
+        android:textColor="@color/md_theme_primaryContainer"
         app:boxBackgroundColor="@color/md_theme_tertiaryContainer"
         app:boxBackgroundMode="filled"
         app:boxCornerRadiusBottomEnd="30dp"
@@ -45,11 +45,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat"
             android:hint="Digite seu E-mail"
             android:textColor="@color/md_theme_primaryContainer"
-            android:textSize="40sp"
+            android:textSize="18sp"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="322dp" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -57,7 +57,7 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="wrap_content"
+        android:layout_width="258dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:fontFamily="@font/montserrat_medium"
@@ -65,7 +65,7 @@
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Modifique sua senha!"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="40sp"
+        android:textSize="22sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -74,9 +74,9 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="400dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="150dp"
+        android:layout_width="150dp"
+        android:layout_height="97dp"
+        android:layout_marginTop="65dp"
         android:src="@drawable/icone_tela_opcoes"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
