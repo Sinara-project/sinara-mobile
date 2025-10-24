@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobilesinara.Models.Permissao;
 import com.example.mobilesinara.R;
 
 import java.util.List;
@@ -31,12 +32,12 @@ public class PermissaoAdapter extends RecyclerView.Adapter<PermissaoAdapter.Perm
     @Override
     public void onBindViewHolder(@NonNull PermissaoAdapter.PermissaoVIewHolder holder, int position) {
         Permissao permissao = permissoes.get(position);
-        holder.checkBox.setText(permissao.getNome());
-        holder.checkBox.setChecked(permissao.isSelecionado());
+        //holder.checkBox.setText(permissao.getNome());
+        //holder.checkBox.setChecked(permissao.isSelecionado());
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            permissao.setSelecionado(isChecked);
-            Toast.makeText(buttonView.getContext(), "Checked marcado em: "+permissao.getNome(), Toast.LENGTH_SHORT).show();
+            //permissao.setSelecionado(isChecked);
+            //Toast.makeText(buttonView.getContext(), "Checked marcado em: "+permissao.getNome(), Toast.LENGTH_SHORT).show();
         });
     }
 

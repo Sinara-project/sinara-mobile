@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.mobilesinara.Models.Permissao;
 import com.example.mobilesinara.R;
 
 import java.util.ArrayList;
@@ -39,10 +38,10 @@ public class CadastroOperarioPermissoes extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.RecyclerView);
         //TODO: trocar a lista pelo banco de dados com as permissões corretas do banco
         List<Permissao> lista = new ArrayList<>();
-        lista.add(new Permissao("Permissão exemplo1", false));
-        lista.add(new Permissao("Permissão exemplo2", false));
-        lista.add(new Permissao("Permissão exemplo3", false));
-        lista.add(new Permissao("Permissão exemplo4", false));
+//        lista.add(new Permissao("Permissão exemplo1", false));
+//        lista.add(new Permissao("Permissão exemplo2", false));
+//        lista.add(new Permissao("Permissão exemplo3", false));
+//        lista.add(new Permissao("Permissão exemplo4", false));
         PermissaoAdapter permissaoAdapter = new PermissaoAdapter(lista);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(permissaoAdapter);

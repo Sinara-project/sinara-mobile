@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -15,13 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobilesinara.FormularioAcao;
 import com.example.mobilesinara.R;
-import com.example.mobilesinara.cadastro.operario.Permissao;
-import com.example.mobilesinara.cadastro.operario.PermissaoAdapter;
 import com.example.mobilesinara.databinding.FragmentDashboardBinding;
 
-import java.text.Normalizer;
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

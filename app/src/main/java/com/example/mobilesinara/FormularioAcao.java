@@ -1,6 +1,6 @@
 package com.example.mobilesinara;
 
-import com.example.mobilesinara.cadastro.operario.Permissao;
+import com.example.mobilesinara.Models.Permissao;
 
 import java.util.Date;
 
