@@ -17,7 +17,7 @@ public interface IFormularioPersonalizado {
     @GET("https://ms-sinara-mongo.onrender.com/formulario-personalizado/{id}")
     Call<FormularioPersonalizado> getFormularioPersonalizado(@Path("id") String id);
     @GET("https://ms-sinara-mongo.onrender.com/formulario-personalizado/buscar-por-empresa/{idEmpresa}")
-    Call<FormularioPersonalizado> getFormularioPersonalizadoPorEmpresa(@Path("idEmpresa") String idEmpresa);
+    Call<List<FormularioPersonalizado>> getFormularioPersonalizadoPorEmpresa(@Path("idEmpresa") String idEmpresa);
 
     @FormUrlEncoded
     @POST("formulario-personalizado/inserir")
