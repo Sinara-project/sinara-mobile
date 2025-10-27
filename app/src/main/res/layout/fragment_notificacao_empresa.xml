@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_onBackground"
-    tools:context=".notificacaoEmpresa">
+    tools:context=".ui.notificacaoEmpresa.notificacaoEmpresa">
 
     <ImageView
         android:id="@+id/imageView9"
@@ -28,6 +28,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerNotification"
         android:layout_width="409dp"
         android:layout_height="807dp"
         android:layout_marginStart="1dp"

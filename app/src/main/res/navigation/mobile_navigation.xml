@@ -41,12 +41,12 @@
         tools:layout="@layout/fragment_profile"/>
     <fragment
         android:id="@+id/monitoramento_respondido"
-        android:name="com.example.mobilesinara.monitoramento_respondido"
+        android:name="com.example.mobilesinara.ui.monitoramentoRespondido.monitoramento_respondido"
         android:label="fragment_monitoramento_respondido"
         tools:layout="@layout/fragment_monitoramento_respondido" />
     <fragment
         android:id="@+id/monitoramentoAguardando"
-        android:name="com.example.mobilesinara.monitoramentoAguardando"
+        android:name="com.example.mobilesinara.ui.monitoramentoAguardando.monitoramentoAguardando"
         android:label="fragment_monitoramento_aguardando"
         tools:layout="@layout/fragment_monitoramento_aguardando" >
         <action
@@ -64,7 +64,7 @@
     </fragment>
     <fragment
         android:id="@+id/formularioRespondido"
-        android:name="com.example.mobilesinara.FormularioRespondido"
+        android:name="com.example.mobilesinara.ui.formularioRespondido.FormularioRespondido"
         android:label="fragment_formulario_respondido"
         tools:layout="@layout/fragment_formulario_respondido" />
     <fragment

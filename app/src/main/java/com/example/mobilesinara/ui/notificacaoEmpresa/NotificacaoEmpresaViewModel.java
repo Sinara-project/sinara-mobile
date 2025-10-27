@@ -1,15 +1,15 @@
-package com.example.mobilesinara;
+package com.example.mobilesinara.ui.notificacaoEmpresa;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class FormulariosEmpresaViewModel extends ViewModel {
+public class NotificacaoEmpresaViewModel extends ViewModel {
     private final MutableLiveData<String> mText;
 
-    public FormulariosEmpresaViewModel() {
+    public NotificacaoEmpresaViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is formulariosEmpresa fragment");
+        mText.setValue("This is NotificacaoEmpresa fragment");
     }
 
     public LiveData<String> getText() {

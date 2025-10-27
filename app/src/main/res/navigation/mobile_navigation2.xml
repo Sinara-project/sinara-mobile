@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home_empresa"
-        android:name="com.example.mobilesinara.telaHomeEmpresa"
+        android:name="com.example.mobilesinara.ui.telaHomeEmpresa.telaHomeEmpresa"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_tela_home_empresa" />
 
     <fragment
         android:id="@+id/navigation_formulario_empresa"
-        android:name="com.example.mobilesinara.formulariosEmpresa"
+        android:name="com.example.mobilesinara.ui.formulariosEmpresa.formulariosEmpresa"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_formularios_empresa" />
 
     <fragment
         android:id="@+id/navigation_notifications_empresa"
-        android:name="com.example.mobilesinara.notificacaoEmpresa"
+        android:name="com.example.mobilesinara.ui.notificacaoEmpresa.notificacaoEmpresa"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notificacao_empresa" />
     <fragment

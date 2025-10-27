@@ -1,4 +1,4 @@
-package com.example.mobilesinara;
+package com.example.mobilesinara.ui.formulariosEmpresa;
 
 import android.graphics.Color;
 import android.os.Bundle;
@@ -18,10 +18,9 @@ import androidx.lifecycle.ViewModelProvider;
 import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
 import com.example.mobilesinara.Models.Campos;
 import com.example.mobilesinara.Models.FormularioPersonalizado;
+import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentFormulariosEmpresaBinding;
 import com.google.android.material.textfield.TextInputEditText;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
