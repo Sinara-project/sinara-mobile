@@ -1,8 +1,7 @@
 package com.example.mobilesinara.Models;
 
-import java.lang.annotation.Repeatable;
-
 public class Respostas {
+    private String id;
     private String campoLabel;
     private String campoTipo;
     private double valor;

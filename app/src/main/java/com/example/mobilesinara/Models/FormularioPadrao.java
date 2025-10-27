@@ -3,6 +3,7 @@ package com.example.mobilesinara.Models;
 import java.util.Date;
 
 public class FormularioPadrao {
+    private String id;
     private String idEmpresa;
     private Date dataPreenchimento;
     private double cloroResidual;

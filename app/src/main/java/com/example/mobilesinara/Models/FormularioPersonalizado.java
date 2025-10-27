@@ -3,13 +3,14 @@ package com.example.mobilesinara.Models;
 import java.util.List;
 
 public class FormularioPersonalizado {
+    private String id;
     private String idCriador;
     private String titulo;
     private String descricao;
-    private List<Campos> campos;
+    private List<campos> campos;
     private List<String> idPermissao;
     public FormularioPersonalizado(){}
-    public FormularioPersonalizado(String idCriador, String titulo, String descricao, List<Campos> campos, List<String> idPermissao){
+    public FormularioPersonalizado(String idCriador, String titulo, String descricao, List<campos> campos, List<String> idPermissao){
         this.idCriador = idCriador;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -29,7 +30,7 @@ public class FormularioPersonalizado {
         return descricao;
     }
 
-    public List<Campos> getCampos() {
+    public List<campos> getCampos() {
         return campos;
     }
 
@@ -49,7 +50,7 @@ public class FormularioPersonalizado {
         this.descricao = descricao;
     }
 
-    public void setCampos(List<Campos> campos) {
+    public void setCampos(List<campos> campos) {
         this.campos = campos;
     }
 

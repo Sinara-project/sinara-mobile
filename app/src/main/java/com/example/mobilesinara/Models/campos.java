@@ -1,18 +1,25 @@
 package com.example.mobilesinara.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
-public class Campos {
+public class campos {
+    private String id;
+    @SerializedName("label")
     private String label;
+    @SerializedName("tipo")
     private String tipo;
-    private Boolean Obrigatorio;
+    @SerializedName("obrigatorio")
+    private Boolean obrigatorio;
+    @SerializedName("opcoes")
     private List<String> opcoes;
 
-    public Campos(){}
-    public Campos(String label, String tipo, Boolean obrigatorio, List<String> opcoes){
+    public campos(){}
+    public campos(String label, String tipo, Boolean obrigatorio, List<String> opcoes){
         this.label = label;
         this.tipo = tipo;
-        this.Obrigatorio = obrigatorio;
+        this.obrigatorio = obrigatorio;
         this.opcoes = opcoes;
     }
 
@@ -25,7 +32,7 @@ public class Campos {
     }
 
     public Boolean getObrigatorio() {
-        return Obrigatorio;
+        return obrigatorio;
     }
 
     public List<String> getOpcoes() {
@@ -41,7 +48,7 @@ public class Campos {
     }
 
     public void setObrigatorio(Boolean obrigatorio) {
-        Obrigatorio = obrigatorio;
+        this.obrigatorio = obrigatorio;
     }
 
     public void setOpcoes(List<String> opcoes) {

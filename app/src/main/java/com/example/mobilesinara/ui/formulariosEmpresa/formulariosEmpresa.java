@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
-import com.example.mobilesinara.Models.Campos;
+import com.example.mobilesinara.Models.campos;
 import com.example.mobilesinara.Models.FormularioPersonalizado;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentFormulariosEmpresaBinding;
@@ -53,7 +53,7 @@ public class formulariosEmpresa extends Fragment {
         Button btnAdicionarCampo = root.findViewById(R.id.button13);
         LinearLayout cardContainer = root.findViewById(R.id.cardContainer);
         Button btCadastrar = root.findViewById(R.id.bt_cadastrar);
-        List<Campos> campos = new ArrayList<>();
+        List<campos> campos = new ArrayList<>();
         List<String> permissoes = new ArrayList<>();
 
         btnMostrarOpcoes.setOnClickListener(v -> {
@@ -85,7 +85,7 @@ public class formulariosEmpresa extends Fragment {
                 .build();
     }
 
-    private void criarFormulario(String titulo, String descricao, List<Campos> campos, List<String> permissoes){
+    private void criarFormulario(String titulo, String descricao, List<campos> campos, List<String> permissoes){
         IFormularioPersonalizado iFormularioPersonalizado = getRetrofit().create(IFormularioPersonalizado.class);
         Call<FormularioPersonalizado> call = iFormularioPersonalizado.InsertFormularioPersonalizado("aqui vai ser o id do criador, mas ele vem do sql ent n dá para por ainda", titulo, descricao, campos, permissoes);
 
@@ -107,7 +107,7 @@ public class formulariosEmpresa extends Fragment {
         });
     }
 
-    private void adicionarNovoCard(LayoutInflater inflater, LinearLayout container, List<Campos> campos) {
+    private void adicionarNovoCard(LayoutInflater inflater, LinearLayout container, List<campos> campos) {
         View novoCard = inflater.inflate(R.layout.item_card_formulario, container, false);
 
         Button btnEscrita = novoCard.findViewById(R.id.button17);
@@ -165,7 +165,7 @@ public class formulariosEmpresa extends Fragment {
             opcoesContainer.addView(novaOpcao);
             opcoes.add(novaOpcao.findViewById(R.id.editOpcao).toString());
         });
-        Campos campo = new Campos(label.toString(), tipo[0], obrigatorio[0], opcoes);
+        campos campo = new campos(label.toString(), tipo[0], obrigatorio[0], opcoes);
         campos.add(campo);
         container.addView(novoCard);
     }

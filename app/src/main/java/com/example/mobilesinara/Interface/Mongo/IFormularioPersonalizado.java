@@ -1,12 +1,11 @@
 package com.example.mobilesinara.Interface.Mongo;
 
-import com.example.mobilesinara.Models.Campos;
+import com.example.mobilesinara.Models.campos;
 import com.example.mobilesinara.Models.FormularioPersonalizado;
 
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -25,7 +24,7 @@ public interface IFormularioPersonalizado {
             @Field("idCriador") String idCriador,
             @Field("titulo") String titulo,
             @Field("descricao") String descricao,
-            @Field("campos") List<Campos> campos,
+            @Field("campos") List<campos> campos,
             @Field("permissoes") List<String> permissoes
     );
 }
