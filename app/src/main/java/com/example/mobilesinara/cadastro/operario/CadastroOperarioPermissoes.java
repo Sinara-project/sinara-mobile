@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -13,12 +12,15 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
+import com.example.mobilesinara.Interface.Mongo.IPermissoes;
 import com.example.mobilesinara.Models.Permissao;
 import com.example.mobilesinara.R;
-
-import java.util.ArrayList;
 import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CadastroOperarioPermissoes extends AppCompatActivity {
 
@@ -36,16 +38,28 @@ public class CadastroOperarioPermissoes extends AppCompatActivity {
         Button btSalvar = findViewById(R.id.bt_salvar);
 
         RecyclerView recyclerView = findViewById(R.id.RecyclerView);
-        //TODO: trocar a lista pelo banco de dados com as permissões corretas do banco
-        List<Permissao> lista = new ArrayList<>();
-//        lista.add(new Permissao("Permissão exemplo1", false));
-//        lista.add(new Permissao("Permissão exemplo2", false));
-//        lista.add(new Permissao("Permissão exemplo3", false));
-//        lista.add(new Permissao("Permissão exemplo4", false));
-        PermissaoAdapter permissaoAdapter = new PermissaoAdapter(lista);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(permissaoAdapter);
+        IPermissoes iPermissoes = getRetrofit().create(IPermissoes.class);
+        Call<List<Permissao>> call = iPermissoes.getPermissaoPorEmpresa("id da empresa que ainda não tem por causa do sql");
+        call.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<List<Permissao>> call, Response<List<Permissao>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<Permissao> lista = response.body();
+                    PermissaoAdapter permissaoAdapter = new PermissaoAdapter(lista);
+                    try {
+                        recyclerView.setLayoutManager(new LinearLayoutManager(CadastroOperario.class.newInstance()));
+                    } catch (IllegalAccessException | InstantiationException e) {
+                        throw new RuntimeException(e);
+                    }
+                    recyclerView.setAdapter(permissaoAdapter);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<List<Permissao>> call, Throwable t) {
+
+            }
+        });
         btVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,4 +75,11 @@ public class CadastroOperarioPermissoes extends AppCompatActivity {
             }
         });
     }
+    private Retrofit getRetrofit() {
+        return new Retrofit.Builder()
+                .baseUrl("https://ms-sinara-mongo.onrender.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
 }

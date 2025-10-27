@@ -41,7 +41,7 @@ public class notificacaoEmpresa extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.recyclerNotification);
         INotificacao iNotificacao = getRetrofit().create(INotificacao.class);
         Call<List<Notificacao>> call = iNotificacao.getNotificacaoPorUsuario("depois vai precisar pegar o id do user no sql");
-        call.enqueue(new Callback<List<Notificacao>>() {
+        call.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<List<Notificacao>> call, Response<List<Notificacao>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -49,8 +49,7 @@ public class notificacaoEmpresa extends Fragment {
                     NotificationAdapter notificationAdapter = new NotificationAdapter(lista);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                     recyclerView.setAdapter(notificationAdapter);
-                }
-                else{
+                } else {
                     Toast.makeText(getContext(), "Não deu certo", Toast.LENGTH_SHORT).show();
                 }
             }

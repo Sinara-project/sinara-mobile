@@ -14,4 +14,7 @@ public interface IPermissoes {
     Call<Permissao> getPermissaoPorId(@Path("id") String id);
     @POST("https://ms-sinara-mongo.onrender.com/permissoes/inserir")
     boolean insertPermissao(String idEmpresa, String nomePermissao, List<String> idFuncionario);
+
+    @GET("https://ms-sinara-mongo.onrender.com//permissoes/buscar-por-empresa/{idEmpresa}")
+    Call<List<Permissao>> getPermissaoPorEmpresa(@Path("idEmpresa") String id);
 }
