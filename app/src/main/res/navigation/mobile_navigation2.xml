@@ -24,7 +24,7 @@
         tools:layout="@layout/fragment_notificacao_empresa" />
     <fragment
         android:id="@+id/profileEmpresa"
-        android:name="com.example.mobilesinara.ProfileEmpresa"
+        android:name="com.example.mobilesinara.ui.ProfileEmpresa.ProfileEmpresa"
         android:label="fragment_profile_empresa"
         tools:layout="@layout/fragment_profile_empresa" />
 </navigation>

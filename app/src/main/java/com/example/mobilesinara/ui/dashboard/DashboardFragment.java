@@ -13,12 +13,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mobilesinara.FormularioAcao;
+import com.example.mobilesinara.Interface.Mongo.IFormularioPadrao;
+import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
+import com.example.mobilesinara.Models.FormularioPadrao;
+import com.example.mobilesinara.Models.FormularioPersonalizado;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentDashboardBinding;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DashboardFragment extends Fragment {
 
@@ -26,28 +35,62 @@ public class DashboardFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         DashboardViewModel dashboardViewModel =
                 new ViewModelProvider(this).get(DashboardViewModel.class);
 
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-        //TODO: adicionar um método de pesquiisa, conectar tudo na api
+        //TODO: adicionar um método de pesquiisa
         EditText txt_pesquisa = root.findViewById(R.id.text_pesquisa);
         RecyclerView recyclerView = root.findViewById(R.id.recyclerForms);
         List<FormularioAcao> lista = new ArrayList<>();
-        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Aguardando resposta"));
-        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Respondido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Devolvido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Aguardando resposta"));
-        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Respondido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Devolvido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Aguardando resposta"));
-        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Respondido"));
-        lista.add(new FormularioAcao("Titulo de exemplo", new Date(), "Devolvido"));
-        FormsAdapter formsAdapter = new FormsAdapter(lista);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(formsAdapter);
+        IFormularioPadrao iFormularioPadrao = getRetrofit().create(IFormularioPadrao.class);
+        Call<List<FormularioPadrao>> callPadrao = iFormularioPadrao.getFormularioPadraoPorEmpresa("id pendente por causa da falta do sql");
+
+        IFormularioPersonalizado iFormularioPersonalizado = getRetrofit().create(IFormularioPersonalizado.class);
+        Call<List<FormularioPersonalizado>> callPersonalizado = iFormularioPersonalizado.getFormularioPersonalizadoPorEmpresa("id pendente por causa da falta do sql");
+
+        //TODO: tanto o padrão quando o personalizado vão precisar estar na mesma recycler view
+        callPadrao.enqueue(new Callback<List<FormularioPadrao>>() {
+            @Override
+            public void onResponse(Call<List<FormularioPadrao>> call, Response<List<FormularioPadrao>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<FormularioPadrao> lista = response.body();
+                    FormsPadraoAdapter formsPadraoAdapter = new FormsPadraoAdapter(lista);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setAdapter(formsPadraoAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FormularioPadrao>> call, Throwable t) {
+
+            }
+        });
+        callPersonalizado.enqueue(new Callback<List<FormularioPersonalizado>>() {
+            @Override
+            public void onResponse(Call<List<FormularioPersonalizado>> call, Response<List<FormularioPersonalizado>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    List<FormularioPersonalizado> lista = response.body();
+                    FormsPersonalizadoAdapter formsPersonalizadoAdapter = new FormsPersonalizadoAdapter(lista);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setAdapter(formsPersonalizadoAdapter);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<FormularioPersonalizado>> call, Throwable t) {
+
+            }
+        });
         return root;
+    }
+    private Retrofit getRetrofit() {
+        return new Retrofit.Builder()
+                .baseUrl("https://ms-sinara-mongo.onrender.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
     }
 
     @Override
