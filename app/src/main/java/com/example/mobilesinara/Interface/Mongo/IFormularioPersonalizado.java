@@ -16,12 +16,12 @@ public interface IFormularioPersonalizado {
     @GET("https://ms-sinara-mongo.onrender.com/formulario-personalizado/{id}")
     Call<FormularioPersonalizado> getFormularioPersonalizado(@Path("id") String id);
     @GET("https://ms-sinara-mongo.onrender.com/formulario-personalizado/buscar-por-empresa/{idEmpresa}")
-    Call<List<FormularioPersonalizado>> getFormularioPersonalizadoPorEmpresa(@Path("idEmpresa") String idEmpresa);
+    Call<List<FormularioPersonalizado>> getFormularioPersonalizadoPorEmpresa(@Path("idEmpresa") int idEmpresa);
 
     @FormUrlEncoded
     @POST("formulario-personalizado/inserir")
     Call<FormularioPersonalizado> InsertFormularioPersonalizado(
-            @Field("idCriador") String idCriador,
+            @Field("idCriador") int idCriador,
             @Field("titulo") String titulo,
             @Field("descricao") String descricao,
             @Field("campos") List<campos> campos,

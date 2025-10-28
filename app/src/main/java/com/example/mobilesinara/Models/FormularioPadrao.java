@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class FormularioPadrao {
     private String id;
-    private String idEmpresa;
+    private int idEmpresa;
     private Date dataPreenchimento;
     private double cloroResidual;
     private double corAguaBruta;
@@ -16,9 +16,9 @@ public class FormularioPadrao {
     private double turbinezAguaBruta;
     private double turbidezAguaTratada;
     private String qualidade;
-    private String idFuncionario;
+    private int idFuncionario;
     public FormularioPadrao(){}
-    public FormularioPadrao(String idEmpresa, Date dataPreenchimento, double cloroResidual, double corAguaBruta, double corAguaTratada, double fluoreto, double nitrato, double phAguaBruta, double phAguaTratada, double turbinezAguaBruta, double turbidezAguaTratada, String qualidade, String idFuncionario){
+    public FormularioPadrao(int idEmpresa, Date dataPreenchimento, double cloroResidual, double corAguaBruta, double corAguaTratada, double fluoreto, double nitrato, double phAguaBruta, double phAguaTratada, double turbinezAguaBruta, double turbidezAguaTratada, String qualidade, int idFuncionario){
         this.idEmpresa = idEmpresa;
         this.dataPreenchimento = dataPreenchimento;
         this.cloroResidual = cloroResidual;
@@ -74,11 +74,11 @@ public class FormularioPadrao {
         return turbinezAguaBruta;
     }
 
-    public String getIdEmpresa() {
+    public int getIdEmpresa() {
         return idEmpresa;
     }
 
-    public String getIdFuncionario() {
+    public int getIdFuncionario() {
         return idFuncionario;
     }
 
@@ -106,11 +106,11 @@ public class FormularioPadrao {
         this.fluoreto = fluoreto;
     }
 
-    public void setIdEmpresa(String idEmpresa) {
+    public void setIdEmpresa(int idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
 
-    public void setIdFuncionario(String idFuncionario) {
+    public void setIdFuncionario(int idFuncionario) {
         this.idFuncionario = idFuncionario;
     }
 

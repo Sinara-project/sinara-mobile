@@ -40,7 +40,7 @@ public class notificacaoEmpresa extends Fragment {
         View root = binding.getRoot();
         RecyclerView recyclerView = root.findViewById(R.id.recyclerNotification);
         INotificacao iNotificacao = getRetrofit().create(INotificacao.class);
-        Call<List<Notificacao>> call = iNotificacao.getNotificacaoPorUsuario("depois vai precisar pegar o id do user no sql");
+        Call<List<Notificacao>> call = iNotificacao.getNotificacaoPorUsuario(3);
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<List<Notificacao>> call, Response<List<Notificacao>> response) {

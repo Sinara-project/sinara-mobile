@@ -15,7 +15,7 @@ public interface IFormularioPadrao {
     @GET("https://ms-sinara-mongo.onrender.com/formulario-padrao/{id}")
     Call<FormularioPadrao> getFormularioPadrao(@Path("id") String id);
     @GET("https://ms-sinara-mongo.onrender.com/formulario-padrao/buscar-por-empresa/{idEmpresa}")
-    Call<List<FormularioPadrao>> getFormularioPadraoPorEmpresa(@Path("idEmpresa") String idEmpresa);
+    Call<List<FormularioPadrao>> getFormularioPadraoPorEmpresa(@Path("idEmpresa") int idEmpresa);
     @POST("https://ms-sinara-mongo.onrender.com/formulario-padrao/inserir")
-    boolean insertFormularioPadrao(@Body String idEmpresa, Date dataPreenchimento, double cloroResidual, double corAguaBruta, double corAguaTratada, double fluoreto, double nitrato, double phAguaBruta, double phAguaTratada, double turbinezAguaBruta, double turbidezAguaTratada, String qualidade, String idFuncionario);
+    boolean insertFormularioPadrao(@Body String idEmpresa, Date dataPreenchimento, double cloroResidual, double corAguaBruta, double corAguaTratada, double fluoreto, double nitrato, double phAguaBruta, double phAguaTratada, double turbinezAguaBruta, double turbidezAguaTratada, String qualidade, int idFuncionario);
 }

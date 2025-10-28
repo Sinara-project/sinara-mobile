@@ -39,7 +39,7 @@ public class CadastroOperarioPermissoes extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.RecyclerView);
         IPermissoes iPermissoes = getRetrofit().create(IPermissoes.class);
-        Call<List<Permissao>> call = iPermissoes.getPermissaoPorEmpresa("id da empresa que ainda não tem por causa do sql");
+        Call<List<Permissao>> call = iPermissoes.getPermissaoPorEmpresa(3);
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<List<Permissao>> call, Response<List<Permissao>> response) {

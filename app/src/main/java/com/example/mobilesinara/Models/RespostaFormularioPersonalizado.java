@@ -8,10 +8,10 @@ public class RespostaFormularioPersonalizado {
     private List<Respostas> respostas;
     private Date data;
     private String idForm;
-    private String idOperario;
+    private int idOperario;
 
     public RespostaFormularioPersonalizado(){}
-    public RespostaFormularioPersonalizado(String id, List<Respostas> respostas, Date data, String idForm, String idOperario){
+    public RespostaFormularioPersonalizado(String id, List<Respostas> respostas, Date data, String idForm, int idOperario){
         this.id = id;
         this.respostas = respostas;
         this.data = data;
@@ -35,7 +35,7 @@ public class RespostaFormularioPersonalizado {
         return idForm;
     }
 
-    public String getIdOperario() {
+    public int getIdOperario() {
         return idOperario;
     }
 
@@ -55,7 +55,7 @@ public class RespostaFormularioPersonalizado {
         this.idForm = idForm;
     }
 
-    public void setIdOperario(String idOperario) {
+    public void setIdOperario(int idOperario) {
         this.idOperario = idOperario;
     }
 }

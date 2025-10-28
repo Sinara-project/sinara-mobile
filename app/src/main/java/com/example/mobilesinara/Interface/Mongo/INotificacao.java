@@ -13,7 +13,7 @@ import retrofit2.http.Path;
 
 public interface INotificacao {
     @GET("https://ms-sinara-mongo.onrender.com/notificacoes/buscar-por-usuario/{id}")
-    Call<List<Notificacao>> getNotificacaoPorUsuario(@Path("id") String id);
+    Call<List<Notificacao>> getNotificacaoPorUsuario(@Path("id") int id);
     @GET("https://ms-sinara-mongo.onrender.com/notificacoes/{id}")
     Call<Notificacao> getNotificacaoPorId(@Path("id") String id);
     @POST("https://ms-sinara-mongo.onrender.com/notificacoes/inserir")

@@ -4,13 +4,13 @@ import java.util.List;
 
 public class FormularioPersonalizado {
     private String id;
-    private String idCriador;
+    private int idCriador;
     private String titulo;
     private String descricao;
     private List<campos> campos;
     private List<String> idPermissao;
     public FormularioPersonalizado(){}
-    public FormularioPersonalizado(String idCriador, String titulo, String descricao, List<campos> campos, List<String> idPermissao){
+    public FormularioPersonalizado(int idCriador, String titulo, String descricao, List<campos> campos, List<String> idPermissao){
         this.idCriador = idCriador;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -18,7 +18,7 @@ public class FormularioPersonalizado {
         this.idPermissao = idPermissao;
     }
 
-    public String getIdCriador() {
+    public int getIdCriador() {
         return idCriador;
     }
 
@@ -38,7 +38,7 @@ public class FormularioPersonalizado {
         return idPermissao;
     }
 
-    public void setIdCriador(String idCriador) {
+    public void setIdCriador(int idCriador) {
         this.idCriador = idCriador;
     }
 

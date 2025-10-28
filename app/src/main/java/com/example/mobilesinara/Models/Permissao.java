@@ -4,11 +4,11 @@ import java.util.List;
 
 public class Permissao {
     private String id;
-    private String idEmpresa;
+    private int idEmpresa;
     private String nomePermissao;
     private List<String> idFuncionario;
     public Permissao(){}
-    public Permissao(String id, String idEmpresa, String nomePermissao, List<String> idFuncionario){
+    public Permissao(String id, int idEmpresa, String nomePermissao, List<String> idFuncionario){
         this.id = id;
         this.idEmpresa = idEmpresa;
         this.nomePermissao = nomePermissao;
@@ -19,11 +19,11 @@ public class Permissao {
         this.idFuncionario = idFuncionario;
     }
 
-    public void setIdEmpresa(String idEmpresa) {
+    public void setIdEmpresa(int idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
 
-    public String getIdEmpresa() {
+    public int getIdEmpresa() {
         return idEmpresa;
     }
 

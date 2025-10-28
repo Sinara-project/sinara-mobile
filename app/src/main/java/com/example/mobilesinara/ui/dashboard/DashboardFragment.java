@@ -46,10 +46,10 @@ public class DashboardFragment extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.recyclerForms);
         List<FormularioAcao> lista = new ArrayList<>();
         IFormularioPadrao iFormularioPadrao = getRetrofit().create(IFormularioPadrao.class);
-        Call<List<FormularioPadrao>> callPadrao = iFormularioPadrao.getFormularioPadraoPorEmpresa("id pendente por causa da falta do sql");
+        Call<List<FormularioPadrao>> callPadrao = iFormularioPadrao.getFormularioPadraoPorEmpresa(3);
 
         IFormularioPersonalizado iFormularioPersonalizado = getRetrofit().create(IFormularioPersonalizado.class);
-        Call<List<FormularioPersonalizado>> callPersonalizado = iFormularioPersonalizado.getFormularioPersonalizadoPorEmpresa("id pendente por causa da falta do sql");
+        Call<List<FormularioPersonalizado>> callPersonalizado = iFormularioPersonalizado.getFormularioPersonalizadoPorEmpresa(3);
 
         //TODO: tanto o padrão quando o personalizado vão precisar estar na mesma recycler view
         callPadrao.enqueue(new Callback<List<FormularioPadrao>>() {
