@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
 import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.R;
@@ -67,6 +68,19 @@ public class telaHomeEmpresa extends Fragment {
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+        IFormularioPersonalizado iFormularioPersonalizado = retrofit.create(IFormularioPersonalizado.class);
+        Call<Integer> callQtdFormularios = iFormularioPersonalizado.getQtdFormularioPersonalizadoPorEmpresa(1);
+        callQtdFormularios.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                relatoriosRegistrados.setText(String.valueOf(response.body()));
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
         IEmpresa iEmpresa = retrofit.create(IEmpresa.class);
         Call<Empresa> callGetEmpresa = iEmpresa.getEmpresaPorId(4);
         callGetEmpresa.enqueue(new Callback<Empresa>() {

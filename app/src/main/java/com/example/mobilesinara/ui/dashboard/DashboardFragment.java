@@ -1,10 +1,13 @@
 package com.example.mobilesinara.ui.dashboard;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -12,11 +15,16 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.mobilesinara.FormularioAcao;
 import com.example.mobilesinara.Interface.Mongo.IFormularioPadrao;
 import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
+import com.example.mobilesinara.Interface.SQL.IEmpresa;
+import com.example.mobilesinara.Interface.SQL.IOperario;
+import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.FormularioPadrao;
 import com.example.mobilesinara.Models.FormularioPersonalizado;
+import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentDashboardBinding;
 
@@ -47,6 +55,54 @@ public class DashboardFragment extends Fragment {
         List<FormularioAcao> lista = new ArrayList<>();
         IFormularioPadrao iFormularioPadrao = getRetrofit().create(IFormularioPadrao.class);
         Call<List<FormularioPadrao>> callPadrao = iFormularioPadrao.getFormularioPadraoPorEmpresa(3);
+        ImageView imgUser = root.findViewById(R.id.imgUser);
+        ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
+
+        IOperario iOperario = getRetrofit().create(IOperario.class);
+        Call<Operario> callOperario = iOperario.getOperarioPorId(4);
+
+        callOperario.enqueue(new Callback<Operario>() {
+            @Override
+            public void onResponse(Call<Operario> call, Response<Operario> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    Glide.with(getContext())
+                            .load(response.body().getImageUrl())
+                            .into(imgUser);
+                    int idEmpresa = response.body().getIdEmpresa();
+                    IEmpresa iEmpresa = getRetrofit().create(IEmpresa.class);
+                    Call<Empresa> callGetEmpresa = iEmpresa.getEmpresaPorId(idEmpresa);
+                    callGetEmpresa.enqueue(new Callback<Empresa>() {
+                        @Override
+                        public void onResponse(Call<Empresa> call, Response<Empresa> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                Glide.with(getContext())
+                                        .load(response.body().getImageUrl())
+                                        .into(imgEmpresa);
+                            }
+                            else{
+                                Log.e("API", "Erro de resposta: " + response.code());
+                                Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Empresa> call, Throwable t) {
+                            Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
+                            Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else{
+                    Log.e("API", "Erro de resposta: " + response.code());
+                    Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Operario> call, Throwable t) {
+
+            }
+        });
 
         IFormularioPersonalizado iFormularioPersonalizado = getRetrofit().create(IFormularioPersonalizado.class);
         Call<List<FormularioPersonalizado>> callPersonalizado = iFormularioPersonalizado.getFormularioPersonalizadoPorEmpresa(3);
