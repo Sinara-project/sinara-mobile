@@ -40,15 +40,15 @@ public class notificacaoEmpresa extends Fragment {
         View root = binding.getRoot();
         RecyclerView recyclerView = root.findViewById(R.id.recyclerNotification);
         INotificacao iNotificacao = getRetrofit().create(INotificacao.class);
-        Call<List<Notificacao>> call = iNotificacao.getNotificacaoPorUsuario(3);
+        Call<List<Notificacao>> call = iNotificacao.getNotificacaoPorUsuario(456);
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<List<Notificacao>> call, Response<List<Notificacao>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     List<Notificacao> lista = response.body();
-                    NotificationAdapter notificationAdapter = new NotificationAdapter(lista);
+                    NotificacaoAdapter notificacaoAdapter = new NotificacaoAdapter(lista);
                     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerView.setAdapter(notificationAdapter);
+                    recyclerView.setAdapter(notificacaoAdapter);
                 } else {
                     Toast.makeText(getContext(), "Não deu certo", Toast.LENGTH_SHORT).show();
                 }

@@ -44,7 +44,7 @@ public class FormsPadraoAdapter extends RecyclerView.Adapter<FormsPadraoAdapter.
         holder.dataEHora.setText(dataFormatada);
         //holder.status.setText(formularioAcao.getStatus());
         if(holder.status.getText().toString().equals("Respondido")){
-            holder.bt_status.setBackgroundColor(Color.parseColor("#455A64"));
+            holder.bt_status.setBackgroundColor(Color.parseColor("#409346"));
             holder.bt_extra.setVisibility(INVISIBLE);
             holder.bt_principal.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -54,22 +54,7 @@ public class FormsPadraoAdapter extends RecyclerView.Adapter<FormsPadraoAdapter.
                 }
             });
         }
-        else if (holder.status.getText().toString().equals("Devolvido")) {
-            holder.bt_status.setBackgroundColor(Color.parseColor("#409346"));
-            holder.bt_principal.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Navigation.findNavController(v).navigate(R.id.action_navigation_dashboard_to_monitoramento_respondido);
-                }
-            });
-            holder.bt_extra.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Navigation.findNavController(v).navigate(R.id.monitoramentoAguardando);
-                }
-            });
-        }
-        else if (holder.status.getText().toString().equals("Aguardando resposta")) {
+        else{
             holder.bt_principal.setText("Preencher");
             holder.bt_extra.setVisibility(INVISIBLE);
             holder.bt_principal.setOnClickListener(new View.OnClickListener() {

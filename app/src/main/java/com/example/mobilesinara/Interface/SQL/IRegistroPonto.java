@@ -17,8 +17,8 @@ public interface IRegistroPonto {
     Call<RegistroPontoModel> getRegistroPontoPorId(@Path("id") int id);
     @GET("/user/registroPonto/horarioEntradaSaida/{id}")
     Call<RegistroPontoModel> getHorarioEntradaSaida(@Path("id") int id);
-    @GET("/user/registroPonto/horasTrabalhadas/{id}")
-    Call<RegistroPontoModel> getHorasTrabalhadas(@Path("id") int id);
+    @GET("registroPonto/horasTrabalhadas/{id}")
+    Call<String> getHorasTrabalhadas(@Path("id") int id);
     @GET("/user/registroPonto/listarStatusOperario/{idOperario}")
     Call<Boolean> getStatusOperario(@Path("idOperario") int idOperario);
     @GET("/user/registroPonto/quantidadeRegistroPonto/{idOperario}")

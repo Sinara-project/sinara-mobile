@@ -2,7 +2,6 @@ package com.example.mobilesinara.Models;
 
 public class Operario {
     private int idEmpresa;
-    private String url;
     private String imageUrl;
     private String cpf;
     private String nome;
@@ -14,9 +13,8 @@ public class Operario {
     private String senha;
     private int horasPrevistas;
     public Operario(){}
-    public Operario(int idEmpresa, String url, String imageUrl, String cpf, String nome, String email, String cargo, String setor, boolean ferias, boolean ativo, String senha, int horasPrevistas){
+    public Operario(int idEmpresa, String imageUrl, String cpf, String nome, String email, String cargo, String setor, boolean ferias, boolean ativo, String senha, int horasPrevistas){
         this.idEmpresa = idEmpresa;
-        this.url = url;
         this.imageUrl = imageUrl;
          this.cpf = cpf;
          this.nome = nome;
@@ -73,10 +71,6 @@ public class Operario {
         return setor;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
@@ -119,9 +113,5 @@ public class Operario {
 
     public void setSetor(String setor) {
         this.setor = setor;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 }

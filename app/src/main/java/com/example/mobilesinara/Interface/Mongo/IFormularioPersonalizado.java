@@ -19,7 +19,7 @@ public interface IFormularioPersonalizado {
     Call<List<FormularioPersonalizado>> getFormularioPersonalizadoPorEmpresa(@Path("idEmpresa") int idEmpresa);
 
     @FormUrlEncoded
-    @POST("formulario-personalizado/inserir")
+    @POST("https://ms-sinara-mongo.onrender.com/formulario-personalizado/inserir")
     Call<FormularioPersonalizado> InsertFormularioPersonalizado(
             @Field("idCriador") int idCriador,
             @Field("titulo") String titulo,

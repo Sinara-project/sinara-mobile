@@ -5,17 +5,19 @@ public class Empresa {
     private String nome;
     private String senha;
     private String senhaAreaRestrita;
+    private String codigo;
     private String imageUrl;
     private String email;
     private String ramoAtuacao;
     private String telefone;
     private int idPlano;
     public Empresa(){}
-    public Empresa(String cnpj, String nome, String senha, String senhaAreaRestrita, String email, String imageUrl, String ramoAtuacao, String telefone, int idPlano){
+    public Empresa(String cnpj, String nome, String senha, String senhaAreaRestrita, String email,String codigo, String imageUrl, String ramoAtuacao, String telefone, int idPlano){
         this.cnpj = cnpj;
         this.nome = nome;
         this.senha = senha;
         this.senhaAreaRestrita = senhaAreaRestrita;
+        this.codigo = codigo;
         this.imageUrl = imageUrl;
         this.email = email;
         this.ramoAtuacao = ramoAtuacao;
@@ -93,5 +95,13 @@ public class Empresa {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 }

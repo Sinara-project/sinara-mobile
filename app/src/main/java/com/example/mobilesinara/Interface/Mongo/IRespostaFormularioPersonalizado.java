@@ -15,6 +15,8 @@ import retrofit2.http.Path;
 public interface IRespostaFormularioPersonalizado {
     @GET("https://ms-sinara-mongo.onrender.com/resposta-formulario-personalizado/{id}")
     Call<RespostaFormularioPersonalizado> getRespostaFormularioPersonalizadoById(@Path("id") String id);
+    @GET("https://ms-sinara-mongo.onrender.com/resposta-formulario-personalizado/contar-respostas-por-operario/{idOperario}")
+    Call<Integer> getQuantidadeRespostasPorUsuario(@Path("idOperario") int id);
     @POST("https://ms-sinara-mongo.onrender.com/resposta-formulario-personalizado/inserir")
     boolean insertRespostaFormularioPersonalizado(@Body List<Respostas> respostas, Date data, String idForm, String idOperario);
 }
