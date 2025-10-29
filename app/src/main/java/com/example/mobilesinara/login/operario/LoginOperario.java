@@ -53,7 +53,14 @@ public class LoginOperario extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(!editTextCpf.getText().toString().isEmpty()&&!editTextEmail.getText().toString().isEmpty()&&!editTextSenha.getText().toString().isEmpty()&&!editTextCodEmpresa.getText().toString().isEmpty()){
-                    startActivity(new Intent(LoginOperario.this, LoginOperarioCadastroRosto.class));
+                    Bundle info = new Bundle();
+                    info.putString("cpf", editTextCpf.getText().toString());
+                    info.putString("email", editTextEmail.getText().toString());
+                    info.putString("senha", editTextSenha.getText().toString());
+                    info.putString("codEmpresa", editTextCodEmpresa.getText().toString());
+                    Intent intent = new Intent(LoginOperario.this, LoginOperarioCadastroRosto.class);
+                    intent.putExtras(info);
+                    startActivity(intent);
                     overridePendingTransition(0, 0);
                 }
                 else{

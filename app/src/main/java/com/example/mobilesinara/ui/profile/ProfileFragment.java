@@ -35,9 +35,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
     private Retrofit retrofit;
-
-    //TODO: mexer na segurança da api de sql
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ProfileViewModel profileViewModel =
@@ -45,6 +42,7 @@ public class ProfileFragment extends Fragment {
 
         binding = FragmentProfileBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         Button btDeslogar = root.findViewById(R.id.button4);
         ImageView img_pfp = root.findViewById(R.id.imageView10);
         TextView nome = root.findViewById(R.id.textView10);
@@ -54,78 +52,93 @@ public class ProfileFragment extends Fragment {
         TextView pontosRegistrados = root.findViewById(R.id.pontosRegistrados);
         TextView estaDeFerias = root.findViewById(R.id.ferias);
         TextView empresa = root.findViewById(R.id.textView13);
-        TextView codEmpresa = root.findViewById(R.id.textView11);
-        btDeslogar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getContext(), TelaOpcoes.class);
-                startActivity(intent);
-            }
+        TextView codEmpresaView = root.findViewById(R.id.textView11);
+
+        Bundle args = getArguments();
+        if (args != null) {
+            String codEmpresa = args.getString("codEmpresa", "(não encontrado)");
+            Log.d("ProfileFragment", "Recebido codEmpresa: " + codEmpresa);
+            codEmpresaView.setText("Código da empresa: " + codEmpresa);
+        } else {
+            Log.e("ProfileFragment", "getArguments() veio nulo!");
+            Toast.makeText(requireContext(), "Nenhum argumento recebido", Toast.LENGTH_SHORT).show();
+        }
+
+        btDeslogar.setOnClickListener(v -> {
+            Intent intent = new Intent(requireContext(), TelaOpcoes.class);
+            startActivity(intent);
         });
-        chamarApi(horasTrabalhadas, horasPrevistas, pontosRegistrados, formsPreenchidos, estaDeFerias, img_pfp, nome, empresa, codEmpresa);
+
+        chamarApi(horasTrabalhadas, horasPrevistas, pontosRegistrados, formsPreenchidos, estaDeFerias, img_pfp, nome, empresa);
         return root;
     }
 
     private void chamarApi(TextView horasTrabalhadas, TextView horasPrevistas, TextView pontosRegistrados,
                            TextView formsPreenchidos, TextView estaDeFerias, ImageView img_pfp, TextView nome,
-                           TextView empresaTxt, TextView codEmpresa) {
+                           TextView empresaTxt) {
+
         String url = "https://ms-sinara-sql-oox0.onrender.com/api/user/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         IRegistroPonto iRegistroPonto = retrofit.create(IRegistroPonto.class);
         IOperario iOperario = retrofit.create(IOperario.class);
         IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = retrofit.create(IRespostaFormularioPersonalizado.class);
-        Call<Integer> callGetQtdRespostas = iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(4);
+
+        int idOperario = 4;
+
+        Call<Integer> callGetQtdRespostas = iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(idOperario);
         callGetQtdRespostas.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     formsPreenchidos.setText(String.valueOf(response.body()));
-                }
-                else{
+                } else {
                     Log.e("API", "Erro de resposta: " + response.code());
-                    Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
                 Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
-                Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        Call<Integer> callGetQtdPontos = iRegistroPonto.getQuantidadeRegistroPonto(4);
+
+        Call<Integer> callGetQtdPontos = iRegistroPonto.getQuantidadeRegistroPonto(idOperario);
         callGetQtdPontos.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     pontosRegistrados.setText(String.valueOf(response.body()));
-                }
-                else{
+                } else {
                     Log.e("API", "Erro de resposta: " + response.code());
-                    Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Integer> call, Throwable t) {
                 Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
-                Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-        Call<Operario> callGetOperario = iOperario.getOperarioPorId(4);
+
+        Call<Operario> callGetOperario = iOperario.getOperarioPorId(idOperario);
         callGetOperario.enqueue(new Callback<Operario>() {
             @Override
             public void onResponse(Call<Operario> call, Response<Operario> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    horasPrevistas.setText(String.valueOf(response.body().getHorasPrevistas()));
-                    Glide.with(getContext())
-                            .load(response.body().getImageUrl())
-                            .into(img_pfp);
-                    nome.setText(response.body().getNome());
-                    int idEmpresa = response.body().getIdEmpresa();
+                    Operario operario = response.body();
+
+                    horasPrevistas.setText(String.valueOf(operario.getHorasPrevistas()));
+                    if (getContext() != null) {
+                        Glide.with(getContext())
+                                .load(operario.getImageUrl())
+                                .into(img_pfp);
+                    }
+                    nome.setText(operario.getNome());
+
+                    int idEmpresa = operario.getIdEmpresa();
                     IEmpresa iEmpresa = retrofit.create(IEmpresa.class);
                     Call<Empresa> callGetEmpresa = iEmpresa.getEmpresaPorId(idEmpresa);
                     callGetEmpresa.enqueue(new Callback<Empresa>() {
@@ -133,56 +146,44 @@ public class ProfileFragment extends Fragment {
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if (response.isSuccessful() && response.body() != null) {
                                 empresaTxt.setText(response.body().getNome());
-                                codEmpresa.setText("Código da empresa: "+response.body().getCodigo());
-                            }
-                            else{
-                                Log.e("API", "Erro de resposta: " + response.code());
-                                Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
+                                Log.d("ProfileFragment", "Empresa carregada: " + response.body().getNome());
+                            } else {
+                                Log.e("API", "Erro de resposta (empresa): " + response.code());
                             }
                         }
 
                         @Override
                         public void onFailure(Call<Empresa> call, Throwable t) {
-                            Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
-                            Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("RetrofitError", "Erro empresa: " + t.getMessage(), t);
                         }
                     });
-                    if(response.body().isFerias()){
-                        estaDeFerias.setText("Está de férias");
-                    }
-                    else{
-                        estaDeFerias.setText("Não está de férias");
-                    }
-                }
-                else{
-                    Log.e("API", "Erro de resposta: " + response.code());
-                    Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
+
+                    estaDeFerias.setText(operario.isFerias() ? "Está de férias" : "Não está de férias");
+                } else {
+                    Log.e("API", "Erro de resposta (operário): " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<Operario> call, Throwable t) {
-                Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
-                Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("RetrofitError", "Erro operário: " + t.getMessage(), t);
             }
         });
-        Call<String> callHorasTrabalhadas = iRegistroPonto.getHorasTrabalhadas(4);
+
+        Call<String> callHorasTrabalhadas = iRegistroPonto.getHorasTrabalhadas(idOperario);
         callHorasTrabalhadas.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     horasTrabalhadas.setText(response.body());
-                }
-                else{
-                    Log.e("API", "Erro de resposta: " + response.code());
-                    Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("API", "Erro de resposta (horas): " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
-                Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("RetrofitError", "Erro horas: " + t.getMessage(), t);
             }
         });
     }

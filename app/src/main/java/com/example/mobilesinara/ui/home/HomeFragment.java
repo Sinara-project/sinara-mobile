@@ -16,8 +16,11 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
+import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
+import com.example.mobilesinara.Interface.Mongo.IRespostaFormularioPersonalizado;
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
 import com.example.mobilesinara.Interface.SQL.IOperario;
+import com.example.mobilesinara.Interface.SQL.IRegistroPonto;
 import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
@@ -78,6 +81,55 @@ public class HomeFragment extends Fragment {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         IOperario iOperario = retrofit.create(IOperario.class);
+        IRegistroPonto iRegistroPonto = retrofit.create(IRegistroPonto.class);
+        IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = retrofit.create(IRespostaFormularioPersonalizado.class);
+        IFormularioPersonalizado iFormularioPersonalizado = retrofit.create(IFormularioPersonalizado.class);
+        Call<Boolean> callStatus = iRegistroPonto.getStatusOperario(3);
+        callStatus.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if(response.body()){
+                        btStatus.setText("Online");
+                    }
+                    else{
+                        btStatus.setText("Offline");
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+
+            }
+        });
+        Call<Integer> callRespondidos = iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(4);
+        callRespondidos.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                  formsRespondidos.setText(String.valueOf(response.body()));
+                }
+            }
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
+        Call<Integer> callPendentes = iFormularioPersonalizado.getQtdFormulariosPendentes(1);
+        callPendentes.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    formsPendentes.setText(String.valueOf(response.body()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
         Call<Operario> callGetOperario = iOperario.getOperarioPorId(4);
         callGetOperario.enqueue(new Callback<Operario>() {
             @Override
@@ -106,14 +158,12 @@ public class HomeFragment extends Fragment {
                 }
                 else{
                     Log.e("API", "Erro de resposta: " + response.code());
-                    Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Operario> call, Throwable t) {
                 Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
-                Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }});
     }
 

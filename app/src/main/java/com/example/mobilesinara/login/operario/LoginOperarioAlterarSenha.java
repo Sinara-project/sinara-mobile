@@ -30,6 +30,7 @@ public class LoginOperarioAlterarSenha extends AppCompatActivity {
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         Button btSim = findViewById(R.id.bt_sim);
         Button btNao = findViewById(R.id.bt_nao);
+        Bundle info = getIntent().getExtras();
 
         //botão de voltar
         btVoltar.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +48,9 @@ public class LoginOperarioAlterarSenha extends AppCompatActivity {
         btSim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginOperarioAlterarSenha.this, LoginOperarioAlterarSenha2.class));
+                Intent intent = new Intent(LoginOperarioAlterarSenha.this, LoginOperarioAlterarSenha2.class);
+                intent.putExtras(info);
+                startActivity(intent);
                 overridePendingTransition(0, 0);
             }
         });
@@ -56,7 +59,9 @@ public class LoginOperarioAlterarSenha extends AppCompatActivity {
         btNao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(LoginOperarioAlterarSenha.this, HomeOperario.class));
+                Intent intent = new Intent(LoginOperarioAlterarSenha.this, HomeOperario.class);
+                intent.putExtras(info);
+                startActivity(intent);
                 overridePendingTransition(0, 0);
             }
         });

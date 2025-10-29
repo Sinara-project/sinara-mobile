@@ -20,6 +20,8 @@ public interface IFormularioPersonalizado {
     @GET("https://ms-sinara-mongo.onrender.com/formulario-personalizado/contar-por-criador/{idEmpresa}")
     Call<Integer> getQtdFormularioPersonalizadoPorEmpresa(@Path("idEmpresa") int idEmpresa);
 
+    @GET("https://ms-sinara-mongo.onrender.com/formulario-personalizado/contar-formularios-pendentes/{idPermissao}")
+    Call<Integer> getQtdFormulariosPendentes(@Path("idPermissao") int id);
     @FormUrlEncoded
     @POST("https://ms-sinara-mongo.onrender.com/formulario-personalizado/inserir")
     Call<FormularioPersonalizado> InsertFormularioPersonalizado(
