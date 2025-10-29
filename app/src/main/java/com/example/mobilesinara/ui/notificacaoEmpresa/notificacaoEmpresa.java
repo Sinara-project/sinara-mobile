@@ -8,13 +8,20 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.mobilesinara.Interface.Mongo.INotificacao;
+import com.example.mobilesinara.Interface.SQL.IEmpresa;
+import com.example.mobilesinara.Interface.SQL.IOperario;
+import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Notificacao;
+import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentNotificacaoEmpresaBinding;
 import com.example.mobilesinara.ui.notifications.NotificationAdapter;
@@ -39,6 +46,52 @@ public class notificacaoEmpresa extends Fragment {
         binding = FragmentNotificacaoEmpresaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         RecyclerView recyclerView = root.findViewById(R.id.recyclerNotification);
+        ImageView imgUser = root.findViewById(R.id.imgUser);
+        ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
+        IOperario iOperario = getRetrofit().create(IOperario.class);
+        Call<Operario> callOperario = iOperario.getOperarioPorId(4);
+        callOperario.enqueue(new Callback<Operario>() {
+            @Override
+            public void onResponse(Call<Operario> call, Response<Operario> response) {
+                if(response.isSuccessful() && response.body() != null) {
+                    Glide.with(getContext())
+                            .load(response.body().getImageUrl())
+                            .into(imgUser);
+                    int idEmpresa = response.body().getIdEmpresa();
+                    IEmpresa iEmpresa = getRetrofit().create(IEmpresa.class);
+                    Call<Empresa> callGetEmpresa = iEmpresa.getEmpresaPorId(idEmpresa);
+                    callGetEmpresa.enqueue(new Callback<Empresa>() {
+                        @Override
+                        public void onResponse(Call<Empresa> call, Response<Empresa> response) {
+                            if (response.isSuccessful() && response.body() != null) {
+                                Glide.with(getContext())
+                                        .load(response.body().getImageUrl())
+                                        .into(imgEmpresa);
+                            }
+                            else{
+                                Log.e("API", "Erro de resposta: " + response.code());
+                                Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Empresa> call, Throwable t) {
+                            Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
+                            Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+                else{
+                    Log.e("API", "Erro de resposta: " + response.code());
+                    Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Operario> call, Throwable t) {
+
+            }
+        });
         INotificacao iNotificacao = getRetrofit().create(INotificacao.class);
         Call<List<Notificacao>> call = iNotificacao.getNotificacaoPorUsuario(456);
         call.enqueue(new Callback<>() {
