@@ -24,7 +24,6 @@ import com.example.mobilesinara.Models.Notificacao;
 import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentNotificacaoEmpresaBinding;
-import com.example.mobilesinara.ui.notifications.NotificationAdapter;
 
 import java.util.List;
 
