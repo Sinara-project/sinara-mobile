@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.example.mobilesinara.DTO.HorasTrabalhadasResponse;
 import com.example.mobilesinara.Interface.Mongo.IRespostaFormularioPersonalizado;
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
 import com.example.mobilesinara.Interface.SQL.IOperario;
@@ -164,19 +165,19 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Call<String> callHorasTrabalhadas = iRegistroPonto.getHorasTrabalhadas(idOperario);
-        callHorasTrabalhadas.enqueue(new Callback<String>() {
+        Call<HorasTrabalhadasResponse> callHorasTrabalhadas = iRegistroPonto.getHorasTrabalhadas(idOperario);
+        callHorasTrabalhadas.enqueue(new Callback<HorasTrabalhadasResponse>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<HorasTrabalhadasResponse> call, Response<HorasTrabalhadasResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    horasTrabalhadas.setText(String.valueOf(response.body()));
+                    horasTrabalhadas.setText(response.body().getHorasTrabalhadas());
                 } else {
                     Log.e("API", "Erro de resposta (horas): " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<HorasTrabalhadasResponse> call, Throwable t) {
                 Log.e("RetrofitError", "Erro horas: " + t.getMessage(), t);
             }
         });

@@ -1,5 +1,6 @@
 package com.example.mobilesinara.Interface.SQL;
 
+import com.example.mobilesinara.DTO.HorasTrabalhadasResponse;
 import com.example.mobilesinara.Models.FormularioPersonalizado;
 import com.example.mobilesinara.Models.RegistroPontoModel;
 
@@ -17,8 +18,8 @@ public interface IRegistroPonto {
     Call<RegistroPontoModel> getRegistroPontoPorId(@Path("id") int id);
     @GET("/api/user/registroPonto/horarioEntradaSaida/{id}")
     Call<RegistroPontoModel> getHorarioEntradaSaida(@Path("id") int id);
-    @GET("/api/user/registroPonto/horasTrabalhadas/{id}")
-    Call<String> getHorasTrabalhadas(@Path("id") int id);
+    @GET("/api/user/registroPonto/horasTrabalhadas/{idOperario}")
+    Call<HorasTrabalhadasResponse> getHorasTrabalhadas(@Path("idOperario") int idOperario);
     @GET("/api/user/registroPonto/listarStatusOperario/{idOperario}")
     Call<Boolean> getStatusOperario(@Path("idOperario") int idOperario);
     @GET("/api/user/registroPonto/quantidadeRegistroPonto/{idOperario}")
