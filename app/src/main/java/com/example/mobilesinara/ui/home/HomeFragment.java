@@ -1,5 +1,6 @@
 package com.example.mobilesinara.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +16,10 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.example.mobilesinara.R;
+import com.example.mobilesinara.TelaOpcoes;
+import com.example.mobilesinara.cadastro.operario.CadastroOperario;
+import com.example.mobilesinara.cadastro.operario.CadastroOperarioPermissoes;
 import com.bumptech.glide.Glide;
 import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
 import com.example.mobilesinara.Interface.Mongo.IRespostaFormularioPersonalizado;
@@ -25,6 +30,7 @@ import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentHomeBinding;
+import com.example.mobilesinara.registro_ponto.RegistroPonto;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +50,17 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        Button botaoPonto = root.findViewById(R.id.button2);
+        botaoPonto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_registroPonto);
+                getActivity().overridePendingTransition(0, 0);
+            }
+        });
+
+       
         Button bt_status = root.findViewById(R.id.button7);
         TextView formsPendentes = root.findViewById(R.id.formsPendentes);
         TextView formsRespondidos = root.findViewById(R.id.formsRespondidos);

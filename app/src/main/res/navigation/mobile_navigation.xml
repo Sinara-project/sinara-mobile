@@ -9,6 +9,11 @@
     <fragment
         android:id="@+id/navigation_home_operario"
         android:name="com.example.mobilesinara.ui.home.HomeFragment"
+        android:label=""
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_navigation_home_to_registroPonto"
+            app:destination="@id/registroPonto" />
         android:label="Home_Operario"
         tools:layout="@layout/fragment_home">
         <action
@@ -40,6 +45,61 @@
         android:label="Perfil"
         tools:layout="@layout/fragment_profile"/>
     <fragment
+        android:id="@+id/registroPonto"
+        android:name="com.example.mobilesinara.registro_ponto.RegistroPonto"
+        android:label="fragment_registro_ponto"
+        tools:layout="@layout/fragment_registro_ponto" >
+        <action
+            android:id="@+id/action_registroPonto_to_registroPontoSenha"
+            app:destination="@id/registroPontoSenha" />
+        <action
+            android:id="@+id/action_registroPonto_to_navigation_home"
+            app:destination="@id/navigation_home" />
+        <action
+            android:id="@+id/action_registroPonto_to_registroPontoCamera"
+            app:destination="@id/registroPontoCamera" />
+    </fragment>
+    <fragment
+        android:id="@+id/registroPontoSenha"
+        android:name="com.example.mobilesinara.registro_ponto.RegistroPontoSenha"
+        android:label="fragment_registro_ponto_senha"
+        tools:layout="@layout/fragment_registro_ponto_senha" >
+        <action
+            android:id="@+id/action_registroPontoSenha_to_registroPonto"
+            app:destination="@id/registroPonto" />
+        <action
+            android:id="@+id/action_registroPontoSenha_to_registroPonto2"
+            app:destination="@id/registroPonto" />
+        <action
+            android:id="@+id/action_registroPontoSenha_to_registroPontoConfirmar"
+            app:destination="@id/registroPontoConfirmar" />
+    </fragment>
+    <fragment
+        android:id="@+id/registroPontoConfirmar"
+        android:name="com.example.mobilesinara.registro_ponto.RegistroPontoConfirmar"
+        android:label="fragment_registro_ponto_confirmar"
+        tools:layout="@layout/fragment_registro_ponto_confirmar" >
+        <action
+            android:id="@+id/action_registroPontoConfirmar_to_registroPontoSucesso"
+            app:destination="@id/registroPontoSucesso" />
+        <action
+            android:id="@+id/action_registroPontoConfirmar_to_registroPonto"
+            app:destination="@id/registroPonto" />
+    </fragment>
+    <fragment
+        android:id="@+id/registroPontoSucesso"
+        android:name="com.example.mobilesinara.registro_ponto.RegistroPontoSucesso"
+        android:label="fragment_registro_ponto_sucesso"
+        tools:layout="@layout/fragment_registro_ponto_sucesso" >
+        <action
+            android:id="@+id/action_registroPontoSucesso_to_registroPontoConfirmar"
+            app:destination="@id/registroPontoConfirmar" />
+    </fragment>
+    <fragment
+        android:id="@+id/registroPontoCamera"
+        android:name="com.example.mobilesinara.registro_ponto.RegistroPontoCamera"
+        android:label="fragment_registro_ponto_camera"
+        tools:layout="@layout/fragment_registro_ponto_camera" />
         android:id="@+id/monitoramento_respondido"
         android:name="com.example.mobilesinara.ui.monitoramentoRespondido.monitoramento_respondido"
         android:label="fragment_monitoramento_respondido"

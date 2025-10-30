@@ -1,10 +1,12 @@
 package com.example.mobilesinara.login.operario;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
+import com.google.android.material.imageview.ShapeableImageView;
 
 public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
 
@@ -22,14 +25,17 @@ public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_operario_cadastro_rosto2);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         Button cadastrar = findViewById(R.id.bt_cadastrar);
+        ShapeableImageView imageView = findViewById(R.id.foto);
+
+        String photoUriString = getIntent().getStringExtra("photoUri");
+        if (photoUriString != null) {
+            Uri photoUri = Uri.parse(photoUriString);
+            imageView.setImageURI(photoUri);
+        }
+
         Bundle info = getIntent().getExtras();
 
         //botão de voltar
