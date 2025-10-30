@@ -49,7 +49,7 @@ public class FormsPersonalizadoAdapter extends RecyclerView.Adapter<FormsPersona
                 @Override
                 public void onClick(View v) {
                     //NavController navController = NavHostFragment.findNavController(AFragment.this);
-                    Navigation.findNavController(v).navigate(R.id.action_navigation_dashboard_to_monitoramento_respondido);
+                    Navigation.findNavController(v).navigate(R.id.monitoramentoAguardando);
                 }
             });
         }
@@ -58,7 +58,7 @@ public class FormsPersonalizadoAdapter extends RecyclerView.Adapter<FormsPersona
             holder.bt_principal.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Navigation.findNavController(v).navigate(R.id.action_navigation_dashboard_to_monitoramento_respondido);
+                    Navigation.findNavController(v).navigate(R.id.monitoramentoAguardando);
                 }
             });
             holder.bt_extra.setOnClickListener(new View.OnClickListener() {

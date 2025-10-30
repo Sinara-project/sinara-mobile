@@ -14,8 +14,6 @@
         <action
             android:id="@+id/action_navigation_home_to_registroPonto"
             app:destination="@id/registroPonto" />
-        android:label="Home_Operario"
-        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_navigation_home_to_configuration"
             app:destination="@id/configuration" />
@@ -26,9 +24,6 @@
         android:name="com.example.mobilesinara.ui.dashboard.DashboardFragment"
         android:label="Formularios_Operario"
         tools:layout="@layout/fragment_dashboard">
-        <action
-            android:id="@+id/action_navigation_dashboard_to_monitoramento_respondido"
-            app:destination="@id/monitoramento_respondido" />
         <action
             android:id="@+id/action_navigation_dashboard_to_monitoramentoAguardando"
             app:destination="@id/monitoramentoAguardando" />
@@ -54,7 +49,7 @@
             app:destination="@id/registroPontoSenha" />
         <action
             android:id="@+id/action_registroPonto_to_navigation_home"
-            app:destination="@id/navigation_home" />
+            app:destination="@id/navigation_home_operario" />
         <action
             android:id="@+id/action_registroPonto_to_registroPontoCamera"
             app:destination="@id/registroPontoCamera" />
@@ -100,10 +95,6 @@
         android:name="com.example.mobilesinara.registro_ponto.RegistroPontoCamera"
         android:label="fragment_registro_ponto_camera"
         tools:layout="@layout/fragment_registro_ponto_camera" />
-        android:id="@+id/monitoramento_respondido"
-        android:name="com.example.mobilesinara.ui.monitoramentoRespondido.monitoramento_respondido"
-        android:label="fragment_monitoramento_respondido"
-        tools:layout="@layout/fragment_monitoramento_respondido" />
     <fragment
         android:id="@+id/monitoramentoAguardando"
         android:name="com.example.mobilesinara.ui.monitoramentoAguardando.monitoramentoAguardando"
