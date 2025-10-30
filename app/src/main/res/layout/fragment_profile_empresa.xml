@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_onBackground"
-    tools:context=".ProfileEmpresa">
+    tools:context=".ui.ProfileEmpresa.ProfileEmpresa">
 
     <ImageView
         android:id="@+id/imageView9"
@@ -114,6 +114,7 @@
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/cnpj"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
@@ -155,6 +156,7 @@
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
@@ -196,6 +198,7 @@
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/ramo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"

@@ -1,15 +1,15 @@
-package com.example.mobilesinara;
+package com.example.mobilesinara.ui.formulariosEmpresa;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class TelaHomeEmpresaViewModel extends ViewModel {
+public class FormulariosEmpresaViewModel extends ViewModel {
     private final MutableLiveData<String> mText;
 
-    public TelaHomeEmpresaViewModel() {
+    public FormulariosEmpresaViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is TelaHomeEmpresa fragment");
+        mText.setValue("This is formulariosEmpresa fragment");
     }
 
     public LiveData<String> getText() {

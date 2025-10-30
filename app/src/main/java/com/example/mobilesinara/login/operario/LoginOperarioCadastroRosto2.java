@@ -30,7 +30,7 @@ public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
 
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         Button cadastrar = findViewById(R.id.bt_cadastrar);
-
+        Bundle info = getIntent().getExtras();
 
         //botão de voltar
         btVoltar.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +44,9 @@ public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
         cadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LoginOperarioCadastroRosto2.this, LoginOperarioAlterarSenha.class));
+                Intent intent = new Intent(LoginOperarioCadastroRosto2.this, LoginOperarioAlterarSenha.class);
+                intent.putExtras(info);
+                startActivity(intent);
                 overridePendingTransition(0, 0);
             }
         });

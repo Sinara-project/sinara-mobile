@@ -1,4 +1,4 @@
-package com.example.mobilesinara;
+package com.example.mobilesinara.Models;
 
 import java.util.Date;
 

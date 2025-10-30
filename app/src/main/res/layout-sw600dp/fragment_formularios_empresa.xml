@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_onBackground"
-    tools:context=".formulariosEmpresa">
+    tools:context=".ui.formulariosEmpresa.formulariosEmpresa">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
 
         <!-- Ícone de usuário -->
         <ImageView
-            android:id="@+id/iconUser"
+            android:id="@+id/imgEmpresa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -110,7 +110,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/text_campo"
+                android:id="@+id/text_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"

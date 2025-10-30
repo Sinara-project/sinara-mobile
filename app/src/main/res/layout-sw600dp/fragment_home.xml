@@ -71,75 +71,41 @@
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/cardRespondidos"
-        android:layout_width="157dp"
+        android:layout_width="0dp"
         android:layout_height="149dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginBottom="10dp"
-        app:cardCornerRadius="20dp"
         app:cardBackgroundColor="@color/md_theme_secondaryContainer"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toStartOf="@+id/cardDevolvidos"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_medium"
-                android:textColor="#FFFFFF"
-                android:text="00"
-                android:textSize="40sp"
-                android:paddingTop="8dp" />
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_medium"
+                android:paddingTop="8dp"
+                android:text="00"
                 android:textColor="#FFFFFF"
+                android:textSize="40sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat_medium"
+                android:paddingStart="8dp"
+                android:paddingTop="8dp"
                 android:text="Respondidos"
-                android:textSize="16sp"
-                android:paddingTop="8dp" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
-
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardDevolvidos"
-        android:layout_width="157dp"
-        android:layout_height="149dp"
-        android:layout_marginBottom="10dp"
-        app:cardCornerRadius="20dp"
-        app:cardBackgroundColor="@color/md_theme_secondaryContainer"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cardRespondidos">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_medium"
                 android:textColor="#FFFFFF"
-                android:text="00"
-                android:textSize="40sp"
-                android:paddingTop="8dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat_medium"
-                android:textColor="#FFFFFF"
-                android:text="Devolvidos"
-                android:textSize="16sp"
-                android:paddingTop="8dp" />
+                android:textSize="18sp" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -207,7 +173,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
-        android:id="@+id/iconEmpresa"
+        android:id="@+id/imgEmpresa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -217,7 +183,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/iconUser"
+        android:id="@+id/imgUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"

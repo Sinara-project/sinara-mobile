@@ -8,9 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobilesinara.Notificacao;
+import com.example.mobilesinara.Models.Notificacao;
 import com.example.mobilesinara.R;
-import com.example.mobilesinara.ui.dashboard.FormsAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.mobilesinara;
+package com.example.mobilesinara.ui.monitoramentoAguardando;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

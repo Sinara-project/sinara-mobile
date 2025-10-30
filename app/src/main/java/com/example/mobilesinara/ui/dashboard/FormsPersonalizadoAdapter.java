@@ -12,36 +12,36 @@ import androidx.annotation.NonNull;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mobilesinara.FormularioAcao;
+import com.example.mobilesinara.Models.FormularioPersonalizado;
 import com.example.mobilesinara.R;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class FormsAdapter extends RecyclerView.Adapter<FormsAdapter.FormsViewHolder> {
+public class FormsPersonalizadoAdapter extends RecyclerView.Adapter<FormsPersonalizadoAdapter.FormsViewHolder> {
 
-    private List<FormularioAcao> formularios;
+    private List<FormularioPersonalizado> formularios;
 
-    public FormsAdapter(List<FormularioAcao> lista) {
+    public FormsPersonalizadoAdapter(List<FormularioPersonalizado> lista) {
         this.formularios = lista;
     }
 
     @NonNull
     @Override
-    public FormsAdapter.FormsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FormsPersonalizadoAdapter.FormsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_formularios, parent, false);
-        return new FormsAdapter.FormsViewHolder(view);
+        return new FormsPersonalizadoAdapter.FormsViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FormsAdapter.FormsViewHolder holder, int position) {
-        FormularioAcao formularioAcao = formularios.get(position);
-        holder.titulo.setText(formularioAcao.getTitulo());
+    public void onBindViewHolder(@NonNull FormsPersonalizadoAdapter.FormsViewHolder holder, int position) {
+        FormularioPersonalizado formularioAcao = formularios.get(position);
+        //holder.titulo.setText(formularioAcao.getTitulo());
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
-        String dataFormatada = formatter.format(formularioAcao.getDataPreenchimento());
-        holder.dataEHora.setText(dataFormatada);
-        holder.status.setText(formularioAcao.getStatus());
+        //String dataFormatada = formatter.format(formularioAcao.getDataPreenchimento());
+        //holder.dataEHora.setText(dataFormatada);
+        //holder.status.setText(formularioAcao.getStatus());
         if(holder.status.getText().toString().equals("Respondido")){
             holder.bt_status.setBackgroundColor(Color.parseColor("#455A64"));
             holder.bt_extra.setVisibility(INVISIBLE);
