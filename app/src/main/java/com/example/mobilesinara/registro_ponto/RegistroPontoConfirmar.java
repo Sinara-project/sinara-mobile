@@ -86,7 +86,6 @@ public class RegistroPontoConfirmar extends Fragment {
         handler.post(runnable);
 
         Button btRegistroPonto = view.findViewById(R.id.bt_confirmar);
-        ImageView voltar = view.findViewById(R.id.voltar);
         Button btCancelar = view.findViewById(R.id.bt_cancelar);
 
         btCancelar.setOnClickListener(new View.OnClickListener() {
