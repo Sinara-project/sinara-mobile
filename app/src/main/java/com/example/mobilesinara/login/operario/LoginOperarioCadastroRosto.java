@@ -45,6 +45,7 @@ public class LoginOperarioCadastroRosto extends AppCompatActivity {
 
         Button btTirarFoto = findViewById(R.id.bt_tirar_foto);
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
+        Bundle info = getIntent().getExtras();
 
         btVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +64,15 @@ public class LoginOperarioCadastroRosto extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(this, "Erro ao abrir a câmera", Toast.LENGTH_SHORT).show();
+              }
+        });
+        avancar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginOperarioCadastroRosto.this, LoginOperarioCadastroRosto2.class);
+                intent.putExtras(info);
+                startActivity(intent);
+                overridePendingTransition(0, 0);
             }
         });
     }

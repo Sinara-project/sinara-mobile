@@ -1,8 +1,7 @@
 package com.example.mobilesinara;
 
-import com.example.mobilesinara.cadastro.operario.Permissao;
+import com.example.mobilesinara.Models.Permissao;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 public class FormularioAcao extends Permissao {
@@ -10,11 +9,11 @@ public class FormularioAcao extends Permissao {
 
     private String titulo;
 
-    private LocalDateTime dataPreenchimento;
+    private Date dataPreenchimento;
 
     private String status;
 
-    public FormularioAcao(String titulo, LocalDateTime dataPreenchimento, String status){
+    public FormularioAcao(String titulo, Date dataPreenchimento, String status){
         this.titulo = titulo;
         this.dataPreenchimento = dataPreenchimento;
         this.status = status;
@@ -24,7 +23,7 @@ public class FormularioAcao extends Permissao {
         return titulo;
     }
 
-    public LocalDateTime getDataPreenchimento() {
+    public Date getDataPreenchimento() {
         return dataPreenchimento;
     }
     public String getStatus(){

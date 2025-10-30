@@ -47,7 +47,7 @@ public class LoginOperario extends AppCompatActivity {
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayout5);
         TextInputEditText editTextSenha = findViewById(R.id.text_senha);
-        TextInputEditText editTextCpf = findViewById(R.id.text_cpf);
+        TextInputEditText editTextCpf = findViewById(R.id.text_pesquisa);
         TextInputEditText editTextEmail = findViewById(R.id.text_email);
         TextInputEditText editTextCodEmpresa = findViewById(R.id.text_cod_empresa);
         Button login = findViewById(R.id.bt_fazer_login);
@@ -112,6 +112,18 @@ public class LoginOperario extends AppCompatActivity {
                     });
 
                 } else {
+                if(!editTextCpf.getText().toString().isEmpty()&&!editTextEmail.getText().toString().isEmpty()&&!editTextSenha.getText().toString().isEmpty()&&!editTextCodEmpresa.getText().toString().isEmpty()){
+                    Bundle info = new Bundle();
+                    info.putString("cpf", editTextCpf.getText().toString());
+                    info.putString("email", editTextEmail.getText().toString());
+                    info.putString("senha", editTextSenha.getText().toString());
+                    info.putString("codEmpresa", editTextCodEmpresa.getText().toString());
+                    Intent intent = new Intent(LoginOperario.this, LoginOperarioCadastroRosto.class);
+                    intent.putExtras(info);
+                    startActivity(intent);
+                    overridePendingTransition(0, 0);
+                }
+                else{
                     Toast.makeText(LoginOperario.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                 }
             }
