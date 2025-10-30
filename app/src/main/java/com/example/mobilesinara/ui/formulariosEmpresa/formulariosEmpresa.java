@@ -19,6 +19,7 @@ import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
 import com.example.mobilesinara.Models.campos;
 import com.example.mobilesinara.Models.FormularioPersonalizado;
 import com.example.mobilesinara.R;
+import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.databinding.FragmentFormulariosEmpresaBinding;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -28,8 +29,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class formulariosEmpresa extends Fragment {
 
@@ -77,16 +76,8 @@ public class formulariosEmpresa extends Fragment {
 
         return root;
     }
-
-    private Retrofit getRetrofit() {
-        return new Retrofit.Builder()
-                .baseUrl("https://ms-sinara-mongo.onrender.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-    }
-
     private void criarFormulario(String titulo, String descricao, List<campos> campos, List<String> permissoes){
-        IFormularioPersonalizado iFormularioPersonalizado = getRetrofit().create(IFormularioPersonalizado.class);
+        IFormularioPersonalizado iFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IFormularioPersonalizado.class);
         Call<FormularioPersonalizado> call = iFormularioPersonalizado.InsertFormularioPersonalizado(3, titulo, descricao, campos, permissoes);
 
         call.enqueue(new Callback<FormularioPersonalizado>() {

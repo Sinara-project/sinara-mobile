@@ -21,8 +21,7 @@ import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.api.OperarioService;
-import com.example.mobilesinara.login.adm.LoginADM;
-import com.example.mobilesinara.model.OperarioLoginRequestDTO;
+import com.example.mobilesinara.DTO.OperarioLoginRequestDTO;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -59,7 +58,35 @@ public class LoginOperario extends AppCompatActivity {
                 startActivity(new Intent(LoginOperario.this, LoginOperarioEsqueciSenha.class));
             }
         });
+        final boolean[] senhaVisivel = {false};
 
+        textInputLayout.setEndIconOnClickListener(v -> {
+            senhaVisivel[0] = !senhaVisivel[0];
+
+            if (senhaVisivel[0]) {
+                // Mostra a senha
+                editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(LoginOperario.this, R.drawable.olho_fechado));
+            } else {
+                // Esconde a senha
+                editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(LoginOperario.this, R.drawable.olho_aberto));
+            }
+
+            // Mantém o cursor no fim
+            if (editTextSenha.getText() != null) {
+                editTextSenha.setSelection(editTextSenha.getText().length());
+            }
+        });
+
+        //botão de voltar
+        btVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginOperario.this, TelaOpcoes.class));
+                overridePendingTransition(0, 0);
+            }
+        });
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -127,38 +154,6 @@ public class LoginOperario extends AppCompatActivity {
                         Toast.makeText(LoginOperario.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
                     }
                 }
-
-
-                //botão de voltar
-                btVoltar.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        startActivity(new Intent(LoginOperario.this, TelaOpcoes.class));
-                        overridePendingTransition(0, 0);
-                    }
-                });
-
-                //senha visivel ou nao
-                final boolean[] senhaVisivel = {false};
-
-                textInputLayout.setEndIconOnClickListener(v -> {
-                    senhaVisivel[0] = !senhaVisivel[0];
-
-                    if (senhaVisivel[0]) {
-                        // Mostra a senha
-                        editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                        textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(LoginOperario.this, R.drawable.olho_fechado));
-                    } else {
-                        // Esconde a senha
-                        editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                        textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(LoginOperario.this, R.drawable.olho_aberto));
-                    }
-
-                    // Mantém o cursor no fim
-                    if (editTextSenha.getText() != null) {
-                        editTextSenha.setSelection(editTextSenha.getText().length());
-                    }
-                });
             }
         });
     }

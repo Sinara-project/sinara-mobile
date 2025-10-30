@@ -28,7 +28,6 @@ import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentDashboardBinding;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,7 +76,7 @@ public class DashboardFragment extends Fragment {
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if (response.isSuccessful() && response.body() != null) {
                                 Glide.with(getContext())
-                                        .load(response.body().getImageUrl())
+                                        .load(response.body().getImagemUrl())
                                         .into(imgEmpresa);
                             }
                             else{
