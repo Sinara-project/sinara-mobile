@@ -92,7 +92,8 @@ public class LoginOperario extends AppCompatActivity {
                             } else {
                                 String errorBody = "";
                                 try {
-                                    if (response.errorBody() != null) errorBody = response.errorBody().string();
+                                    if (response.errorBody() != null)
+                                        errorBody = response.errorBody().string();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -112,52 +113,52 @@ public class LoginOperario extends AppCompatActivity {
                     });
 
                 } else {
-                if(!editTextCpf.getText().toString().isEmpty()&&!editTextEmail.getText().toString().isEmpty()&&!editTextSenha.getText().toString().isEmpty()&&!editTextCodEmpresa.getText().toString().isEmpty()){
-                    Bundle info = new Bundle();
-                    info.putString("cpf", editTextCpf.getText().toString());
-                    info.putString("email", editTextEmail.getText().toString());
-                    info.putString("senha", editTextSenha.getText().toString());
-                    info.putString("codEmpresa", editTextCodEmpresa.getText().toString());
-                    Intent intent = new Intent(LoginOperario.this, LoginOperarioCadastroRosto.class);
-                    intent.putExtras(info);
-                    startActivity(intent);
-                    overridePendingTransition(0, 0);
+                    if (!editTextCpf.getText().toString().isEmpty() && !editTextEmail.getText().toString().isEmpty() && !editTextSenha.getText().toString().isEmpty() && !editTextCodEmpresa.getText().toString().isEmpty()) {
+                        Bundle info = new Bundle();
+                        info.putString("cpf", editTextCpf.getText().toString());
+                        info.putString("email", editTextEmail.getText().toString());
+                        info.putString("senha", editTextSenha.getText().toString());
+                        info.putString("codEmpresa", editTextCodEmpresa.getText().toString());
+                        Intent intent = new Intent(LoginOperario.this, LoginOperarioCadastroRosto.class);
+                        intent.putExtras(info);
+                        startActivity(intent);
+                        overridePendingTransition(0, 0);
+                    } else {
+                        Toast.makeText(LoginOperario.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+                    }
                 }
-                else{
-                    Toast.makeText(LoginOperario.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
 
 
-        //botão de voltar
-        btVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginOperario.this, TelaOpcoes.class));
-                overridePendingTransition(0, 0);
-            }
-        });
+                //botão de voltar
+                btVoltar.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        startActivity(new Intent(LoginOperario.this, TelaOpcoes.class));
+                        overridePendingTransition(0, 0);
+                    }
+                });
 
-        //senha visivel ou nao
-        final boolean[] senhaVisivel = {false};
+                //senha visivel ou nao
+                final boolean[] senhaVisivel = {false};
 
-        textInputLayout.setEndIconOnClickListener(v -> {
-            senhaVisivel[0] = !senhaVisivel[0];
+                textInputLayout.setEndIconOnClickListener(v -> {
+                    senhaVisivel[0] = !senhaVisivel[0];
 
-            if (senhaVisivel[0]) {
-                // Mostra a senha
-                editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
-                textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_fechado));
-            } else {
-                // Esconde a senha
-                editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_aberto));
-            }
+                    if (senhaVisivel[0]) {
+                        // Mostra a senha
+                        editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                        textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(LoginOperario.this, R.drawable.olho_fechado));
+                    } else {
+                        // Esconde a senha
+                        editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                        textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(LoginOperario.this, R.drawable.olho_aberto));
+                    }
 
-            // Mantém o cursor no fim
-            if (editTextSenha.getText() != null) {
-                editTextSenha.setSelection(editTextSenha.getText().length());
+                    // Mantém o cursor no fim
+                    if (editTextSenha.getText() != null) {
+                        editTextSenha.setSelection(editTextSenha.getText().length());
+                    }
+                });
             }
         });
     }

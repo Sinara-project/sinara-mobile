@@ -50,7 +50,7 @@ public class FormsPadraoAdapter extends RecyclerView.Adapter<FormsPadraoAdapter.
                 @Override
                 public void onClick(View v) {
                     //NavController navController = NavHostFragment.findNavController(AFragment.this);
-                    Navigation.findNavController(v).navigate(R.id.action_navigation_dashboard_to_monitoramento_respondido);
+                    Navigation.findNavController(v).navigate(R.id.monitoramentoAguardando);
                 }
             });
         }
