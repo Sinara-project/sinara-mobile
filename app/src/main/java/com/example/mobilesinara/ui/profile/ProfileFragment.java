@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -34,6 +33,7 @@ import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
+    private String cpfUser;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ProfileViewModel profileViewModel =
@@ -55,12 +55,10 @@ public class ProfileFragment extends Fragment {
 
         Bundle args = getArguments();
         if (args != null) {
-//            String codEmpresa = args.getString("codEmpresa", "(não encontrado)");
-//            Log.d("ProfileFragment", "Recebido codEmpresa: " + codEmpresa);
-//            codEmpresaView.setText("Código da empresa: " + codEmpresa);
+            cpfUser = args.getString("cpf", "(não encontrado)");
+            Log.d("ProfileFragment", "Recebido cpf: " + cpfUser);
         } else {
             Log.e("ProfileFragment", "getArguments() veio nulo!");
-            Toast.makeText(requireContext(), "Nenhum argumento recebido", Toast.LENGTH_SHORT).show();
         }
 
         btDeslogar.setOnClickListener(v -> {
@@ -79,10 +77,24 @@ public class ProfileFragment extends Fragment {
         IRegistroPonto iRegistroPonto = ApiClientAdapter.getRetrofitInstance().create(IRegistroPonto.class);
         IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
         IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IRespostaFormularioPersonalizado.class);
+        Call<Integer> callIdUserComCpf = iOperario.getIdPorCpf(cpfUser);
+        final int[] idOperario = {0};
+        callIdUserComCpf.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                  idOperario[0] = response.body();
+                  Log.e("o id do user é: ", String.valueOf(idOperario[0]));
+                }
+            }
 
-        int idOperario = 103;
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
 
-        Call<Integer> callGetQtdRespostas = iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(idOperario);
+            }
+        });
+
+        Call<Integer> callGetQtdRespostas = iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(idOperario[0]);
         callGetQtdRespostas.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -100,7 +112,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Call<Integer> callGetQtdPontos = iRegistroPonto.getQuantidadeRegistroPonto(idOperario);
+        Call<Integer> callGetQtdPontos = iRegistroPonto.getQuantidadeRegistroPonto(idOperario[0]);
         callGetQtdPontos.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -117,7 +129,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Call<Operario> callGetOperario = iOperario.getOperarioPorId(idOperario);
+        Call<Operario> callGetOperario = iOperario.getOperarioPorId(idOperario[0]);
         callGetOperario.enqueue(new Callback<Operario>() {
             @Override
             public void onResponse(Call<Operario> call, Response<Operario> response) {
@@ -165,7 +177,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Call<HorasTrabalhadasResponse> callHorasTrabalhadas = iRegistroPonto.getHorasTrabalhadas(idOperario);
+        Call<HorasTrabalhadasResponse> callHorasTrabalhadas = iRegistroPonto.getHorasTrabalhadas(idOperario[0]);
         callHorasTrabalhadas.enqueue(new Callback<HorasTrabalhadasResponse>() {
             @Override
             public void onResponse(Call<HorasTrabalhadasResponse> call, Response<HorasTrabalhadasResponse> response) {

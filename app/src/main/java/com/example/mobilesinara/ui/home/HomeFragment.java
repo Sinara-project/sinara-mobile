@@ -88,7 +88,7 @@ public class HomeFragment extends Fragment {
         IRegistroPonto iRegistroPonto = ApiClientAdapter.getRetrofitInstance().create(IRegistroPonto.class);
         IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IRespostaFormularioPersonalizado.class);
         IFormularioPersonalizado iFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IFormularioPersonalizado.class);
-        Call<Boolean> callStatus = iRegistroPonto.getStatusOperario(3);
+        Call<Boolean> callStatus = iRegistroPonto.getStatusOperario(103);
         callStatus.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {

@@ -19,7 +19,6 @@ public class HomeOperario extends AppCompatActivity {
         binding = ActivityHomeOperarioBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // 🔹 Recupera o bundle vindo da Intent
         Bundle info = getIntent().getExtras();
         if (info != null) {
             for (String key : info.keySet()) {
@@ -39,7 +38,6 @@ public class HomeOperario extends AppCompatActivity {
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_home_operario);
 
-        // 🔹 Injeta o bundle no gráfico
         navController.setGraph(R.navigation.mobile_navigation, info);
 
         NavigationUI.setupWithNavController(binding.navView, navController);

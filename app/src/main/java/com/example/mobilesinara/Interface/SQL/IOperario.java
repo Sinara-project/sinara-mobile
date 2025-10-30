@@ -15,6 +15,8 @@ public interface IOperario {
     Call<Operario> getOperarioPorId(@Path("id") int id);
     @GET("/api/user/operario/perfilOperario/{id}")
     Call<PerfilOperario> getPerfilOperarioPorId(@Path("id") int id);
+    @GET("/api/user/operario/obterId/{cpf}")
+    Call<Integer> getIdPorCpf(@Path("cpf") String cpf);
     @GET("/api/user/operario/verificarReconhecimento/{id}")
     Call<Boolean> verificarReconhecimento(@Path("id") int id);
     @POST("/api/user/operario/atualizar-status")
