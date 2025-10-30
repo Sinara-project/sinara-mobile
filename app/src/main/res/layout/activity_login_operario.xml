@@ -216,16 +216,16 @@ tools:context=".cadastro.operario.CadastroOperario">
     app:srcCompat="@drawable/bt_voltar"
     tools:ignore="SpeakableTextPresentCheck" />
 
-<TextView
-    android:id="@+id/esqueci_minha_senha"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="24dp"
-    android:text="Esqueci minha senha"
-    android:textColor="@color/md_theme_tertiaryContainer"
-    android:textSize="18dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent" />
+    <TextView
+        android:id="@+id/esqueci_minha_senha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="Esqueci minha senha"
+        android:textColor="@color/md_theme_tertiaryContainer"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
