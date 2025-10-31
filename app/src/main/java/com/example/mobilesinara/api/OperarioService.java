@@ -1,6 +1,6 @@
 package com.example.mobilesinara.api;
 
-import com.example.mobilesinara.DTO.OperarioLoginRequestDTO;
+import com.example.mobilesinara.model.OperarioLoginRequestDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

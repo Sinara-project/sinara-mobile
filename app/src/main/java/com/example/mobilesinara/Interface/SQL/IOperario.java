@@ -11,18 +11,16 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface IOperario {
-    @GET("/api/user/operario/buscarPorId/{id}")
+    @GET("/user/operario/buscarPorId/{id}")
     Call<Operario> getOperarioPorId(@Path("id") int id);
-    @GET("/api/user/operario/perfilOperario/{id}")
+    @GET("/user/operario/perfilOperario/{id}")
     Call<PerfilOperario> getPerfilOperarioPorId(@Path("id") int id);
-    @GET("/api/user/operario/obterId/{cpf}")
-    Call<Integer> getIdPorCpf(@Path("cpf") String cpf);
-    @GET("/api/user/operario/verificarReconhecimento/{id}")
+    @GET("/user/operario/verificarReconhecimento/{id}")
     Call<Boolean> verificarReconhecimento(@Path("id") int id);
-    @POST("/api/user/operario/atualizar-status")
+    @POST("/user/operario/atualizar-status")
     Call<String> atualizarStatus(@Body int idOperario, boolean ativo, boolean ferias);
-    @POST("/api/user/operario/uploadReconhecimento/{id}")
+    @POST("/user/operario/uploadReconhecimento/{id}")
     Call<String> uploadReconhecimento(@Path("id") int id, @Body String file);
-    @PUT("/api/user/operario/atualizar/{id}")
+    @PUT("/user/operario/atualizar/{id}")
     Call<String> uploadReconhecimento(@Path("id") int id, @Body Operario operario);
 }

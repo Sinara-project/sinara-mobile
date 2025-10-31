@@ -3,6 +3,7 @@ package com.example.mobilesinara.login.adm;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,10 +16,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mobilesinara.Interface.SQL.IEmpresa;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
+import com.example.mobilesinara.adapter.ApiClientAdapter;
+import com.example.mobilesinara.dto.EmpresaLoginRequestDTO;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginADM extends AppCompatActivity {
 
@@ -35,7 +45,7 @@ public class LoginADM extends AppCompatActivity {
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayoutSenha);
         TextInputEditText editTextCnpj = findViewById(R.id.text_cnpj);
         TextInputEditText editTextSenha = findViewById(R.id.text_senha);
-        Button btAvancar = findViewById(R.id.bt_avancar);
+        Button btLogin = findViewById(R.id.bt_fazer_login);
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
 
         //botão de voltar
@@ -48,12 +58,52 @@ public class LoginADM extends AppCompatActivity {
         });
 
         //bt cadastrar para ir para tela de cadastro
-        btAvancar.setOnClickListener(v -> {
-            if(!editTextCnpj.getText().toString().isEmpty()&&!editTextSenha.getText().toString().isEmpty()){
-                startActivity(new Intent(LoginADM.this, LoginADM2.class));
-                overridePendingTransition(0, 0);
-            }
-            else{
+        btLogin.setOnClickListener(v -> {
+            String cnpj = editTextCnpj.getText().toString().trim();
+            String senha = editTextSenha.getText().toString().trim();
+
+            if (!cnpj.isEmpty() && !senha.isEmpty()) {
+                // Cria objeto de request
+                EmpresaLoginRequestDTO request = new EmpresaLoginRequestDTO(cnpj, senha);
+                IEmpresa empresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
+
+                Call<Boolean> call = empresa.loginEmpresa(request);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            boolean sucesso = response.body();
+                            if (sucesso) {
+                                Toast.makeText(LoginADM.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(LoginADM.this, LoginADM2.class);
+                                intent.putExtra("cnpj", cnpj);
+                                startActivity(intent);
+                                overridePendingTransition(0, 0);
+                            } else {
+                                Toast.makeText(LoginADM.this, "Dados inválidos. Tente novamente.", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            String errorBody = "";
+                            try {
+                                if (response.errorBody() != null)
+                                    errorBody = response.errorBody().string();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            Toast.makeText(LoginADM.this,
+                                    "Erro no servidor. HTTP " + response.code() + " - " + errorBody,
+                                    Toast.LENGTH_LONG).show();
+                            Log.e("LOGIN", "Erro http: " + response.code() + " body: " + errorBody);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        Toast.makeText(LoginADM.this, "Falha na conexão: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+
+            } else {
                 Toast.makeText(LoginADM.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
             }
         });

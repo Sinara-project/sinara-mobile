@@ -15,7 +15,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
 import com.example.mobilesinara.R;
-import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.bumptech.glide.Glide;
 import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
 import com.example.mobilesinara.Interface.Mongo.IRespostaFormularioPersonalizado;
@@ -24,15 +23,20 @@ import com.example.mobilesinara.Interface.SQL.IOperario;
 import com.example.mobilesinara.Interface.SQL.IRegistroPonto;
 import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Operario;
+import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentHomeBinding;
+import com.example.mobilesinara.registro_ponto.RegistroPonto;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private Retrofit retrofit;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -84,11 +88,15 @@ public class HomeFragment extends Fragment {
 
     private void chamarApi(TextView formsPendentes, TextView formsRespondidos, ImageView iconUser, ImageView iconEmpresa, Button btStatus) {
         String url = "https://ms-sinara-sql-oox0.onrender.com/api/user/";
-        IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
-        IRegistroPonto iRegistroPonto = ApiClientAdapter.getRetrofitInstance().create(IRegistroPonto.class);
-        IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IRespostaFormularioPersonalizado.class);
-        IFormularioPersonalizado iFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IFormularioPersonalizado.class);
-        Call<Boolean> callStatus = iRegistroPonto.getStatusOperario(103);
+        retrofit = new Retrofit.Builder()
+                .baseUrl(url)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        IOperario iOperario = retrofit.create(IOperario.class);
+        IRegistroPonto iRegistroPonto = retrofit.create(IRegistroPonto.class);
+        IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = retrofit.create(IRespostaFormularioPersonalizado.class);
+        IFormularioPersonalizado iFormularioPersonalizado = retrofit.create(IFormularioPersonalizado.class);
+        Call<Boolean> callStatus = iRegistroPonto.getStatusOperario(3);
         callStatus.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -134,32 +142,33 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        Call<Operario> callGetOperario = iOperario.getOperarioPorId(103);
+        Call<Operario> callGetOperario = iOperario.getOperarioPorId(4);
         callGetOperario.enqueue(new Callback<Operario>() {
             @Override
             public void onResponse(Call<Operario> call, Response<Operario> response) {
-                if (response.isSuccessful() && response.body() != null && isAdded()) {
-                    Glide.with(iconUser.getContext())
+                if (response.isSuccessful() && response.body() != null) {
+                    Glide.with(getContext())
                             .load(response.body().getImageUrl())
                             .into(iconUser);
-
                     int idEmpresa = response.body().getIdEmpresa();
-                    IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
+                    IEmpresa iEmpresa = retrofit.create(IEmpresa.class);
                     Call<Empresa> callGetEmpresa = iEmpresa.getEmpresaPorId(idEmpresa);
                     callGetEmpresa.enqueue(new Callback<Empresa>() {
                         @Override
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
-                            if (response.isSuccessful() && response.body() != null && isAdded()) {
-                                Glide.with(iconEmpresa.getContext())
-                                        .load(response.body().getImagemUrl())
+                            if(response.isSuccessful() && response.body() != null) {
+                                Glide.with(getContext())
+                                        .load(response.body().getImageUrl())
                                         .into(iconEmpresa);
                             }
                         }
-
                         @Override
-                        public void onFailure(Call<Empresa> call, Throwable t) { }
+                        public void onFailure(Call<Empresa> call, Throwable t) {
+
+                        }
                     });
-                } else {
+                }
+                else{
                     Log.e("API", "Erro de resposta: " + response.code());
                 }
             }
@@ -167,9 +176,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(Call<Operario> call, Throwable t) {
                 Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
-            }
-        });
-
+            }});
     }
 
     @Override

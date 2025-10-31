@@ -98,7 +98,7 @@ public class DashboardFragment extends Fragment {
                         @Override
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if (response.isSuccessful() && response.body() != null) {
-                                Glide.with(requireContext()).load(response.body().getImagemUrl()).into(imgEmpresa);
+                                Glide.with(requireContext()).load(response.body().getImageUrl()).into(imgEmpresa);
                             } else {
                                 Log.e("API", "Erro empresa: " + response.code());
                             }

@@ -6,7 +6,7 @@ public class Empresa {
     private String senha;
     private String senhaAreaRestrita;
     private String codigo;
-    private String imagemUrl;
+    private String imageUrl;
     private String email;
     private String ramoAtuacao;
     private String telefone;
@@ -18,7 +18,7 @@ public class Empresa {
         this.senha = senha;
         this.senhaAreaRestrita = senhaAreaRestrita;
         this.codigo = codigo;
-        this.imagemUrl = imageUrl;
+        this.imageUrl = imageUrl;
         this.email = email;
         this.ramoAtuacao = ramoAtuacao;
         this.telefone = telefone;
@@ -33,12 +33,12 @@ public class Empresa {
         this.nome = nome;
     }
 
-    public String getImagemUrl() {
-        return imagemUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImagemUrl(String imagemUrl) {
-        this.imagemUrl = imagemUrl;
+    public void setImageUrl(String imagemUrl) {
+        this.imageUrl = imagemUrl;
     }
 
     public void setSenha(String senha) {
