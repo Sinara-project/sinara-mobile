@@ -17,6 +17,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mobilesinara.Interface.SQL.IOperario;
 import com.example.mobilesinara.Models.OperarioLoginRequestDTO;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
@@ -52,6 +53,7 @@ public class LoginOperario extends AppCompatActivity {
         TextInputEditText editTextCodEmpresa = findViewById(R.id.text_cod_empresa);
         Button login = findViewById(R.id.bt_fazer_login);
         TextView esqueciSenha = findViewById(R.id.esqueci_minha_senha);
+        Bundle info = new Bundle();
 
         esqueciSenha.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,7 +75,6 @@ public class LoginOperario extends AppCompatActivity {
                     OperarioLoginRequestDTO request = new OperarioLoginRequestDTO(email, cpf, senha, codigoEmpresa);
                     OperarioService service = ApiClientAdapter.getRetrofitInstance().create(OperarioService.class);
 
-//                    Chamada do endpoint
                     Call<Boolean> call = service.loginOperario(request);
 
                     call.enqueue(new Callback<Boolean>() {
@@ -83,8 +84,11 @@ public class LoginOperario extends AppCompatActivity {
                             if (response.isSuccessful() && response.body() != null) {
                                 boolean sucesso = response.body();
                                 if (sucesso) {
+                                    info.putInt("IdUser", getIdOperario(cpf));
                                     Toast.makeText(LoginOperario.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginOperario.this, LoginOperarioCadastroRosto.class));
+                                    Intent intent = new Intent(LoginOperario.this, LoginOperarioCadastroRosto.class);
+                                    intent.putExtras(info);
+                                    startActivity(intent);
                                     overridePendingTransition(0, 0);
                                 } else {
                                     Toast.makeText(LoginOperario.this, "Dados inválidos. Tente novamente.", Toast.LENGTH_SHORT).show();
@@ -100,7 +104,6 @@ public class LoginOperario extends AppCompatActivity {
                                 Toast.makeText(LoginOperario.this,
                                         "Erro no servidor. HTTP " + code + " - " + errorBody,
                                         Toast.LENGTH_LONG).show();
-                                // também log no Logcat
                                 Log.e("LOGIN", "Erro http: " + code + " body: " + errorBody);
                             }
                         }
@@ -161,5 +164,23 @@ public class LoginOperario extends AppCompatActivity {
                 });
             }
         });
+    }
+    private int getIdOperario(String cpf){
+        IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
+        Call<Integer> call = iOperario.getIdPorCpf(cpf);
+        final int[] retorno = new int[1];
+        call.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    retorno[0] = response.body();
+                }
+            }
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+
+            }
+        });
+        return retorno[0];
     }
 }
