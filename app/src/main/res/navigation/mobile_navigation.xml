@@ -135,7 +135,7 @@
         tools:layout="@layout/fragment_formulario_respondido" />
     <fragment
         android:id="@+id/ChatBot"
-        android:name="com.example.mobilesinara.ChatBot"
+        android:name="com.example.mobilesinara.ui.ChatBot.ChatBot"
         android:label="fragment_chat_bot"
         tools:layout="@layout/fragment_chat_bot" />
 </navigation>
