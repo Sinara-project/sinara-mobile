@@ -2,6 +2,7 @@ package com.example.mobilesinara.ui.dashboard;
 
 import static android.view.View.INVISIBLE;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,12 +24,13 @@ import java.util.Locale;
 
 public class FormUnificadoAdapter extends RecyclerView.Adapter<FormUnificadoAdapter.FormsViewHolder> {
 
-    private List<FormularioItem> lista = new ArrayList<>();
+    private List<FormularioItem> lista;
 
     public FormUnificadoAdapter(List<FormularioItem> lista) {
         this.lista = lista != null ? lista : new ArrayList<>();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void updateList(List<FormularioItem> novaLista) {
         this.lista = novaLista != null ? novaLista : new ArrayList<>();
         notifyDataSetChanged();
@@ -55,7 +57,6 @@ public class FormUnificadoAdapter extends RecyclerView.Adapter<FormUnificadoAdap
         }
         holder.status.setText(item.getStatus() != null ? item.getStatus() : "");
 
-        // estilo por tipo
         if ("padrao".equalsIgnoreCase(item.getTipo())) {
             holder.bt_status.setBackgroundColor(Color.parseColor("#455A64"));
         } else {

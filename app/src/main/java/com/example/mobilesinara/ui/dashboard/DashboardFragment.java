@@ -126,14 +126,10 @@ public class DashboardFragment extends Fragment {
     }
 
     private void carregarFormularios() {
-        // Cria duas requisições e adiciona os resultados à listaUnificadaAll.
-        // Como uma das classes (FormularioPadrao) não possui título na model fornecida,
-        // usamos uma string gerada com base na data/qualidade para o título.
         IFormularioPadrao iFormularioPadrao = getRetrofit().create(IFormularioPadrao.class);
         IFormularioPersonalizado iFormularioPersonalizado = getRetrofit().create(IFormularioPersonalizado.class);
 
-        // PADRÃO
-        iFormularioPadrao.getFormularioPadraoPorEmpresa(3).enqueue(new Callback<List<FormularioPadrao>>() {
+        iFormularioPadrao.getFormularioPadraoPorEmpresa(2).enqueue(new Callback<List<FormularioPadrao>>() {
             @Override
             public void onResponse(Call<List<FormularioPadrao>> call, Response<List<FormularioPadrao>> response) {
                 if (response.isSuccessful() && response.body() != null) {
@@ -167,7 +163,7 @@ public class DashboardFragment extends Fragment {
         });
 
         // PERSONALIZADO
-        iFormularioPersonalizado.getFormularioPersonalizadoPorEmpresa(3).enqueue(new Callback<List<FormularioPersonalizado>>() {
+        iFormularioPersonalizado.getFormularioPersonalizadoPorEmpresa(2).enqueue(new Callback<List<FormularioPersonalizado>>() {
             @Override
             public void onResponse(Call<List<FormularioPersonalizado>> call, Response<List<FormularioPersonalizado>> response) {
                 if (response.isSuccessful() && response.body() != null) {

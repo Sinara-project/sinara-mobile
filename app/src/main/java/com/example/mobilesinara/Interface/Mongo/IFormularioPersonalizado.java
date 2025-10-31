@@ -15,7 +15,7 @@ import retrofit2.http.Path;
 public interface IFormularioPersonalizado {
     @GET("https://ms-sinara-mongo.onrender.com/formulario-personalizado/{id}")
     Call<FormularioPersonalizado> getFormularioPersonalizado(@Path("id") String id);
-    @GET("https://ms-sinara-mongo.onrender.com/formulario-personalizado/buscar-por-empresa/{idEmpresa}")
+    @GET("https://ms-sinara-mongo.onrender.com/formulario-personalizado/buscar-por-criador/{idEmpresa}")
     Call<List<FormularioPersonalizado>> getFormularioPersonalizadoPorEmpresa(@Path("idEmpresa") int idEmpresa);
     @GET("https://ms-sinara-mongo.onrender.com/formulario-personalizado/contar-por-criador/{idEmpresa}")
     Call<Integer> getQtdFormularioPersonalizadoPorEmpresa(@Path("idEmpresa") int idEmpresa);
