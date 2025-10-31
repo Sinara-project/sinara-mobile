@@ -1,11 +1,10 @@
-package com.example.mobilesinara.dto;
+package com.example.mobilesinara.Models;
 
 public class OperarioLoginRequestDTO {
     private String email;
     private String cpf;
     private String senha;
     private String codigoEmpresa;
-
     public OperarioLoginRequestDTO(String email, String cpf, String senha, String codigoEmpresa) {
         this.email = email;
         this.cpf = cpf;
@@ -13,24 +12,12 @@ public class OperarioLoginRequestDTO {
         this.codigoEmpresa = codigoEmpresa;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public String getCpf() {
-        return cpf;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getSenha() {
         return senha;
-    }
-
-    public String getCodigoEmpresa() {
-        return codigoEmpresa;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public void setCpf(String cpf) {
@@ -39,6 +26,18 @@ public class OperarioLoginRequestDTO {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getCodigoEmpresa() {
+        return codigoEmpresa;
     }
 
     public void setCodigoEmpresa(String codigoEmpresa) {

@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.example.mobilesinara.R;
 import com.bumptech.glide.Glide;
 import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
 import com.example.mobilesinara.Interface.Mongo.IRespostaFormularioPersonalizado;
@@ -24,6 +25,7 @@ import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentHomeBinding;
+import com.example.mobilesinara.registro_ponto.RegistroPonto;
 
 import retrofit2.Call;
 import retrofit2.Callback;

@@ -21,18 +21,16 @@ import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
 import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.R;
+import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.databinding.FragmentTelaHomeEmpresaBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class telaHomeEmpresa extends Fragment {
 
     private FragmentTelaHomeEmpresaBinding binding;
-    private Retrofit retrofit;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -63,11 +61,7 @@ public class telaHomeEmpresa extends Fragment {
 
     private void chamarApi(ImageView iconEmpresa, TextView relatoriosRegistrados) {
         String url = "https://ms-sinara-sql-oox0.onrender.com/api/user/";
-        retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        IFormularioPersonalizado iFormularioPersonalizado = retrofit.create(IFormularioPersonalizado.class);
+        IFormularioPersonalizado iFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IFormularioPersonalizado.class);
         Call<Integer> callQtdFormularios = iFormularioPersonalizado.getQtdFormularioPersonalizadoPorEmpresa(1);
         callQtdFormularios.enqueue(new Callback<Integer>() {
             @Override
@@ -80,7 +74,7 @@ public class telaHomeEmpresa extends Fragment {
 
             }
         });
-        IEmpresa iEmpresa = retrofit.create(IEmpresa.class);
+        IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
         Call<Empresa> callGetEmpresa = iEmpresa.getEmpresaPorId(4);
         callGetEmpresa.enqueue(new Callback<Empresa>() {
             @Override

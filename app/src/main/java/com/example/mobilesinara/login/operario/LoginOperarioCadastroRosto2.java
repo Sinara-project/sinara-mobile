@@ -65,7 +65,6 @@ public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
                 }
 
                 Intent intent = new Intent(LoginOperarioCadastroRosto2.this, LoginOperarioAlterarSenha.class);
-                intent.putExtras(info);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }

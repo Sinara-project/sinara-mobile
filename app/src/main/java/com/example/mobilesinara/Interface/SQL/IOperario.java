@@ -1,7 +1,7 @@
 package com.example.mobilesinara.Interface.SQL;
 
 import com.example.mobilesinara.Models.Operario;
-import com.example.mobilesinara.dto.OperarioLoginRequestDTO;
+import com.example.mobilesinara.Models.OperarioLoginRequestDTO;
 import com.example.mobilesinara.Models.PerfilOperario;
 
 import okhttp3.MultipartBody;

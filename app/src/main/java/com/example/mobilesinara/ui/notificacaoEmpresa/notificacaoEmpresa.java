@@ -23,6 +23,7 @@ import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Notificacao;
 import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
+import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.databinding.FragmentNotificacaoEmpresaBinding;
 
 import java.util.List;
@@ -30,8 +31,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class notificacaoEmpresa extends Fragment {
 
@@ -47,8 +46,8 @@ public class notificacaoEmpresa extends Fragment {
         RecyclerView recyclerView = root.findViewById(R.id.recyclerNotification);
         ImageView imgUser = root.findViewById(R.id.imgUser);
         ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
-        IOperario iOperario = getRetrofit().create(IOperario.class);
-        Call<Operario> callOperario = iOperario.getOperarioPorId(4);
+        IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
+        Call<Operario> callOperario = iOperario.getOperarioPorId(3);
         callOperario.enqueue(new Callback<Operario>() {
             @Override
             public void onResponse(Call<Operario> call, Response<Operario> response) {
@@ -57,7 +56,7 @@ public class notificacaoEmpresa extends Fragment {
                             .load(response.body().getImageUrl())
                             .into(imgUser);
                     int idEmpresa = response.body().getIdEmpresa();
-                    IEmpresa iEmpresa = getRetrofit().create(IEmpresa.class);
+                    IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
                     Call<Empresa> callGetEmpresa = iEmpresa.getEmpresaPorId(idEmpresa);
                     callGetEmpresa.enqueue(new Callback<Empresa>() {
                         @Override
@@ -91,7 +90,7 @@ public class notificacaoEmpresa extends Fragment {
 
             }
         });
-        INotificacao iNotificacao = getRetrofit().create(INotificacao.class);
+        INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
         Call<List<Notificacao>> call = iNotificacao.getNotificacaoPorUsuario(456);
         call.enqueue(new Callback<>() {
             @Override
@@ -112,12 +111,6 @@ public class notificacaoEmpresa extends Fragment {
             }
         });
         return root;
-    }
-    private Retrofit getRetrofit() {
-        return new Retrofit.Builder()
-                .baseUrl("https://ms-sinara-mongo.onrender.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
     }
 
     @Override

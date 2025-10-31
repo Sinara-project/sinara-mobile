@@ -15,19 +15,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.mobilesinara.Interface.Mongo.INotificacao;
 import com.example.mobilesinara.Models.Notificacao;
 import com.example.mobilesinara.R;
+import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.databinding.FragmentNotificationsBinding;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.xml.transform.Result;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+
 
 public class NotificationsFragment extends Fragment {
 
@@ -41,7 +37,7 @@ public class NotificationsFragment extends Fragment {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         RecyclerView recyclerView = root.findViewById(R.id.recyclerNotification);
-        INotificacao iNotificacao = getRetrofit().create(INotificacao.class);
+        INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
         Call<List<Notificacao>> call = iNotificacao.getNotificacaoPorUsuario(3);
         call.enqueue(new Callback<List<Notificacao>>() {
             @Override
@@ -64,13 +60,6 @@ public class NotificationsFragment extends Fragment {
         });
 
         return root;
-    }
-
-    private Retrofit getRetrofit() {
-        return new Retrofit.Builder()
-                .baseUrl("https://ms-sinara-mongo.onrender.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
     }
 
     @Override

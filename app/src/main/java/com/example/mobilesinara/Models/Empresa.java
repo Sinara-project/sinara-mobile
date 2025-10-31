@@ -37,8 +37,8 @@ public class Empresa {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrl(String imagemUrl) {
+        this.imageUrl = imagemUrl;
     }
 
     public void setSenha(String senha) {

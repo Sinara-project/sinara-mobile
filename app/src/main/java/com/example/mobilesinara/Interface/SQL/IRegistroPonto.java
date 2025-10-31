@@ -1,5 +1,6 @@
 package com.example.mobilesinara.Interface.SQL;
 
+import com.example.mobilesinara.DTO.HorasTrabalhadasResponse;
 import com.example.mobilesinara.Models.FormularioPersonalizado;
 import com.example.mobilesinara.Models.RegistroPontoModel;
 
@@ -13,18 +14,18 @@ import retrofit2.http.Path;
 
 public interface IRegistroPonto {
 
-    @GET("/user/registroPonto/buscarPorId/{id}")
+    @GET("/api/user/registroPonto/buscarPorId/{id}")
     Call<RegistroPontoModel> getRegistroPontoPorId(@Path("id") int id);
-    @GET("/user/registroPonto/horarioEntradaSaida/{id}")
+    @GET("/api/user/registroPonto/horarioEntradaSaida/{id}")
     Call<RegistroPontoModel> getHorarioEntradaSaida(@Path("id") int id);
-    @GET("registroPonto/horasTrabalhadas/{id}")
-    Call<String> getHorasTrabalhadas(@Path("id") int id);
-    @GET("/user/registroPonto/listarStatusOperario/{idOperario}")
+    @GET("/api/user/registroPonto/horasTrabalhadas/{idOperario}")
+    Call<HorasTrabalhadasResponse> getHorasTrabalhadas(@Path("idOperario") int idOperario);
+    @GET("/api/user/registroPonto/listarStatusOperario/{idOperario}")
     Call<Boolean> getStatusOperario(@Path("idOperario") int idOperario);
-    @GET("/user/registroPonto/quantidadeRegistroPonto/{idOperario}")
+    @GET("/api/user/registroPonto/quantidadeRegistroPonto/{idOperario}")
     Call<Integer> getQuantidadeRegistroPonto(@Path("idOperario") int idOperario);
-    @GET("/user/registroPonto/ultimoTurno/{idOperario}")
+    @GET("/api/user/registroPonto/ultimoTurno/{idOperario}")
     Call<Date> getUltimoTurno(@Path("idOperario") int idOperario);
-    @POST("/user/registroPonto/inserir")
+    @POST("/api/user/registroPonto/inserir")
     Call<String> inserirRegistroPonto(@Body Date horarioEntrada, Date horarioSaida, int idOperario, int idEmpresa);
 }

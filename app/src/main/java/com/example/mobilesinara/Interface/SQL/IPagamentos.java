@@ -8,7 +8,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 public interface IPagamentos {
-    @GET("/admin/pagamento/buscarPorId/{id}")
+    @GET("/api/admin/pagamento/buscarPorId/{id}")
     Call<Pagamento> getPagamentoPorId(@Path("id") int id);
 
 }

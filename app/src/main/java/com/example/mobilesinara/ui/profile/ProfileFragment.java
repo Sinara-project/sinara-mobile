@@ -9,13 +9,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.example.mobilesinara.DTO.HorasTrabalhadasResponse;
 import com.example.mobilesinara.Interface.Mongo.IRespostaFormularioPersonalizado;
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
 import com.example.mobilesinara.Interface.SQL.IOperario;
@@ -24,17 +24,15 @@ import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
+import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.databinding.FragmentProfileBinding;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
-    private Retrofit retrofit;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ProfileViewModel profileViewModel =
@@ -54,40 +52,23 @@ public class ProfileFragment extends Fragment {
         TextView empresa = root.findViewById(R.id.textView13);
         TextView codEmpresaView = root.findViewById(R.id.textView11);
 
-        Bundle args = getArguments();
-        if (args != null) {
-            String codEmpresa = args.getString("codEmpresa", "(não encontrado)");
-            Log.d("ProfileFragment", "Recebido codEmpresa: " + codEmpresa);
-            codEmpresaView.setText("Código da empresa: " + codEmpresa);
-        } else {
-            Log.e("ProfileFragment", "getArguments() veio nulo!");
-            Toast.makeText(requireContext(), "Nenhum argumento recebido", Toast.LENGTH_SHORT).show();
-        }
-
         btDeslogar.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), TelaOpcoes.class);
             startActivity(intent);
         });
 
-        chamarApi(horasTrabalhadas, horasPrevistas, pontosRegistrados, formsPreenchidos, estaDeFerias, img_pfp, nome, empresa);
+        chamarApi(horasTrabalhadas, horasPrevistas, pontosRegistrados, formsPreenchidos, estaDeFerias, img_pfp, nome, empresa, codEmpresaView);
         return root;
     }
 
     private void chamarApi(TextView horasTrabalhadas, TextView horasPrevistas, TextView pontosRegistrados,
                            TextView formsPreenchidos, TextView estaDeFerias, ImageView img_pfp, TextView nome,
-                           TextView empresaTxt) {
+                           TextView empresaTxt, TextView codEmpresaView) {
 
-        String url = "https://ms-sinara-sql-oox0.onrender.com/api/user/";
-        retrofit = new Retrofit.Builder()
-                .baseUrl(url)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-
-        IRegistroPonto iRegistroPonto = retrofit.create(IRegistroPonto.class);
-        IOperario iOperario = retrofit.create(IOperario.class);
-        IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = retrofit.create(IRespostaFormularioPersonalizado.class);
-
-        int idOperario = 4;
+        IRegistroPonto iRegistroPonto = ApiClientAdapter.getRetrofitInstance().create(IRegistroPonto.class);
+        IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
+        IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IRespostaFormularioPersonalizado.class);
+        int idOperario = 103;
 
         Call<Integer> callGetQtdRespostas = iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(idOperario);
         callGetQtdRespostas.enqueue(new Callback<Integer>() {
@@ -98,6 +79,7 @@ public class ProfileFragment extends Fragment {
                 } else {
                     Log.e("API", "Erro de resposta: " + response.code());
                 }
+
             }
 
             @Override
@@ -139,13 +121,14 @@ public class ProfileFragment extends Fragment {
                     nome.setText(operario.getNome());
 
                     int idEmpresa = operario.getIdEmpresa();
-                    IEmpresa iEmpresa = retrofit.create(IEmpresa.class);
+                    IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
                     Call<Empresa> callGetEmpresa = iEmpresa.getEmpresaPorId(idEmpresa);
                     callGetEmpresa.enqueue(new Callback<Empresa>() {
                         @Override
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if (response.isSuccessful() && response.body() != null) {
                                 empresaTxt.setText(response.body().getNome());
+                                codEmpresaView.setText("Código da empresa: "+response.body().getCodigo());
                                 Log.d("ProfileFragment", "Empresa carregada: " + response.body().getNome());
                             } else {
                                 Log.e("API", "Erro de resposta (empresa): " + response.code());
@@ -170,19 +153,19 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Call<String> callHorasTrabalhadas = iRegistroPonto.getHorasTrabalhadas(idOperario);
-        callHorasTrabalhadas.enqueue(new Callback<String>() {
+        Call<HorasTrabalhadasResponse> callHorasTrabalhadas = iRegistroPonto.getHorasTrabalhadas(idOperario);
+        callHorasTrabalhadas.enqueue(new Callback<HorasTrabalhadasResponse>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<HorasTrabalhadasResponse> call, Response<HorasTrabalhadasResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    horasTrabalhadas.setText(response.body());
+                    horasTrabalhadas.setText(response.body().getHorasTrabalhadas());
                 } else {
                     Log.e("API", "Erro de resposta (horas): " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<HorasTrabalhadasResponse> call, Throwable t) {
                 Log.e("RetrofitError", "Erro horas: " + t.getMessage(), t);
             }
         });

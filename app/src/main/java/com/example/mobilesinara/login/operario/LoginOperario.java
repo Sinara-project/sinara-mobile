@@ -17,18 +17,19 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.example.mobilesinara.Interface.SQL.IOperario;
+import com.example.mobilesinara.Models.OperarioLoginRequestDTO;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
-import com.example.mobilesinara.dto.OperarioLoginRequestDTO;
+import com.example.mobilesinara.api.OperarioService;
+import com.example.mobilesinara.Models.OperarioLoginRequestDTO;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.IOException;
 
-import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Call;
 import retrofit2.Response;
 
 public class LoginOperario extends AppCompatActivity {
@@ -70,7 +71,7 @@ public class LoginOperario extends AppCompatActivity {
                 if (!email.isEmpty() && !cpf.isEmpty() && !senha.isEmpty() && !codigoEmpresa.isEmpty()) {
 
                     OperarioLoginRequestDTO request = new OperarioLoginRequestDTO(email, cpf, senha, codigoEmpresa);
-                    IOperario service = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
+                    OperarioService service = ApiClientAdapter.getRetrofitInstance().create(OperarioService.class);
 
 //                    Chamada do endpoint
                     Call<Boolean> call = service.loginOperario(request);
@@ -153,6 +154,7 @@ public class LoginOperario extends AppCompatActivity {
                         textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(LoginOperario.this, R.drawable.olho_aberto));
                     }
 
+                    // Mantém o cursor no fim
                     if (editTextSenha.getText() != null) {
                         editTextSenha.setSelection(editTextSenha.getText().length());
                     }
