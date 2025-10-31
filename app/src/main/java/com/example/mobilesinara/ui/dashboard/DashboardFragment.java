@@ -27,6 +27,7 @@ import com.example.mobilesinara.Models.FormularioPadrao;
 import com.example.mobilesinara.Models.FormularioPersonalizado;
 import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
+import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.databinding.FragmentDashboardBinding;
 
 import java.text.SimpleDateFormat;
@@ -46,9 +47,7 @@ public class DashboardFragment extends Fragment {
     private RecyclerView recyclerView;
     private EditText txtPesquisa;
 
-    // lista completa (origem). Sempre filtramos a partir daqui.
     private final List<FormularioItem> listaUnificadaAll = new ArrayList<>();
-    // adapter exibido
     private FormUnificadoAdapter adapter;
 
     @Override
@@ -62,16 +61,13 @@ public class DashboardFragment extends Fragment {
         ImageView imgUser = root.findViewById(R.id.imgUser);
         ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
 
-        // configura RecyclerView e adapter vazio desde o início
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         adapter = new FormUnificadoAdapter(new ArrayList<>());
         recyclerView.setAdapter(adapter);
 
-        // carregar fotos e formularios
         carregarDadosUsuario(imgUser, imgEmpresa);
         carregarFormularios(); // esse método adiciona itens à listaUnificadaAll e faz adapter.updateList(...)
 
-        // pesquisa (filtra por título e status)
         txtPesquisa.addTextChangedListener(new TextWatcher() {
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void afterTextChanged(Editable s) {}
@@ -86,7 +82,7 @@ public class DashboardFragment extends Fragment {
     }
 
     private void carregarDadosUsuario(ImageView imgUser, ImageView imgEmpresa) {
-        IOperario iOperario = getRetrofit().create(IOperario.class);
+        IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
         Call<Operario> callOperario = iOperario.getOperarioPorId(4);
 
         callOperario.enqueue(new Callback<Operario>() {
@@ -97,7 +93,7 @@ public class DashboardFragment extends Fragment {
                     Glide.with(requireContext()).load(operario.getImageUrl()).into(imgUser);
 
                     int idEmpresa = operario.getIdEmpresa();
-                    IEmpresa iEmpresa = getRetrofit().create(IEmpresa.class);
+                    IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
                     iEmpresa.getEmpresaPorId(idEmpresa).enqueue(new Callback<Empresa>() {
                         @Override
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
@@ -126,8 +122,8 @@ public class DashboardFragment extends Fragment {
     }
 
     private void carregarFormularios() {
-        IFormularioPadrao iFormularioPadrao = getRetrofit().create(IFormularioPadrao.class);
-        IFormularioPersonalizado iFormularioPersonalizado = getRetrofit().create(IFormularioPersonalizado.class);
+        IFormularioPadrao iFormularioPadrao = ApiClientAdapter.getRetrofitInstance().create(IFormularioPadrao.class);
+        IFormularioPersonalizado iFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IFormularioPersonalizado.class);
 
         iFormularioPadrao.getFormularioPadraoPorEmpresa(2).enqueue(new Callback<List<FormularioPadrao>>() {
             @Override
@@ -162,7 +158,6 @@ public class DashboardFragment extends Fragment {
             }
         });
 
-        // PERSONALIZADO
         iFormularioPersonalizado.getFormularioPersonalizadoPorEmpresa(2).enqueue(new Callback<List<FormularioPersonalizado>>() {
             @Override
             public void onResponse(Call<List<FormularioPersonalizado>> call, Response<List<FormularioPersonalizado>> response) {
@@ -202,13 +197,6 @@ public class DashboardFragment extends Fragment {
             }
         }
         adapter.updateList(filtrada);
-    }
-
-    private Retrofit getRetrofit() {
-        return new Retrofit.Builder()
-                .baseUrl("https://ms-sinara-mongo.onrender.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
     }
 
     @Override
