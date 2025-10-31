@@ -11,6 +11,9 @@
         android:name="com.example.mobilesinara.ui.home.HomeFragment"
         android:label=""
         tools:layout="@layout/fragment_home" >
+        <argument
+            android:name="idUser"
+            app:argType="integer" />
         <action
             android:id="@+id/action_navigation_home_to_registroPonto"
             app:destination="@id/registroPonto" />

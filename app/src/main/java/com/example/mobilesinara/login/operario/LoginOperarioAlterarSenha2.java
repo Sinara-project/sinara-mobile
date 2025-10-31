@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilesinara.HomeOperario;
 import com.example.mobilesinara.R;
+import com.example.mobilesinara.ui.home.HomeFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -41,6 +42,8 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
 
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         Button btContinuar = findViewById(R.id.bt_continuar);
+        Bundle info = getIntent().getExtras();
+        int id = info.getInt("idUser");
 
         btContinuar.setOnClickListener(v -> {
             if (editTextSenha1.getText().toString().isEmpty()
@@ -52,6 +55,9 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
             }
             else{
                 Intent intent = new Intent(LoginOperarioAlterarSenha2.this, HomeOperario.class);
+                intent.putExtra("idUser", id);
+                HomeFragment homeOperario = new HomeFragment();
+                homeOperario.setArguments(info);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }

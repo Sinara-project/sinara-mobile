@@ -1,4 +1,4 @@
-package com.example.mobilesinara.DTO;
+package com.example.mobilesinara.Models;
 
 public class HorasTrabalhadasResponse {
     private String horasTrabalhadas;

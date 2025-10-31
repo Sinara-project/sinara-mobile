@@ -20,7 +20,7 @@ import com.example.mobilesinara.Interface.SQL.IEmpresa;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
-import com.example.mobilesinara.dto.EmpresaLoginRequestDTO;
+import com.example.mobilesinara.Models.EmpresaLoginRequestDTO;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 

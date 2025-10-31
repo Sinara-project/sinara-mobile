@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -23,9 +24,7 @@ import com.example.mobilesinara.Interface.SQL.IOperario;
 import com.example.mobilesinara.Interface.SQL.IRegistroPonto;
 import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Operario;
-import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentHomeBinding;
-import com.example.mobilesinara.registro_ponto.RegistroPonto;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,6 +44,11 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        Bundle args = getArguments();
+        if (args == null || !args.containsKey("idUser")) {
+            Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
+        }
+        int idUser = args.getInt("idUser");
 
         Button botaoPonto = root.findViewById(R.id.button2);
         botaoPonto.setOnClickListener(new View.OnClickListener() {
@@ -54,7 +58,6 @@ public class HomeFragment extends Fragment {
                 getActivity().overridePendingTransition(0, 0);
             }
         });
-
        
         Button bt_status = root.findViewById(R.id.button7);
         TextView formsPendentes = root.findViewById(R.id.formsPendentes);
@@ -82,11 +85,11 @@ public class HomeFragment extends Fragment {
                 Navigation.findNavController(v).navigate(R.id.action_navigation_home_to_configuration);
             }
         });
-        chamarApi(formsPendentes, formsRespondidos, iconUser, iconEmpresa, bt_status);
+        chamarApi(formsPendentes, formsRespondidos, iconUser, iconEmpresa, bt_status, idUser);
         return root;
     }
 
-    private void chamarApi(TextView formsPendentes, TextView formsRespondidos, ImageView iconUser, ImageView iconEmpresa, Button btStatus) {
+    private void chamarApi(TextView formsPendentes, TextView formsRespondidos, ImageView iconUser, ImageView iconEmpresa, Button btStatus, int idUser) {
         String url = "https://ms-sinara-sql-oox0.onrender.com/api/user/";
         retrofit = new Retrofit.Builder()
                 .baseUrl(url)
@@ -96,7 +99,7 @@ public class HomeFragment extends Fragment {
         IRegistroPonto iRegistroPonto = retrofit.create(IRegistroPonto.class);
         IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = retrofit.create(IRespostaFormularioPersonalizado.class);
         IFormularioPersonalizado iFormularioPersonalizado = retrofit.create(IFormularioPersonalizado.class);
-        Call<Boolean> callStatus = iRegistroPonto.getStatusOperario(3);
+        Call<Boolean> callStatus = iRegistroPonto.getStatusOperario(idUser);
         callStatus.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -121,6 +124,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
                   formsRespondidos.setText(String.valueOf(response.body()));
+                  Log.e("Respondidos: ", "Chegou em respondidos com o id: "+idUser);
                 }
             }
             @Override
@@ -128,12 +132,13 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        Call<Integer> callPendentes = iFormularioPersonalizado.getQtdFormulariosPendentes(1);
+        Call<Integer> callPendentes = iFormularioPersonalizado.getQtdFormulariosPendentes(idUser);
         callPendentes.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     formsPendentes.setText(String.valueOf(response.body()));
+                    Log.e("Pendentes: ", "Chegou em pendentes com o id: "+idUser);
                 }
             }
 
@@ -142,11 +147,12 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        Call<Operario> callGetOperario = iOperario.getOperarioPorId(4);
+        Call<Operario> callGetOperario = iOperario.getOperarioPorId(idUser);
         callGetOperario.enqueue(new Callback<Operario>() {
             @Override
             public void onResponse(Call<Operario> call, Response<Operario> response) {
                 if (response.isSuccessful() && response.body() != null) {
+                    Log.e("Operarios: ", "Chegou em operarios com o id: "+idUser);
                     Glide.with(getContext())
                             .load(response.body().getImageUrl())
                             .into(iconUser);
@@ -157,6 +163,7 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if(response.isSuccessful() && response.body() != null) {
+                                Log.e("Empresas: ", "Chegou em empresas com o id: "+idUser);
                                 Glide.with(getContext())
                                         .load(response.body().getImageUrl())
                                         .into(iconEmpresa);

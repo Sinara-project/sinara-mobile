@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,7 +16,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilesinara.Interface.SQL.IOperario;
 import com.example.mobilesinara.R;
-import com.example.mobilesinara.TelaOpcoes;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -29,6 +27,8 @@ import retrofit2.Call;
 
 public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
 
+    private int idUser = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,43 +39,49 @@ public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
         Button cadastrar = findViewById(R.id.bt_cadastrar);
         ShapeableImageView imageView = findViewById(R.id.foto);
 
+        // Recupera a foto
         String photoUriString = getIntent().getStringExtra("photoUri");
         if (photoUriString != null) {
             Uri photoUri = Uri.parse(photoUriString);
             imageView.setImageURI(photoUri);
         }
 
+        // Recupera informações do usuário
         Bundle info = getIntent().getExtras();
-
-        //botão de voltar
-        btVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginOperarioCadastroRosto2.this, LoginOperarioCadastroRosto.class));
-                overridePendingTransition(0, 0);
+        if (info != null) {
+            if (info.containsKey("idUser")) {
+                idUser = info.getInt("idUser");
+            } else if (info.containsKey("id")) {
+                idUser = info.getInt("id");
             }
+        }
+
+        // botão voltar
+        btVoltar.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginOperarioCadastroRosto2.this, LoginOperarioCadastroRosto.class);
+            intent.putExtra("idUser", idUser);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
         });
 
-        cadastrar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (photoUriString != null && info != null) {
-                    Uri photoUri = Uri.parse(photoUriString);
-                    enviarFotoParaServidor(photoUri, info);
-                }
-
-                Intent intent = new Intent(LoginOperarioCadastroRosto2.this, LoginOperarioAlterarSenha.class);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
+        // botão cadastrar
+        cadastrar.setOnClickListener(v -> {
+            if (photoUriString != null && idUser != -1) {
+                Uri photoUri = Uri.parse(photoUriString);
+                enviarFotoParaServidor(photoUri, idUser);
             }
+
+            Intent intent = new Intent(LoginOperarioCadastroRosto2.this, LoginOperarioAlterarSenha.class);
+            intent.putExtra("idUser", idUser);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
         });
     }
-    private void enviarFotoParaServidor(Uri photoUri, Bundle info) {
-        if (photoUri == null || info == null) return;
 
-        Integer idOperario = info.getInt("id");
+    private void enviarFotoParaServidor(Uri photoUri, int idOperario) {
+        if (photoUri == null || idOperario == -1) return;
+
         File file = new File(photoUri.getPath());
-
         RequestBody requestFile = RequestBody.create(file, okhttp3.MediaType.parse("image/*"));
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 

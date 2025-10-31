@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
-import com.example.mobilesinara.DTO.HorasTrabalhadasResponse;
+import com.example.mobilesinara.Models.HorasTrabalhadasResponse;
 import com.example.mobilesinara.Interface.Mongo.IRespostaFormularioPersonalizado;
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
 import com.example.mobilesinara.Interface.SQL.IOperario;
