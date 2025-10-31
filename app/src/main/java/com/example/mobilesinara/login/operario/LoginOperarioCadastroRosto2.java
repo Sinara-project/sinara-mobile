@@ -36,8 +36,6 @@ public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
             imageView.setImageURI(photoUri);
         }
 
-        Bundle info = getIntent().getExtras();
-
         //botão de voltar
         btVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +49,6 @@ public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginOperarioCadastroRosto2.this, LoginOperarioAlterarSenha.class);
-                intent.putExtras(info);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }

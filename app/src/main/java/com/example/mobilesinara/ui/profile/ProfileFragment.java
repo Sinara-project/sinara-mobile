@@ -33,7 +33,6 @@ import retrofit2.Response;
 
 public class ProfileFragment extends Fragment {
     private FragmentProfileBinding binding;
-    private String cpfUser;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         ProfileViewModel profileViewModel =
@@ -53,14 +52,6 @@ public class ProfileFragment extends Fragment {
         TextView empresa = root.findViewById(R.id.textView13);
         TextView codEmpresaView = root.findViewById(R.id.textView11);
 
-        Bundle args = getArguments();
-        if (args != null) {
-            cpfUser = args.getString("cpf", "(não encontrado)");
-            Log.d("ProfileFragment", "Recebido cpf: " + cpfUser);
-        } else {
-            Log.e("ProfileFragment", "getArguments() veio nulo!");
-        }
-
         btDeslogar.setOnClickListener(v -> {
             Intent intent = new Intent(requireContext(), TelaOpcoes.class);
             startActivity(intent);
@@ -77,24 +68,9 @@ public class ProfileFragment extends Fragment {
         IRegistroPonto iRegistroPonto = ApiClientAdapter.getRetrofitInstance().create(IRegistroPonto.class);
         IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
         IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IRespostaFormularioPersonalizado.class);
-        Call<Integer> callIdUserComCpf = iOperario.getIdPorCpf(cpfUser);
-        final int[] idOperario = {0};
-        callIdUserComCpf.enqueue(new Callback<Integer>() {
-            @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                  idOperario[0] = response.body();
-                  Log.e("o id do user é: ", String.valueOf(idOperario[0]));
-                }
-            }
+        int idOperario = 103;
 
-            @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
-
-            }
-        });
-
-        Call<Integer> callGetQtdRespostas = iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(idOperario[0]);
+        Call<Integer> callGetQtdRespostas = iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(idOperario);
         callGetQtdRespostas.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -112,7 +88,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Call<Integer> callGetQtdPontos = iRegistroPonto.getQuantidadeRegistroPonto(idOperario[0]);
+        Call<Integer> callGetQtdPontos = iRegistroPonto.getQuantidadeRegistroPonto(idOperario);
         callGetQtdPontos.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -129,7 +105,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Call<Operario> callGetOperario = iOperario.getOperarioPorId(idOperario[0]);
+        Call<Operario> callGetOperario = iOperario.getOperarioPorId(idOperario);
         callGetOperario.enqueue(new Callback<Operario>() {
             @Override
             public void onResponse(Call<Operario> call, Response<Operario> response) {
@@ -177,7 +153,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        Call<HorasTrabalhadasResponse> callHorasTrabalhadas = iRegistroPonto.getHorasTrabalhadas(idOperario[0]);
+        Call<HorasTrabalhadasResponse> callHorasTrabalhadas = iRegistroPonto.getHorasTrabalhadas(idOperario);
         callHorasTrabalhadas.enqueue(new Callback<HorasTrabalhadasResponse>() {
             @Override
             public void onResponse(Call<HorasTrabalhadasResponse> call, Response<HorasTrabalhadasResponse> response) {

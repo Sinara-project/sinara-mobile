@@ -47,7 +47,7 @@ public class notificacaoEmpresa extends Fragment {
         ImageView imgUser = root.findViewById(R.id.imgUser);
         ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
         IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
-        Call<Operario> callOperario = iOperario.getOperarioPorId(4);
+        Call<Operario> callOperario = iOperario.getOperarioPorId(3);
         callOperario.enqueue(new Callback<Operario>() {
             @Override
             public void onResponse(Call<Operario> call, Response<Operario> response) {

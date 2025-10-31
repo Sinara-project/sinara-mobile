@@ -32,7 +32,6 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        Bundle info = getIntent().getExtras();
         TextInputLayout textInputLayout1 = findViewById(R.id.textInputLayout1);
         TextInputEditText editTextSenha1 = findViewById(R.id.mostrar_senha_atual);
         TextInputLayout textInputLayout2 = findViewById(R.id.textInputLayout2);
@@ -52,9 +51,7 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
                 Toast.makeText(LoginOperarioAlterarSenha2.this, "As senhas não correspondem", Toast.LENGTH_SHORT).show();
             }
             else{
-                info.putString("senha", editTextSenha2.getText().toString());
                 Intent intent = new Intent(LoginOperarioAlterarSenha2.this, HomeOperario.class);
-                intent.putExtras(info);
                 startActivity(intent);
                 overridePendingTransition(0, 0);
             }
