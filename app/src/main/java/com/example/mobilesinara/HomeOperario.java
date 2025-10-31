@@ -1,6 +1,8 @@
 package com.example.mobilesinara;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -22,7 +24,6 @@ public class HomeOperario extends AppCompatActivity {
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
 
-        // Configuração dos destinos de topo (bottom navigation)
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home_operario,
                 R.id.navigation_forms_operario,
@@ -31,18 +32,16 @@ public class HomeOperario extends AppCompatActivity {
         ).build();
 
         Bundle info = getIntent().getExtras();
-        if (info == null) {
-            info = new Bundle();
-            info.putInt("idUser", -1); // valor de segurança
+        int idUser = -1;
+        if (info != null && info.containsKey("idUser")) {
+            idUser = info.getInt("idUser");
         }
 
+        SharedPreferences prefs = getSharedPreferences("sinara_prefs", MODE_PRIVATE);
+        prefs.edit().putInt("idUser", idUser).apply();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_home_operario);
-        navController.setGraph(R.navigation.mobile_navigation, info);
-        NavigationUI.setupWithNavController(binding.navView, navController);
-
-        navController.setGraph(R.navigation.mobile_navigation, info);
-
-        // Liga o bottom navigation ao NavController
+        navController.setGraph(R.navigation.mobile_navigation, info != null ? info : new Bundle());
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 }

@@ -91,7 +91,7 @@ public class notificacaoEmpresa extends Fragment {
             }
         });
         INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
-        Call<List<Notificacao>> call = iNotificacao.getNotificacaoPorUsuario(456);
+        Call<List<Notificacao>> call = iNotificacao.getNotificacaoPorEmpresa(456);
         call.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<List<Notificacao>> call, Response<List<Notificacao>> response) {

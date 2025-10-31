@@ -24,6 +24,7 @@ import com.example.mobilesinara.Interface.SQL.IOperario;
 import com.example.mobilesinara.Interface.SQL.IRegistroPonto;
 import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Operario;
+import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.databinding.FragmentHomeBinding;
 
 import retrofit2.Call;
@@ -95,10 +96,10 @@ public class HomeFragment extends Fragment {
                 .baseUrl(url)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-        IOperario iOperario = retrofit.create(IOperario.class);
-        IRegistroPonto iRegistroPonto = retrofit.create(IRegistroPonto.class);
-        IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = retrofit.create(IRespostaFormularioPersonalizado.class);
-        IFormularioPersonalizado iFormularioPersonalizado = retrofit.create(IFormularioPersonalizado.class);
+        IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
+        IRegistroPonto iRegistroPonto = ApiClientAdapter.getRetrofitInstance().create(IRegistroPonto.class);
+        IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IRespostaFormularioPersonalizado.class);
+        IFormularioPersonalizado iFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IFormularioPersonalizado.class);
         Call<Boolean> callStatus = iRegistroPonto.getStatusOperario(idUser);
         callStatus.enqueue(new Callback<Boolean>() {
             @Override
@@ -118,7 +119,7 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        Call<Integer> callRespondidos = iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(4);
+        Call<Integer> callRespondidos = iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(idUser);
         callRespondidos.enqueue(new Callback<Integer>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
