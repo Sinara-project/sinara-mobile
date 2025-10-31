@@ -17,12 +17,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mobilesinara.Models.OperarioLoginRequestDTO;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.api.OperarioService;
-import com.example.mobilesinara.login.adm.LoginADM;
-import com.example.mobilesinara.model.OperarioLoginRequestDTO;
+import com.example.mobilesinara.Models.OperarioLoginRequestDTO;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
