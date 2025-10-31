@@ -76,18 +76,6 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".cadastro.operario.CadastroOperarioSucesso"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".cadastro.operario.CadastroOperarioPermissoes"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".cadastro.operario.CadastroOperario"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".TelaOpcoes"
             android:exported="false"
             android:screenOrientation="portrait" />

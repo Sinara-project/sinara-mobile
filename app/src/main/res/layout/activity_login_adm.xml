@@ -8,12 +8,12 @@
     tools:context=".login.adm.LoginADM">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_avancar"
+        android:id="@+id/bt_fazer_login"
         android:layout_width="300dp"
         android:layout_height="62dp"
         android:layout_marginBottom="73dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Avançar"
+        android:text="Fazer login"
         android:textColor="@color/md_theme_surfaceVariant"
         android:textSize="18sp"
         app:backgroundTint="@color/md_theme_primaryFixed_highContrast"

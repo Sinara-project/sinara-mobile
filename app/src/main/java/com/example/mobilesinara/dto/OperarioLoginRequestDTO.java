@@ -1,4 +1,4 @@
-package com.example.mobilesinara.model;
+package com.example.mobilesinara.dto;
 
 public class OperarioLoginRequestDTO {
     private String email;
