@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -47,16 +46,13 @@ public class LoginOperarioCadastroRosto extends AppCompatActivity {
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         info = getIntent().getExtras();
 
-        // botão de voltar
         btVoltar.setOnClickListener(view -> {
             startActivity(new Intent(LoginOperarioCadastroRosto.this, LoginOperario.class));
             overridePendingTransition(0, 0);
         });
 
-        // inicializa o launcher da câmera
         setCamera();
 
-        // botão tirar foto
         btTirarFoto.setOnClickListener(v -> {
             Toast.makeText(this, "Centralize seu rosto na câmera", Toast.LENGTH_LONG).show();
             try {
@@ -103,7 +99,6 @@ public class LoginOperarioCadastroRosto extends AppCompatActivity {
                 photo
         );
 
-        // abre a câmera
         cameraLauncher.launch(photoUri);
     }
 }

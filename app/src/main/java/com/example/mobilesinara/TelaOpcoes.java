@@ -7,9 +7,6 @@ import android.widget.Button;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
-//import com.example.mobilesinara.cadastro.adm.CadastroAdm;
-//import com.example.mobilesinara.Login.adm.loginAdm;
-import com.example.mobilesinara.cadastro.operario.CadastroOperario;
 import com.example.mobilesinara.login.adm.LoginADM;
 import com.example.mobilesinara.login.operario.LoginOperario;
 

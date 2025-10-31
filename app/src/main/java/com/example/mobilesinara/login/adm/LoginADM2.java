@@ -18,7 +18,6 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilesinara.HomeEmpresa;
 import com.example.mobilesinara.R;
-import com.example.mobilesinara.cadastro.operario.CadastroOperario;
 
 public class LoginADM2 extends AppCompatActivity {
 

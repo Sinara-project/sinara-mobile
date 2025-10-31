@@ -1,6 +1,5 @@
 package com.example.mobilesinara.ui.home;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,17 +8,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.example.mobilesinara.R;
-import com.example.mobilesinara.TelaOpcoes;
-import com.example.mobilesinara.cadastro.operario.CadastroOperario;
-import com.example.mobilesinara.cadastro.operario.CadastroOperarioPermissoes;
 import com.bumptech.glide.Glide;
 import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
 import com.example.mobilesinara.Interface.Mongo.IRespostaFormularioPersonalizado;
@@ -30,7 +24,6 @@ import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentHomeBinding;
-import com.example.mobilesinara.registro_ponto.RegistroPonto;
 
 import retrofit2.Call;
 import retrofit2.Callback;
