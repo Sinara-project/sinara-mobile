@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/md_theme_onBackground"
     android:backgroundTint="@color/md_theme_onBackground"
-    tools:context=".ChatBot">
+    tools:context=".ui.ChatBot.ChatBot">
 
     <ImageView
         android:id="@+id/imageView14"

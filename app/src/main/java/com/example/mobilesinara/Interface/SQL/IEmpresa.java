@@ -2,7 +2,7 @@ package com.example.mobilesinara.Interface.SQL;
 
 import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.PerfilEmpresa;
-import com.example.mobilesinara.dto.EmpresaLoginRequestDTO;
+import com.example.mobilesinara.Models.EmpresaLoginRequestDTO;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

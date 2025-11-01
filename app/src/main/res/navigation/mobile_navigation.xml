@@ -11,6 +11,9 @@
         android:name="com.example.mobilesinara.ui.home.HomeFragment"
         android:label=""
         tools:layout="@layout/fragment_home" >
+        <argument
+            android:name="idUser"
+            app:argType="integer" />
         <action
             android:id="@+id/action_navigation_home_to_registroPonto"
             app:destination="@id/registroPonto" />
@@ -24,6 +27,10 @@
         android:name="com.example.mobilesinara.ui.dashboard.DashboardFragment"
         android:label="Formularios_Operario"
         tools:layout="@layout/fragment_dashboard">
+        <argument
+            android:name="idUser"
+            app:argType="integer"
+            android:defaultValue="-1" />
         <action
             android:id="@+id/action_navigation_dashboard_to_monitoramentoAguardando"
             app:destination="@id/monitoramentoAguardando" />
@@ -34,11 +41,19 @@
         android:name="com.example.mobilesinara.ui.notifications.NotificationsFragment"
         android:label="Notificações"
         tools:layout="@layout/fragment_notifications" />
+        <argument
+            android:name="idUser"
+            app:argType="integer"
+            android:defaultValue="-1" />
     <fragment
         android:id="@+id/navigation_profile_operario"
         android:name="com.example.mobilesinara.ui.profile.ProfileFragment"
         android:label="Perfil"
         tools:layout="@layout/fragment_profile"/>
+        <argument
+            android:name="idUser"
+            app:argType="integer"
+            android:defaultValue="-1" />
     <fragment
         android:id="@+id/registroPonto"
         android:name="com.example.mobilesinara.registro_ponto.RegistroPonto"
@@ -120,7 +135,7 @@
         tools:layout="@layout/fragment_formulario_respondido" />
     <fragment
         android:id="@+id/ChatBot"
-        android:name="com.example.mobilesinara.ChatBot"
+        android:name="com.example.mobilesinara.ui.ChatBot.ChatBot"
         android:label="fragment_chat_bot"
         tools:layout="@layout/fragment_chat_bot" />
 </navigation>

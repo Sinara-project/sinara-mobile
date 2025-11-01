@@ -29,6 +29,7 @@ public class LoginOperarioCadastroRosto extends AppCompatActivity {
     private Uri photoUri;
     private ActivityResultLauncher<Uri> cameraLauncher;
     private Bundle info;
+    private int idUser = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +45,21 @@ public class LoginOperarioCadastroRosto extends AppCompatActivity {
 
         Button btTirarFoto = findViewById(R.id.bt_tirar_foto);
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
+
+        // Recupera as informações enviadas pela tela anterior
         info = getIntent().getExtras();
+        if (info != null) {
+            if (info.containsKey("idUser")) {
+                idUser = info.getInt("idUser");
+            } else if (info.containsKey("id")) {
+                idUser = info.getInt("id");
+            }
+        }
 
         btVoltar.setOnClickListener(view -> {
             startActivity(new Intent(LoginOperarioCadastroRosto.this, LoginOperario.class));
             overridePendingTransition(0, 0);
+            finish();
         });
 
         setCamera();
@@ -75,6 +86,7 @@ public class LoginOperarioCadastroRosto extends AppCompatActivity {
                         Intent intent = new Intent(this, LoginOperarioCadastroRosto2.class);
                         if (info != null) intent.putExtras(info);
                         intent.putExtra("photoUri", photoUri.toString());
+                        intent.putExtra("idUser", idUser);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                         finish();

@@ -1,7 +1,6 @@
 package com.example.mobilesinara.Interface.SQL;
 
-import com.example.mobilesinara.DTO.HorasTrabalhadasResponse;
-import com.example.mobilesinara.Models.FormularioPersonalizado;
+import com.example.mobilesinara.Models.HorasTrabalhadasResponse;
 import com.example.mobilesinara.Models.RegistroPontoModel;
 
 import java.util.Date;

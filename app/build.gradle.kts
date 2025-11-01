@@ -61,4 +61,6 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:3.0.0")
     implementation("com.github.bumptech.glide:glide:5.0.4")
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+    implementation("com.google.guava:guava:32.1.3-android")
 }

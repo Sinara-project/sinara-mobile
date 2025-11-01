@@ -1,4 +1,4 @@
-package com.example.mobilesinara.dto;
+package com.example.mobilesinara.Models;
 
 public class EmpresaLoginRequestDTO {
     private String cnpj;

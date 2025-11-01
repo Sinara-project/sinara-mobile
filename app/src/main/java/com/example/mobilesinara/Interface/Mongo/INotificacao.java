@@ -12,8 +12,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 public interface INotificacao {
-    @GET("https://ms-sinara-mongo.onrender.com/notificacoes/buscar-por-usuario/{id}")
-    Call<List<Notificacao>> getNotificacaoPorUsuario(@Path("id") int id);
+    @GET("https://ms-sinara-mongo.onrender.com/notificacoes/buscar-por-empresa/{idEmpresa}")
+    Call<List<Notificacao>> getNotificacaoPorEmpresa(@Path("idEmpresa") int id);
     @GET("https://ms-sinara-mongo.onrender.com/notificacoes/{id}")
     Call<Notificacao> getNotificacaoPorId(@Path("id") String id);
     @POST("https://ms-sinara-mongo.onrender.com/notificacoes/inserir")
