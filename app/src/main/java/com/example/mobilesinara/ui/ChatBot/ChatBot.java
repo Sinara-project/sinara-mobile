@@ -1,6 +1,7 @@
 package com.example.mobilesinara.ui.ChatBot;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,11 +16,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.mobilesinara.adapter.RetrofitClient;
 import com.example.mobilesinara.Interface.IChatBotAPI;
 import com.example.mobilesinara.Models.ChatRequest;
 import com.example.mobilesinara.Models.ChatResponse;
 import com.example.mobilesinara.R;
+import com.example.mobilesinara.adapter.RetrofitClient;
 import com.example.mobilesinara.databinding.FragmentChatBotBinding;
 
 import retrofit2.Call;
@@ -29,6 +30,7 @@ import retrofit2.Response;
 public class ChatBot extends Fragment {
 
     private FragmentChatBotBinding binding;
+    private static final String TAG = "ChatBot";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,12 +48,16 @@ public class ChatBot extends Fragment {
         sendButton.setOnClickListener(v -> {
             String message = input.getText().toString().trim();
             if (!message.isEmpty()) {
+                Log.d(TAG, "Usuário enviou: " + message);
+
                 addUserMessage(message, layoutMessages, inflater);
                 input.setText("");
 
                 scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
 
                 sendMessageToBot(message, layoutMessages, inflater, scrollView);
+            } else {
+                Log.w(TAG, "Campo de texto vazio, nada enviado.");
             }
         });
 
@@ -76,20 +82,41 @@ public class ChatBot extends Fragment {
         IChatBotAPI api = RetrofitClient.getInstance().create(IChatBotAPI.class);
         ChatRequest request = new ChatRequest(userMessage);
 
-        api.sendMessage(request).enqueue(new Callback<ChatResponse>() {
+        Log.d(TAG, "Enviando mensagem para o servidor: " + userMessage);
+        Log.d(TAG, "Request body: " + request.toString());
+
+        Call<ChatResponse> call = api.sendMessage(request);
+        Log.d(TAG, "URL chamada: " + call.request().url());
+
+        call.enqueue(new Callback<ChatResponse>() {
             @Override
             public void onResponse(Call<ChatResponse> call, Response<ChatResponse> response) {
+                Log.d(TAG, "Resposta recebida do servidor. Código HTTP: " + response.code());
+
                 if (response.isSuccessful() && response.body() != null) {
                     String reply = response.body().getReply();
+                    Log.d(TAG, "Resposta do bot: " + reply);
+
                     addBotMessage(reply, layout, inflater);
                     scrollView.post(() -> scrollView.fullScroll(View.FOCUS_DOWN));
                 } else {
-                    addBotMessage("Erro: resposta inválida do servidor.", layout, inflater);
+                    String errorBody = "";
+                    try {
+                        errorBody = response.errorBody() != null ? response.errorBody().string() : "null";
+                    } catch (Exception e) {
+                        Log.e(TAG, "Erro ao ler corpo de erro", e);
+                    }
+
+                    Log.e(TAG, "Erro na resposta do servidor. Código: " + response.code() +
+                            " Corpo: " + errorBody);
+
+                    addBotMessage("Erro: resposta inválida do servidor (" + response.code() + ")", layout, inflater);
                 }
             }
 
             @Override
             public void onFailure(Call<ChatResponse> call, Throwable t) {
+                Log.e(TAG, "Falha na conexão com o servidor", t);
                 addBotMessage("Falha na conexão: " + t.getMessage(), layout, inflater);
                 Toast.makeText(getContext(), "Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }

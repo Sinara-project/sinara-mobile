@@ -2,6 +2,7 @@ package com.example.mobilesinara.Models;
 
 public class Empresa {
     private String cnpj;
+    private int id;
     private String nome;
     private String senha;
     private String senhaAreaRestrita;
@@ -23,6 +24,14 @@ public class Empresa {
         this.ramoAtuacao = ramoAtuacao;
         this.telefone = telefone;
         this.idPlano = idPlano;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {

@@ -14,8 +14,8 @@ import retrofit2.http.Path;
 public interface IEmpresa {
     @GET("/api/admin/empresa/buscarPorId/{id}")
     Call<Empresa> getEmpresaPorId(@Path("id") int id);
-    @GET("/api/admin/empresa/obterId/{cnpj}")
-    Call<Empresa> getCnpjPorId(@Path("cnpj") String cnpj);
+    @GET("/api/admin/empresa/obterEmpresaPorCnpj/{cnpj}")
+    Call<Empresa> getEmpresaPorCnpj(@Path("cnpj") String cnpj);
     @GET("/api/admin/empresa/listarPerfilEmpresa/{id}")
     Call<PerfilEmpresa> listarPerfilEmpresa(@Path("id") int id);
     @PATCH("/api/admin/empresa/atualizarSenhaAreaRestrita/{id}")
@@ -26,5 +26,5 @@ public interface IEmpresa {
     Call<String> rebaixarPlanos();
 
     @POST("/api/admin/empresa/loginEmpresa")
-    Call<Boolean> loginEmpresa(@Body EmpresaLoginRequestDTO loginRequest);
+    Call<Empresa> loginEmpresa(@Body EmpresaLoginRequestDTO loginRequest);
 }

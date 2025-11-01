@@ -17,6 +17,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
+import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
@@ -67,39 +68,26 @@ public class LoginADM extends AppCompatActivity {
                 EmpresaLoginRequestDTO request = new EmpresaLoginRequestDTO(cnpj, senha);
                 IEmpresa empresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
 
-                Call<Boolean> call = empresa.loginEmpresa(request);
-                call.enqueue(new Callback<Boolean>() {
+                Call<Empresa> call = empresa.loginEmpresa(request);
+                call.enqueue(new Callback<Empresa>() {
                     @Override
-                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                         if (response.isSuccessful() && response.body() != null) {
-                            boolean sucesso = response.body();
-                            if (sucesso) {
-                                Toast.makeText(LoginADM.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginADM.this, LoginADM2.class);
-                                intent.putExtra("cnpj", cnpj);
-                                startActivity(intent);
-                                overridePendingTransition(0, 0);
-                            } else {
-                                Toast.makeText(LoginADM.this, "Dados inválidos. Tente novamente.", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            String errorBody = "";
-                            try {
-                                if (response.errorBody() != null)
-                                    errorBody = response.errorBody().string();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            Toast.makeText(LoginADM.this,
-                                    "Erro no servidor. HTTP " + response.code() + " - " + errorBody,
-                                    Toast.LENGTH_LONG).show();
-                            Log.e("LOGIN", "Erro http: " + response.code() + " body: " + errorBody);
+                            Toast.makeText(LoginADM.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginADM.this, LoginADM2.class);
+                            intent.putExtra("cnpj", cnpj);
+                            intent.putExtra("email", response.body().getEmail());
+                            Log.d("LOGIN_ADM", "CNPJ digitado: " + cnpj);
+                            startActivity(intent);
+                            overridePendingTransition(0, 0);
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<Boolean> call, Throwable t) {
+                    public void onFailure(Call<Empresa> call, Throwable t) {
                         Toast.makeText(LoginADM.this, "Falha na conexão: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("LOGIN", "Falha na conexão: " + t.getMessage());
+
                     }
                 });
 
