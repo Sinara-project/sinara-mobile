@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -6,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/md_theme_onBackground"
-    tools:context=".registro_ponto.RegistroPonto">
+    tools:context=".registro_ponto.RegistroPontoSucesso">
 
     <ImageView
         android:id="@+id/imageView9"
@@ -46,70 +45,63 @@
         android:fontFamily="@font/montserrat_bold"
         android:text="Registrar ponto"
         android:textColor="@color/md_theme_primaryContainer"
-        android:textSize="50dp"
+        android:textSize="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="00:00"
+        android:text="14:00"
         android:textColor="#FF7655"
-        android:textSize="90dp"
+        android:textSize="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-    <ImageView
-        android:id="@+id/voltar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="120dp"
-        android:src="@drawable/bt_voltar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/registro_senha"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/montserrat"
-        android:text="Registrar com senha"
-        android:textColor="#0B1B54"
-        android:textSize="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/bt_registrar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="421dp"
-        android:layout_height="306dp"
-        android:layout_marginTop="60dp"
-        android:src="@drawable/bate_ponto"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <Button
-        android:id="@+id/bt_registrar"
-        android:layout_width="400dp"
-        android:layout_height="62dp"
+        android:id="@+id/bt_voltar"
+        android:layout_width="305dp"
+        android:layout_height="60dp"
         android:layout_marginBottom="40dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
-        android:text="Registrar ponto"
+        android:text="Voltar"
         android:textSize="18sp"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="342dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/montserrat_bold"
+        android:gravity="center"
+        android:text="Ponto registrado!"
+        android:textColor="#0B1B54"
+        android:textSize="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView19" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="55dp"
+        android:src="@drawable/icone_sucesso"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView22" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

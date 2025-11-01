@@ -63,4 +63,5 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
     implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
     implementation("com.google.guava:guava:32.1.3-android")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
 }

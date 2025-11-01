@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.operario.LoginOperario">
+    tools:context=".login.operario.LoginOperarioCadastroRosto2">
 
     <ImageView
         android:id="@+id/imageView8"
@@ -20,7 +20,7 @@
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="289dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:fontFamily="@font/montserrat_medium"
@@ -62,5 +62,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bt_voltar"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/foto"
+        android:layout_width="233dp"
+        android:layout_height="352dp"
+        android:layout_marginTop="60dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:shapeAppearanceOverlay="@style/CircleImageView"
+        app:srcCompat="@drawable/bater_ponto_cadastro" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

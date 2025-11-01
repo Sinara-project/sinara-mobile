@@ -16,14 +16,14 @@
 
     <ImageView
         android:id="@+id/imageView11"
-        android:layout_width="wrap_content"
-        android:layout_height="270dp"
-        android:src="@drawable/registro_ponto"
+        android:layout_width="309dp"
+        android:layout_height="461dp"
         android:contentDescription="Ícone de registro"
-        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/registro_ponto"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/bt_bater_ponto"
