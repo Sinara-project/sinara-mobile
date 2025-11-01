@@ -10,6 +10,6 @@ import retrofit2.http.POST;
 
 public interface IChatBotAPI {
     @Headers("Content-Type: application/json")
-    @POST
+    @POST("docs")
     Call<ChatResponse> sendMessage(@Body ChatRequest request);
 }
