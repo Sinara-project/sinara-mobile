@@ -35,12 +35,12 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_avancar"
+        android:id="@+id/bt_tirar_foto"
         android:layout_width="350dp"
         android:layout_height="62dp"
         android:layout_marginBottom="73dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Avançar"
+        android:text="Tirar foto"
         android:textColor="@color/md_theme_surfaceVariant"
         android:textSize="18sp"
         app:backgroundTint="@color/md_theme_primaryFixed_highContrast"
@@ -65,9 +65,9 @@
 
     <ImageView
         android:id="@+id/imageView14"
-        android:layout_width="314dp"
-        android:layout_height="552dp"
-        android:layout_marginTop="200dp"
+        android:layout_width="223dp"
+        android:layout_height="315dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView12"

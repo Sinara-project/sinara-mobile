@@ -78,37 +78,69 @@ public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
         });
     }
 
+    private File getFileFromUri(Uri uri) throws Exception {
+        File file = new File(getCacheDir(), "upload_image.jpg");
+        try (java.io.InputStream inputStream = getContentResolver().openInputStream(uri);
+             java.io.OutputStream outputStream = new java.io.FileOutputStream(file)) {
+            byte[] buffer = new byte[4096];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.flush();
+        }
+        return file;
+    }
+
     private void enviarFotoParaServidor(Uri photoUri, int idOperario) {
         if (photoUri == null || idOperario == -1) return;
 
-        File file = new File(photoUri.getPath());
-        RequestBody requestFile = RequestBody.create(file, okhttp3.MediaType.parse("image/*"));
-        MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
+        try {
+            File file = getFileFromUri(photoUri);
+            RequestBody requestFile = RequestBody.create(file, okhttp3.MediaType.parse("multipart/form-data"));
+            MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-        IOperario api = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
-        Call<String> call = api.uploadFotoReconhecimento(idOperario, body);
+            IOperario api = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
+            Call<String> call = api.uploadFotoReconhecimento(idOperario, body);
 
-        call.enqueue(new retrofit2.Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
-                if (response.isSuccessful()) {
+            System.out.println("Enviando foto para servidor...");
+            System.out.println("Arquivo: " + file.getAbsolutePath());
+            System.out.println("ID Operário: " + idOperario);
+            System.out.println("Nome do arquivo: " + file.getName());
+
+            call.enqueue(new retrofit2.Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+                    System.out.println("Código HTTP: " + response.code());
+                    System.out.println("Mensagem: " + response.message());
+                    try {
+                        if (response.errorBody() != null)
+                            System.out.println("Erro: " + response.errorBody().string());
+                    } catch (Exception e) { e.printStackTrace(); }
+
+                    if (response.isSuccessful()) {
+                        runOnUiThread(() ->
+                                Toast.makeText(LoginOperarioCadastroRosto2.this, "Foto enviada com sucesso!", Toast.LENGTH_SHORT).show()
+                        );
+                    } else {
+                        runOnUiThread(() ->
+                                Toast.makeText(LoginOperarioCadastroRosto2.this, "Falha ao enviar foto (" + response.code() + ")", Toast.LENGTH_SHORT).show()
+                        );
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    t.printStackTrace();
                     runOnUiThread(() ->
-                            Toast.makeText(LoginOperarioCadastroRosto2.this, "Foto enviada com sucesso!", Toast.LENGTH_SHORT).show()
-                    );
-                } else {
-                    runOnUiThread(() ->
-                            Toast.makeText(LoginOperarioCadastroRosto2.this, "Falha ao enviar foto", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(LoginOperarioCadastroRosto2.this, "Erro: " + t.getMessage(), Toast.LENGTH_LONG).show()
                     );
                 }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                t.printStackTrace();
-                runOnUiThread(() ->
-                        Toast.makeText(LoginOperarioCadastroRosto2.this, "Erro: " + t.getMessage(), Toast.LENGTH_LONG).show()
-                );
-            }
-        });
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Erro ao preparar a imagem: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
     }
+
 }
