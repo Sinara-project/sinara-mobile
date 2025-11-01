@@ -77,7 +77,7 @@ public class notificacaoEmpresa extends Fragment {
                             .load(response.body().getImageUrl())
                             .into(imgEmpresa);
                     INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
-                    Call<List<Notificacao>> callNotificacao = iNotificacao.getNotificacaoPorEmpresa(456);
+                    Call<List<Notificacao>> callNotificacao = iNotificacao.getNotificacaoPorEmpresa(id[0]);
                     callNotificacao.enqueue(new Callback<>() {
                         @Override
                         public void onResponse(Call<List<Notificacao>> call, Response<List<Notificacao>> response) {
