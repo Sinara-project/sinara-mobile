@@ -1,5 +1,7 @@
 package com.example.mobilesinara.ui.notificacaoEmpresa;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,71 +45,63 @@ public class notificacaoEmpresa extends Fragment {
 
         binding = FragmentNotificacaoEmpresaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        Bundle args = getArguments();
+        String cnpj = null;
+        final int[] id = new int[1];
+
+        if (args != null && args.containsKey("cnpj")) {
+            cnpj = args.getString("cnpj");
+            Log.d("TELA_HOME_EMPRESA", "CNPJ recebido via argumentos: " + cnpj);
+        } else {
+            // fallback: tenta pegar do SharedPreferences
+            SharedPreferences prefs = requireContext().getSharedPreferences("sinara_prefs", Context.MODE_PRIVATE);
+            cnpj = prefs.getString("cnpj", null);
+            Log.d("TELA_HOME_EMPRESA", "CNPJ recuperado do SharedPreferences: " + cnpj);
+        }
+
+        if (cnpj == null || cnpj.isEmpty()) {
+            Log.e("API", "CNPJ é null ou vazio! Não é possível chamar a API.");
+            Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
+            return root;
+        }
         RecyclerView recyclerView = root.findViewById(R.id.recyclerNotification);
-        ImageView imgUser = root.findViewById(R.id.imgUser);
         ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
-        IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
-        Call<Operario> callOperario = iOperario.getOperarioPorId(3);
-        callOperario.enqueue(new Callback<Operario>() {
+        IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
+        Call<Empresa> callEmpresaPorCnpj = iEmpresa.getEmpresaPorCnpj(cnpj);
+        callEmpresaPorCnpj.enqueue(new Callback<Empresa>() {
             @Override
-            public void onResponse(Call<Operario> call, Response<Operario> response) {
-                if(response.isSuccessful() && response.body() != null) {
+            public void onResponse(Call<Empresa> call, Response<Empresa> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    id[0] = response.body().getId();
                     Glide.with(getContext())
                             .load(response.body().getImageUrl())
-                            .into(imgUser);
-                    int idEmpresa = response.body().getIdEmpresa();
-                    IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
-                    Call<Empresa> callGetEmpresa = iEmpresa.getEmpresaPorId(idEmpresa);
-                    callGetEmpresa.enqueue(new Callback<Empresa>() {
+                            .into(imgEmpresa);
+                    INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
+                    Call<List<Notificacao>> callNotificacao = iNotificacao.getNotificacaoPorEmpresa(456);
+                    callNotificacao.enqueue(new Callback<>() {
                         @Override
-                        public void onResponse(Call<Empresa> call, Response<Empresa> response) {
+                        public void onResponse(Call<List<Notificacao>> call, Response<List<Notificacao>> response) {
                             if (response.isSuccessful() && response.body() != null) {
-                                Glide.with(getContext())
-                                        .load(response.body().getImageUrl())
-                                        .into(imgEmpresa);
-                            }
-                            else{
-                                Log.e("API", "Erro de resposta: " + response.code());
-                                Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
+                                List<Notificacao> lista = response.body();
+                                NotificacaoAdapter notificacaoAdapter = new NotificacaoAdapter(lista);
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                recyclerView.setAdapter(notificacaoAdapter);
+                            } else {
+                                Toast.makeText(getContext(), "Não deu certo", Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<Empresa> call, Throwable t) {
-                            Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
-                            Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                        public void onFailure(Call<List<Notificacao>> call, Throwable t) {
+                            Toast.makeText(getContext(), "Não deu certo 2", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
-                else{
-                    Log.e("API", "Erro de resposta: " + response.code());
-                    Toast.makeText(getContext(), "Falha: " + response.code(), Toast.LENGTH_SHORT).show();
-                }
             }
 
             @Override
-            public void onFailure(Call<Operario> call, Throwable t) {
+            public void onFailure(Call<Empresa> call, Throwable t) {
 
-            }
-        });
-        INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
-        Call<List<Notificacao>> call = iNotificacao.getNotificacaoPorEmpresa(456);
-        call.enqueue(new Callback<>() {
-            @Override
-            public void onResponse(Call<List<Notificacao>> call, Response<List<Notificacao>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Notificacao> lista = response.body();
-                    NotificacaoAdapter notificacaoAdapter = new NotificacaoAdapter(lista);
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                    recyclerView.setAdapter(notificacaoAdapter);
-                } else {
-                    Toast.makeText(getContext(), "Não deu certo", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Notificacao>> call, Throwable t) {
-                Toast.makeText(getContext(), "Não deu certo 2", Toast.LENGTH_SHORT).show();
             }
         });
         return root;
