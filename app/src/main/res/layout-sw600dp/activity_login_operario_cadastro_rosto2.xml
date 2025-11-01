@@ -5,17 +5,18 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cadastro.operario.CadastroOperario">
+    tools:context=".login.operario.LoginOperario">
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="150dp"
-        android:layout_height="97dp"
-        android:layout_marginTop="65dp"
-        android:src="@drawable/icone_tela_opcoes"
+        android:layout_width="249dp"
+        android:layout_height="167dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icone_tela_opcoes" />
 
     <TextView
         android:id="@+id/textView12"
@@ -27,7 +28,7 @@
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Deseja mesmo cadastrar esse rosto?"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="22sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +36,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_cadastrar"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="62dp"
         android:layout_marginBottom="73dp"
         android:fontFamily="@font/montserrat_bold"
@@ -46,7 +47,6 @@
         app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.549"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton

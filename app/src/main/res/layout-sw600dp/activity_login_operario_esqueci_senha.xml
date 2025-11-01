@@ -9,7 +9,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/bt_avancar"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="62dp"
         android:layout_marginTop="70dp"
         android:fontFamily="@font/montserrat_bold"
@@ -24,7 +24,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayout3"
-        android:layout_width="300dp"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="84dp"
         android:textColorHint="@color/md_theme_primaryContainer"
@@ -57,7 +57,7 @@
 
     <TextView
         android:id="@+id/textView8"
-        android:layout_width="258dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:fontFamily="@font/montserrat_medium"
@@ -65,7 +65,7 @@
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Modifique sua senha!"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="22sp"
+        android:textSize="30sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -74,14 +74,14 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="150dp"
-        android:layout_height="97dp"
-        android:layout_marginTop="65dp"
-        android:src="@drawable/icone_tela_opcoes"
-        android:visibility="visible"
+        android:layout_width="249dp"
+        android:layout_height="167dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icone_tela_opcoes" />
 
     <ImageButton
         android:id="@+id/bt_voltar"

@@ -18,7 +18,7 @@
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Modifique sua senha!"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="22sp"
+        android:textSize="30sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -28,7 +28,7 @@
 
     <TextView
         android:id="@+id/textView9"
-        android:layout_width="339dp"
+        android:layout_width="600dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="39dp"
         android:fontFamily="@font/montserrat_medium"
@@ -38,7 +38,7 @@
             exemplo@gmail.com
             para que sua senha seja redefinida"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="22sp"
+        android:textSize="30sp"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
@@ -47,14 +47,14 @@
 
     <ImageView
         android:id="@+id/imageView7"
-        android:layout_width="150dp"
-        android:layout_height="97dp"
-        android:layout_marginTop="65dp"
-        android:src="@drawable/icone_tela_opcoes"
-        android:visibility="visible"
+        android:layout_width="249dp"
+        android:layout_height="167dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icone_tela_opcoes" />
 
     <ImageButton
         android:id="@+id/bt_voltar"

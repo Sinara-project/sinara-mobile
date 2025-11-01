@@ -9,9 +9,9 @@
 
     <ImageView
         android:id="@+id/imageView2"
-        android:layout_width="150dp"
-        android:layout_height="97dp"
-        android:layout_marginTop="65dp"
+        android:layout_width="249dp"
+        android:layout_height="167dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,14 +28,14 @@
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Bem vindo(a)!"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="25sp"
+        android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="310dp"
+        android:layout_width="420dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:fontFamily="@font/montserrat_medium"
@@ -43,40 +43,40 @@
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Qual é o seu cargo na sua empresa?"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="25sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <Button
         android:id="@+id/bt_empresa"
-        android:layout_width="300dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="130dp"
+        android:layout_width="400dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="15dp"
         android:width="340dp"
         android:backgroundTint="@color/md_theme_primaryFixed_highContrast"
         android:fontFamily="@font/montserrat_bold"
         android:text="Empresa"
         android:textColor="@color/md_theme_surfaceVariant"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/bt_operario"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/bt_operario"
-        android:layout_width="300dp"
-        android:layout_height="62dp"
-        android:layout_marginTop="21dp"
+        android:layout_width="400dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="300dp"
         android:width="340dp"
         android:backgroundTint="@color/md_theme_primaryFixed_highContrast"
         android:fontFamily="@font/montserrat_bold"
         android:text="Operário"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bt_empresa" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
