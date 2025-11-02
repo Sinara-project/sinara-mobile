@@ -25,13 +25,13 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="353dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:fontFamily="@font/montserrat_medium"
         android:gravity="center"
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
-        android:text="Por favor, digite o código que enviamos para:"
+        android:text="Por favor, digite o código "
         android:textColor="@color/md_theme_onPrimary"
         android:textSize="22sp"
         android:visibility="visible"
@@ -158,30 +158,6 @@
             tools:ignore="TouchTargetSizeCheck" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24dp"
-        android:text="Reenviar código"
-        android:textColor="@color/md_theme_tertiaryContainer"
-        android:textSize="18dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/mostrar_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
-        android:textColor="@color/md_theme_onPrimary"
-        android:textSize="22sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <ImageButton
         android:id="@+id/bt_voltar"

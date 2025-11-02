@@ -146,7 +146,8 @@ public class ProfileFragment extends Fragment {
 
                     if (getContext() != null) {
                         Glide.with(getContext())
-                                .load(operario.getImageUrl())
+                                .load(operario.getImagemUrl())
+                                .circleCrop()
                                 .into(img_pfp);
                     }
 

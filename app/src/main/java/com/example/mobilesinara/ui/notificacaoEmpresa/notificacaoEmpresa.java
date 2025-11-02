@@ -53,7 +53,8 @@ public class notificacaoEmpresa extends Fragment {
             public void onResponse(Call<Operario> call, Response<Operario> response) {
                 if(response.isSuccessful() && response.body() != null) {
                     Glide.with(getContext())
-                            .load(response.body().getImageUrl())
+                            .load(response.body().getImagemUrl())
+                            .circleCrop()
                             .into(imgUser);
                     int idEmpresa = response.body().getIdEmpresa();
                     IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
@@ -63,7 +64,8 @@ public class notificacaoEmpresa extends Fragment {
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if (response.isSuccessful() && response.body() != null) {
                                 Glide.with(getContext())
-                                        .load(response.body().getImageUrl())
+                                        .load(response.body().getImagemUrl())
+                                        .circleCrop()
                                         .into(imgEmpresa);
                             }
                             else{

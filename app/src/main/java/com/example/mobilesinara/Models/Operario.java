@@ -2,7 +2,7 @@ package com.example.mobilesinara.Models;
 
 public class Operario {
     private int idEmpresa;
-    private String imageUrl;
+    private String imagemUrl;
     private String cpf;
     private String nome;
     private String email;
@@ -13,9 +13,9 @@ public class Operario {
     private String senha;
     private int horasPrevistas;
     public Operario(){}
-    public Operario(int idEmpresa, String imageUrl, String cpf, String nome, String email, String cargo, String setor, boolean ferias, boolean ativo, String senha, int horasPrevistas){
+    public Operario(int idEmpresa, String imagemUrl, String cpf, String nome, String email, String cargo, String setor, boolean ferias, boolean ativo, String senha, int horasPrevistas){
         this.idEmpresa = idEmpresa;
-        this.imageUrl = imageUrl;
+        this.imagemUrl = imagemUrl;
          this.cpf = cpf;
          this.nome = nome;
          this.email = email;
@@ -55,8 +55,8 @@ public class Operario {
         return email;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImagemUrl() {
+        return imagemUrl;
     }
 
     public String getNome() {
@@ -99,8 +99,8 @@ public class Operario {
         this.horasPrevistas = horasPrevistas;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
     }
 
     public void setNome(String nome) {
