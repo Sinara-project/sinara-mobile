@@ -44,7 +44,7 @@ public class RegistroPontoCamera extends Fragment {
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 100;
     private PreviewView previewView;
     private ImageCapture imageCapture;
-    private Integer usuarioId;
+    private Integer idUser;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +61,7 @@ public class RegistroPontoCamera extends Fragment {
         if (args == null || !args.containsKey("idUser")) {
             Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
         }
-        int idUser = args.getInt("idUser");
+        idUser = args.getInt("idUser");
 
         Button btTirarFoto = view.findViewById(R.id.bt_bater_ponto);
         btTirarFoto.setOnClickListener(v -> takePhoto());
@@ -114,7 +114,7 @@ public class RegistroPontoCamera extends Fragment {
     }
 
     private void takePhoto() {
-        if (imageCapture == null || usuarioId == null || usuarioId == -1) {
+        if (imageCapture == null || idUser == null || idUser == -1) {
             Toast.makeText(getContext(), "Usuário não definido ou câmera não pronta", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -155,7 +155,7 @@ public class RegistroPontoCamera extends Fragment {
 
         IOperario api = RetrofitClient.getInstance().create(IOperario.class);
 
-        Call<Boolean> call = api.verificarReconhecimento(usuarioId, filePart);
+        Call<Boolean> call = api.verificarReconhecimento(idUser, filePart);
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
