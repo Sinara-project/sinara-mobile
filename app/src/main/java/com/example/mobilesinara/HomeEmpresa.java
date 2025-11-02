@@ -21,26 +21,21 @@ public class HomeEmpresa extends AppCompatActivity {
         binding = ActivityHomeEmpresaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // Recupera o CNPJ vindo da Intent
         Bundle info = getIntent().getExtras();
         String cnpj = null;
         if (info != null && info.containsKey("cnpj")) {
             cnpj = info.getString("cnpj");
         }
 
-        // Salva no SharedPreferences
         SharedPreferences prefs = getSharedPreferences("sinara_prefs", MODE_PRIVATE);
         prefs.edit().putString("cnpj", cnpj).apply();
 
-        // Obtém o NavHostFragment diretamente (forma mais segura)
         NavHostFragment navHostFragment = (NavHostFragment)
                 getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_home_empresa);
         NavController navController = navHostFragment.getNavController();
 
-        // Define o grafo e os argumentos
         navController.setGraph(R.navigation.mobile_navigation2, info != null ? info : new Bundle());
 
-        // Configura os destinos principais
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home_empresa,
                 R.id.navigation_formulario_empresa,
@@ -48,7 +43,6 @@ public class HomeEmpresa extends AppCompatActivity {
                 R.id.profileEmpresa
         ).build();
 
-        // Conecta a BottomNavigationView
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         if (savedInstanceState == null && cnpj != null) {

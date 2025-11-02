@@ -49,8 +49,7 @@ public interface IOperario {
     Call<String> uploadFotoReconhecimento(@Path("id") Integer id, @Part MultipartBody.Part file);
     @Multipart
     @POST("/api/user/operario/verificarFacial")
-    Call<Boolean> verificarReconhecimento(
-            @PartMap Map<String, RequestBody> params,
-            @Part MultipartBody.Part fotoTeste
+    Call<Boolean> verificarReconhecimento(@PartMap Map<String, RequestBody> params,
+                                          @Part MultipartBody.Part fotoTeste
     );
 }

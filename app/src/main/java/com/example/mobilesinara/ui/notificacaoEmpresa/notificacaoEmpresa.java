@@ -67,11 +67,10 @@ public class notificacaoEmpresa extends Fragment {
             return root;
         }
 
-        // Configuração da RecyclerView
         RecyclerView recyclerView = root.findViewById(R.id.recyclerNotification);
         ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
 
-        // Chamada API Empresa
+        // chamada api empresa
         IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
         Call<Empresa> callEmpresaPorCnpj = iEmpresa.getEmpresaPorCnpj(cnpj);
         callEmpresaPorCnpj.enqueue(new Callback<Empresa>() {

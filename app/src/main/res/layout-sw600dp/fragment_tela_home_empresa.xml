@@ -70,13 +70,14 @@
         android:layout_width="0dp"
         android:layout_height="140dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="110dp"
         android:layout_marginEnd="32dp"
         app:cardBackgroundColor="@color/md_theme_secondaryContainer"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeWidth="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"

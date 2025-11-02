@@ -45,7 +45,7 @@
         android:fontFamily="@font/montserrat_bold"
         android:text="Registrar ponto"
         android:textColor="@color/md_theme_primaryContainer"
-        android:textSize="32dp"
+        android:textSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +58,7 @@
         android:fontFamily="@font/montserrat_bold"
         android:text="14:00"
         android:textColor="#FF7655"
-        android:textSize="90dp"
+        android:textSize="110dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
@@ -66,7 +66,7 @@
 
     <Button
         android:id="@+id/bt_confirmar"
-        android:layout_width="305dp"
+        android:layout_width="400dp"
         android:layout_height="60dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/montserrat_bold"
@@ -80,7 +80,7 @@
 
     <Button
         android:id="@+id/bt_cancelar"
-        android:layout_width="305dp"
+        android:layout_width="400dp"
         android:layout_height="60dp"
         android:layout_marginBottom="40dp"
         android:fontFamily="@font/montserrat_bold"
@@ -92,14 +92,13 @@
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent"
         app:strokeColor="#FF7655"
         app:strokeWidth="2dp" />
 
     <TextView
         android:id="@+id/textView22"
-        android:layout_width="342dp"
+        android:layout_width="442dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:fontFamily="@font/montserrat_bold"
@@ -107,7 +106,7 @@
         android:text="Deseja confirmar o
 registro?"
         android:textColor="#0B1B54"
-        android:textSize="28dp"
+        android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />

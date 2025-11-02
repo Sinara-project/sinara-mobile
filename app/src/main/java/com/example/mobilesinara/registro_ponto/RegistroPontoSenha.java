@@ -42,9 +42,7 @@ public class RegistroPontoSenha extends Fragment {
 
     private int idUser = -1;
 
-    public RegistroPontoSenha() {
-        // Required empty public constructor
-    }
+    public RegistroPontoSenha() {}
 
     public static RegistroPontoSenha newInstance(String param1, String param2) {
         RegistroPontoSenha fragment = new RegistroPontoSenha();
@@ -119,7 +117,6 @@ public class RegistroPontoSenha extends Fragment {
                             if (response.isSuccessful() && response.body() != null) {
                                 String urlEmpresa = response.body().getImagemUrl();
 
-                                // Carrega imagem da empresa (ou padrão)
                                 if (urlEmpresa == null || urlEmpresa.isEmpty()) {
                                     Glide.with(requireContext())
                                             .load(R.drawable.profile_pic_default)

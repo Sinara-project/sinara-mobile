@@ -62,7 +62,7 @@ public class DashboardFragment extends Fragment {
         if (idUser == -1) {
             Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
             Log.e("ProfileFragment", "ID do usuário não encontrado nas SharedPreferences");
-            return root; // Evita seguir com o carregamento
+            return root;
         }
 
         Log.d("ProfileFragment", "Usuário logado: " + idUser);
@@ -147,7 +147,6 @@ public class DashboardFragment extends Fragment {
                         }
                     });
 
-                    // ---- Busca formulários PADRÃO ----
                     IFormularioPadrao iFormularioPadrao = ApiClientAdapter.getRetrofitInstance().create(IFormularioPadrao.class);
                     iFormularioPadrao.getFormularioPadraoPorEmpresa(idEmpresa).enqueue(new Callback<List<FormularioPadrao>>() {
                         @Override
@@ -178,7 +177,6 @@ public class DashboardFragment extends Fragment {
                         }
                     });
 
-                    // ---- Busca formulários PERSONALIZADOS ----
                     IFormularioPersonalizado iFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IFormularioPersonalizado.class);
                     iFormularioPersonalizado.getFormularioPersonalizadoPorEmpresa(idEmpresa).enqueue(new Callback<List<FormularioPersonalizado>>() {
                         @Override
