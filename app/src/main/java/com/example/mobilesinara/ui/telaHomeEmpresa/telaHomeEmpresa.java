@@ -50,7 +50,6 @@ public class telaHomeEmpresa extends Fragment {
             cnpj = args.getString("cnpj");
             Log.d("TELA_HOME_EMPRESA", "CNPJ recebido via argumentos: " + cnpj);
         } else {
-            // fallback: tenta pegar do SharedPreferences
             SharedPreferences prefs = requireContext().getSharedPreferences("sinara_prefs", Context.MODE_PRIVATE);
             cnpj = prefs.getString("cnpj", null);
             Log.d("TELA_HOME_EMPRESA", "CNPJ recuperado do SharedPreferences: " + cnpj);

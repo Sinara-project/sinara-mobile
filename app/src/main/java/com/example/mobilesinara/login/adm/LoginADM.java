@@ -1,10 +1,12 @@
 package com.example.mobilesinara.login.adm;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -47,6 +49,15 @@ public class LoginADM extends AppCompatActivity {
         TextInputEditText editTextSenha = findViewById(R.id.text_senha);
         MaterialButton btLogin = findViewById(R.id.bt_fazer_login);
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
+        TextView cadastro = findViewById(R.id.texto_cadastro);
+
+        // txt de cadastro
+        cadastro.setOnClickListener(view -> {
+            String url = "https://sinara-front.onrender.com";
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+        });
 
         // Botão de voltar
         btVoltar.setOnClickListener(view -> {
@@ -88,11 +99,9 @@ public class LoginADM extends AppCompatActivity {
                         if (response.isSuccessful() && response.body() != null) {
                             EmpresaLoginResponseDTO dados = response.body();
 
-                            // Log para debug
                             Log.d("LOGIN_ADM", "Login bem-sucedido para CNPJ: " + cnpj);
                             Log.d("LOGIN_ADM", "Email retornado: " + dados.getEmail());
 
-                            // Salva dados nas SharedPreferences
                             getSharedPreferences("empresaPrefs", MODE_PRIVATE)
                                     .edit()
                                     .putLong("idEmpresa", dados.getId() == null ? -1L : dados.getId())
@@ -104,7 +113,6 @@ public class LoginADM extends AppCompatActivity {
 
                             Toast.makeText(LoginADM.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
 
-                            // Vai para próxima tela e passa dados
                             Intent intent = new Intent(LoginADM.this, LoginADM2.class);
                             intent.putExtra("cnpj", cnpj);
                             startActivity(intent);

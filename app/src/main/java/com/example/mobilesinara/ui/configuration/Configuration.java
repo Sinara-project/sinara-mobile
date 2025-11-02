@@ -43,7 +43,7 @@ public class Configuration extends Fragment {
         View root = binding.getRoot();
         ImageView bt_voltar = root.findViewById(R.id.imageView3);
         Button bt_cadastrar_rosto = root.findViewById(R.id.button11);
-        Button bt_alterar_senha = root.findViewById(R.id.button12);
+        Button bt_alterar_senha = root.findViewById(R.id.alterar_senha);
         Button bt_camera_permission = root.findViewById(R.id.button14);
         Button bt_sms_permission = root.findViewById(R.id.button15);
         verificarPermissaoSMS(getContext(), bt_sms_permission);
@@ -73,16 +73,13 @@ public class Configuration extends Fragment {
 
     private void verificarPermissaoCamera(Context context, Button btCameraPermission) {
         requestPermissions = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-            // Handle permission requests results
             for (Map.Entry<String, Boolean> entry : result.entrySet()) {
                 String permission = entry.getKey();
                 Boolean isGranted = entry.getValue();
                 if (isGranted) {
-                    // Permission is granted
-                    Log.d("Permissions", "Permission granted: " + permission);
+                    Log.d("Permições", "Permissão concedida: " + permission);
                 } else {
-                    // Permission is denied
-                    Log.d("Permissions", "Permission denied: " + permission);
+                    Log.d("Permições", "Permição negada: " + permission);
                 }
             }
         });
@@ -90,16 +87,13 @@ public class Configuration extends Fragment {
 
     private void verificarPermissaoSMS(Context context, Button bt) {
         requestPermissions = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-            // Handle permission requests results
             for (Map.Entry<String, Boolean> entry : result.entrySet()) {
                 String permission = entry.getKey();
                 Boolean isGranted = entry.getValue();
                 if (isGranted) {
-                    // Permission is granted
-                    Log.d("Permissions", "Permission granted: " + permission);
+                    Log.d("Permições", "Permissão concedida: " + permission);
                 } else {
-                    // Permission is denied
-                    Log.d("Permissions", "Permission denied: " + permission);
+                    Log.d("Permições", "Permição negada: " + permission);
                 }
             }
         });

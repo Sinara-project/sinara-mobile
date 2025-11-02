@@ -60,7 +60,6 @@ public class ProfileFragment extends Fragment {
 
         Log.d("ProfileFragment", "Usuário logado: " + idUser);
 
-        // Referências aos elementos da UI
         Button btDeslogar = root.findViewById(R.id.button4);
         ImageView img_pfp = root.findViewById(R.id.imageView10);
         TextView nome = root.findViewById(R.id.textView10);

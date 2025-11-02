@@ -46,7 +46,6 @@ public class LoginOperarioCadastroRosto2 extends AppCompatActivity {
             imageView.setImageURI(photoUri);
         }
 
-        // Recupera informações do usuário
         Bundle info = getIntent().getExtras();
         if (info != null) {
             if (info.containsKey("idUser")) {

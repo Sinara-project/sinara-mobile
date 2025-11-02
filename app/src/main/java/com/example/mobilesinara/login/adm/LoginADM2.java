@@ -34,14 +34,12 @@ public class LoginADM2 extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_adm2);
 
-        // Ajuste de margens para status/nav bar
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Recupera dados vindos da tela anterior
         String cnpjRecebido = getIntent().getStringExtra("cnpj");
 
         Log.d("LOGIN_ADM2", "CNPJ recebido: " + cnpjRecebido);
@@ -96,7 +94,6 @@ public class LoginADM2 extends AppCompatActivity {
                 return;
             }
 
-            // CÓDIGO DE TESTE PADRÃO
             if (codigo.equals("962845")) {
                 if (cnpjRecebido == null || cnpjRecebido.isEmpty()) {
                     Log.e("LOGIN_ADM2", "CNPJ não recebido — não é possível abrir HomeEmpresa");
@@ -112,7 +109,6 @@ public class LoginADM2 extends AppCompatActivity {
                 return;
             }
 
-            // Validação real via API
             IEmpresa empresaCodigo = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
             Call<Boolean> call = empresaCodigo.validarCodigo(cnpjRecebido, codigo);
 

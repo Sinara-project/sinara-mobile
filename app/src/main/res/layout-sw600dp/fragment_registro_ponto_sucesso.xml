@@ -45,7 +45,7 @@
         android:fontFamily="@font/montserrat_bold"
         android:text="Registrar ponto"
         android:textColor="@color/md_theme_primaryContainer"
-        android:textSize="32dp"
+        android:textSize="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -58,7 +58,7 @@
         android:fontFamily="@font/montserrat_bold"
         android:text="14:00"
         android:textColor="#FF7655"
-        android:textSize="80dp"
+        android:textSize="110dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
@@ -66,7 +66,7 @@
 
     <Button
         android:id="@+id/bt_voltar"
-        android:layout_width="305dp"
+        android:layout_width="400dp"
         android:layout_height="60dp"
         android:layout_marginBottom="40dp"
         android:fontFamily="@font/montserrat_bold"
@@ -82,14 +82,14 @@
 
     <TextView
         android:id="@+id/textView22"
-        android:layout_width="342dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:fontFamily="@font/montserrat_bold"
         android:gravity="center"
         android:text="Ponto registrado!"
         android:textColor="#0B1B54"
-        android:textSize="28dp"
+        android:textSize="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView19" />
@@ -98,7 +98,7 @@
         android:id="@+id/imageView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="70dp"
         android:src="@drawable/icone_sucesso"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

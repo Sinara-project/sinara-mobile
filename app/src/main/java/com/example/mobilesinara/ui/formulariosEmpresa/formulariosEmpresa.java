@@ -58,7 +58,6 @@ public class formulariosEmpresa extends Fragment {
 
         Log.d("DEBUG_FORM", "onCreateView iniciado");
 
-        // 🔹 Recupera o CNPJ
         Bundle args = getArguments();
         String cnpj = null;
 
@@ -77,7 +76,6 @@ public class formulariosEmpresa extends Fragment {
             return root;
         }
 
-        // Referências de layout
         TextInputEditText titulo = root.findViewById(R.id.text_titulo);
         TextInputEditText descricao = root.findViewById(R.id.text_desc);
         Button btnMostrarOpcoes = root.findViewById(R.id.btnMostrarOpcoes);
@@ -87,7 +85,6 @@ public class formulariosEmpresa extends Fragment {
         Button btCadastrar = root.findViewById(R.id.bt_cadastrar);
         ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
 
-        // Mostrar / ocultar permissões
         String finalCnpj1 = cnpj;
         btnMostrarOpcoes.setOnClickListener(v -> {
             if (layoutOpcoes.getVisibility() == View.VISIBLE) {
@@ -164,12 +161,10 @@ public class formulariosEmpresa extends Fragment {
             });
         });
 
-        // Botão adicionar campo
         if (btnAdicionarCampo != null) {
             btnAdicionarCampo.setOnClickListener(v -> adicionarNovoCard(inflater, cardContainer));
         }
 
-        // Botão cadastrar formulário
         String finalCnpj = cnpj;
         btCadastrar.setOnClickListener(v -> {
             List<campos> camposList = new ArrayList<>();
@@ -244,7 +239,6 @@ public class formulariosEmpresa extends Fragment {
         });
     }
 
-    // ✅ agora com reset da tela após sucesso
     private void criarFormulario(TextInputEditText titulo, TextInputEditText descricao,
                                  List<campos> campos, List<String> permissoes,
                                  String cnpj, LinearLayout cardContainer, LinearLayout layoutOpcoes) {
@@ -274,7 +268,6 @@ public class formulariosEmpresa extends Fragment {
                                     if (response.isSuccessful()) {
                                         Toast.makeText(requireContext(), "Formulário criado com sucesso!", Toast.LENGTH_SHORT).show();
 
-                                        // 🔹 RESETA a tela
                                         titulo.setText("");
                                         descricao.setText("");
                                         cardContainer.removeAllViews();
