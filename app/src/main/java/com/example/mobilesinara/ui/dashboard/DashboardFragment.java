@@ -113,17 +113,29 @@ public class DashboardFragment extends Fragment {
 
                     int idEmpresa = operario.getIdEmpresa();
 
-                    // ---- Busca dados da empresa ----
                     IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
                     iEmpresa.getEmpresaPorId(idEmpresa).enqueue(new Callback<Empresa>() {
                         @Override
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if (!isAdded()) return;
                             if (response.isSuccessful() && response.body() != null) {
-                                Glide.with(requireContext())
-                                        .load(response.body().getImagemUrl())
-                                        .circleCrop()
-                                        .into(imgEmpresa);
+                                String urlEmpresa = response.body().getImagemUrl();
+                                // Carrega imagem da empresa (ou padrão)
+                                if (urlEmpresa == null || urlEmpresa.isEmpty()) {
+                                    Glide.with(requireContext())
+                                            .load(R.drawable.profile_pic_default)
+                                            .circleCrop()
+                                            .placeholder(R.drawable.profile_pic_default)
+                                            .error(R.drawable.profile_pic_default)
+                                            .into(imgEmpresa);
+                                } else {
+                                    Glide.with(requireContext())
+                                            .load(urlEmpresa)
+                                            .circleCrop()
+                                            .placeholder(R.drawable.profile_pic_default)
+                                            .error(R.drawable.profile_pic_default)
+                                            .into(imgEmpresa);
+                                }
                             } else {
                                 Log.e("API", "Erro empresa: " + response.code());
                             }

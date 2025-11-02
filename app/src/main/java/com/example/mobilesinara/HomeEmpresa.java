@@ -2,25 +2,45 @@ package com.example.mobilesinara;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.mobilesinara.databinding.ActivityHomeEmpresaBinding;
-import com.example.mobilesinara.ui.telaHomeEmpresa.telaHomeEmpresa;
 
 public class HomeEmpresa extends AppCompatActivity {
+
+    private ActivityHomeEmpresaBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityHomeEmpresaBinding binding = ActivityHomeEmpresaBinding.inflate(getLayoutInflater());
+        binding = ActivityHomeEmpresaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Recupera o CNPJ vindo da Intent
+        Bundle info = getIntent().getExtras();
+        String cnpj = null;
+        if (info != null && info.containsKey("cnpj")) {
+            cnpj = info.getString("cnpj");
+        }
+
+        // Salva no SharedPreferences
+        SharedPreferences prefs = getSharedPreferences("sinara_prefs", MODE_PRIVATE);
+        prefs.edit().putString("cnpj", cnpj).apply();
+
+        // Obtém o NavHostFragment diretamente (forma mais segura)
+        NavHostFragment navHostFragment = (NavHostFragment)
+                getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_home_empresa);
+        NavController navController = navHostFragment.getNavController();
+
+        // Define o grafo e os argumentos
+        navController.setGraph(R.navigation.mobile_navigation2, info != null ? info : new Bundle());
+
+        // Configura os destinos principais
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_home_empresa,
                 R.id.navigation_formulario_empresa,
@@ -28,14 +48,7 @@ public class HomeEmpresa extends AppCompatActivity {
                 R.id.profileEmpresa
         ).build();
 
-        String cnpj = getIntent().getStringExtra("cnpj");
-        String email = getIntent().getStringExtra("email");
-        Log.d("HOME_EMPRESA", "CNPJ recebido: " + cnpj + ", Email recebido: " + email);
-
-        SharedPreferences prefs = getSharedPreferences("sinara_prefs", MODE_PRIVATE);
-        prefs.edit().putString("cnpj", cnpj).apply();
-
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_home_empresa);
+        // Conecta a BottomNavigationView
         NavigationUI.setupWithNavController(binding.navView, navController);
 
         if (savedInstanceState == null && cnpj != null) {
