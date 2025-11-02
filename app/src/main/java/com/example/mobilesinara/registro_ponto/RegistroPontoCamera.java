@@ -58,7 +58,7 @@ public class RegistroPontoCamera extends Fragment {
         previewView = view.findViewById(R.id.previewView);
 
         if (getArguments() != null) {
-            usuarioId = getArguments().getInt("usuarioId", -1);
+            usuarioId = getArguments().getInt("idUser", -1);
         }
 
         Button btTirarFoto = view.findViewById(R.id.bt_bater_ponto);

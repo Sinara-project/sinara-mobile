@@ -62,7 +62,8 @@ public class ProfileEmpresa extends Fragment {
             public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                 if(response.isSuccessful() && response.body() != null) {
                     Glide.with(getContext())
-                            .load(response.body().getImageUrl())
+                            .load(response.body().getImagemUrl())
+                            .circleCrop()
                             .into(icEmpresa);
                     nomeEmpresa.setText(response.body().getNome());
                     codigoEmpresa.setText("Código da empresa: "+response.body().getCodigo());

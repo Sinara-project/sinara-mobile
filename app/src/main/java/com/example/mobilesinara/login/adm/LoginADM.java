@@ -3,7 +3,6 @@ package com.example.mobilesinara.login.adm;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,15 +15,17 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mobilesinara.HomeEmpresa;
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
+import com.example.mobilesinara.Models.EmpresaLoginResponseDTO;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.Models.EmpresaLoginRequestDTO;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -45,7 +46,7 @@ public class LoginADM extends AppCompatActivity {
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayoutSenha);
         TextInputEditText editTextCnpj = findViewById(R.id.text_cnpj);
         TextInputEditText editTextSenha = findViewById(R.id.text_senha);
-        Button btLogin = findViewById(R.id.bt_fazer_login);
+        MaterialButton btLogin = findViewById(R.id.bt_fazer_login);
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
 
         //botão de voltar
@@ -63,42 +64,54 @@ public class LoginADM extends AppCompatActivity {
             String senha = editTextSenha.getText().toString().trim();
 
             if (!cnpj.isEmpty() && !senha.isEmpty()) {
-                // Cria objeto de request
                 EmpresaLoginRequestDTO request = new EmpresaLoginRequestDTO(cnpj, senha);
                 IEmpresa empresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
 
-                Call<Boolean> call = empresa.loginEmpresa(request);
-                call.enqueue(new Callback<Boolean>() {
+                Call<EmpresaLoginResponseDTO> call = empresa.loginEmpresa(request);
+                call.enqueue(new Callback<EmpresaLoginResponseDTO>() {
                     @Override
-                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    public void onResponse(Call<EmpresaLoginResponseDTO> call, Response<EmpresaLoginResponseDTO> response) {
+//                        if (response.isSuccessful() && response.body() != null) {
+//                            EmpresaLoginResponseDTO dados = response.body();
+//                            Toast.makeText(LoginADM.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
+//
+//                            Intent intent = new Intent(LoginADM.this, LoginADM2.class);
+//                            intent.putExtra("cnpj", dados.getCnpj());
+//                            intent.putExtra("nome", dados.getNome());
+//                            intent.putExtra("email", dados.getEmail());
+//                            startActivity(intent);
+//                            overridePendingTransition(0, 0);
+//                        } else {
+//                            if (response.code() == 404) {
+//                                Toast.makeText(LoginADM.this, "Empresa não encontrada.", Toast.LENGTH_SHORT).show();
+//                            } else {
+//                                Toast.makeText(LoginADM.this, "Erro no servidor: " + response.code(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+                        // dentro do onResponse do call.enqueue(...)
                         if (response.isSuccessful() && response.body() != null) {
-                            boolean sucesso = response.body();
-                            if (sucesso) {
-                                Toast.makeText(LoginADM.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginADM.this, LoginADM2.class);
-                                intent.putExtra("cnpj", cnpj);
-                                startActivity(intent);
-                                overridePendingTransition(0, 0);
-                            } else {
-                                Toast.makeText(LoginADM.this, "Dados inválidos. Tente novamente.", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            String errorBody = "";
-                            try {
-                                if (response.errorBody() != null)
-                                    errorBody = response.errorBody().string();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            Toast.makeText(LoginADM.this,
-                                    "Erro no servidor. HTTP " + response.code() + " - " + errorBody,
-                                    Toast.LENGTH_LONG).show();
-                            Log.e("LOGIN", "Erro http: " + response.code() + " body: " + errorBody);
-                        }
-                    }
+                            EmpresaLoginResponseDTO dados = response.body();
 
+                            // Salva id, nome, email, imagemUrl nas SharedPreferences
+                            getSharedPreferences("empresaPrefs", MODE_PRIVATE)
+                                    .edit()
+                                    .putLong("idEmpresa", dados.getId() == null ? -1L : dados.getId())
+                                    .putString("nomeEmpresa", dados.getNome())
+                                    .putString("emailEmpresa", dados.getEmail())
+                                    .putString("imagemUrlEmpresa", dados.getImagemUrl())
+                                    .apply();
+
+                            Toast.makeText(LoginADM.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
+
+                            // Abre a HomeEmpresa (ou a activity que você usa após login)
+                            Intent intent = new Intent(LoginADM.this, LoginADM2.class);
+                            startActivity(intent);
+                            overridePendingTransition(0, 0);
+                        }
+
+                    }
                     @Override
-                    public void onFailure(Call<Boolean> call, Throwable t) {
+                    public void onFailure(Call<EmpresaLoginResponseDTO> call, Throwable t) {
                         Toast.makeText(LoginADM.this, "Falha na conexão: " + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });

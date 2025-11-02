@@ -53,11 +53,6 @@ public class LoginOperario extends AppCompatActivity {
         TextInputEditText editTextEmail = findViewById(R.id.text_email);
         TextInputEditText editTextCodEmpresa = findViewById(R.id.text_cod_empresa);
         Button login = findViewById(R.id.bt_fazer_login);
-        TextView esqueciSenha = findViewById(R.id.esqueci_minha_senha);
-
-        esqueciSenha.setOnClickListener(view ->
-                startActivity(new Intent(LoginOperario.this, LoginOperarioEsqueciSenha.class))
-        );
 
         btVoltar.setOnClickListener(view -> {
             startActivity(new Intent(LoginOperario.this, TelaOpcoes.class));
@@ -113,9 +108,6 @@ public class LoginOperario extends AppCompatActivity {
         });
     }
 
-    /**
-     * Busca o ID do operário após login válido e abre a próxima tela
-     */
     private void buscarIdOperario(String cpf) {
         IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
         Call<Integer> call = iOperario.getIdPorCpf(cpf);

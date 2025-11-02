@@ -3,6 +3,7 @@ package com.example.mobilesinara.Interface.SQL;
 import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.Models.OperarioLoginRequestDTO;
 import com.example.mobilesinara.Models.PerfilOperario;
+import com.example.mobilesinara.Models.SenhaRequest;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
@@ -31,6 +32,8 @@ public interface IOperario {
     Call<String> uploadReconhecimento(@Path("id") int id, @Body Operario operario);
     @POST("/api/user/operario/loginOperario")
     Call<Boolean> loginOperario(@Body OperarioLoginRequestDTO loginRequest);
+    @POST("/api/user/operario/verificarSenha")
+    Call<Boolean> verificarSenha(@Body SenhaRequest request);
     @Multipart
     @POST("/api/user/operario/uploadReconhecimento/{id}")
     Call<String> uploadFotoReconhecimento(@Path("id") Integer id, @Part MultipartBody.Part file);
