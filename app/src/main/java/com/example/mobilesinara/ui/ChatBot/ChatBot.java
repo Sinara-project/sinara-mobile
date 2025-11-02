@@ -38,7 +38,7 @@ public class ChatBot extends Fragment {
 
     private FragmentChatBotBinding binding;
     private static final String TAG = "ChatBot";
-    private Call<ChatResponse> chatCall; // para poder cancelar depois
+    private Call<ChatResponse> chatCall;
     private Call<Operario> operarioCall;
     private Call<Empresa> empresaCall;
 
@@ -142,7 +142,7 @@ public class ChatBot extends Fragment {
     }
 
     private void addBotMessage(String message, LinearLayout layout, LayoutInflater inflater) {
-        if (!isAdded()) return; // ⚠️ evita crash
+        if (!isAdded()) return;
         View messageView = inflater.inflate(R.layout.item_chat_bot, layout, false);
         ((TextView) messageView.findViewById(R.id.textViewBot)).setText(message);
         layout.addView(messageView);
