@@ -2,6 +2,7 @@ package com.example.mobilesinara.Interface.SQL;
 
 import com.example.mobilesinara.Models.HorasTrabalhadasResponse;
 import com.example.mobilesinara.Models.RegistroPontoModel;
+import com.example.mobilesinara.Models.RegistroPontoRequest;
 
 import java.util.Date;
 
@@ -26,5 +27,5 @@ public interface IRegistroPonto {
     @GET("/api/user/registroPonto/ultimoTurno/{idOperario}")
     Call<Date> getUltimoTurno(@Path("idOperario") int idOperario);
     @POST("/api/user/registroPonto/inserir")
-    Call<String> inserirRegistroPonto(@Body Date horarioEntrada, Date horarioSaida, int idOperario, int idEmpresa);
+    Call<String> inserirRegistroPonto(@Body RegistroPontoRequest request);
 }

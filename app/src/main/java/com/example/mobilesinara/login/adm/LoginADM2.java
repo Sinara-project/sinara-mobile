@@ -46,14 +46,6 @@ public class LoginADM2 extends AppCompatActivity {
 
         Log.d("LOGIN_ADM2", "CNPJ recebido: " + cnpjRecebido);
 
-        // Salva o CNPJ localmente para referência futura
-        if (cnpjRecebido != null && !cnpjRecebido.isEmpty()) {
-            SharedPreferences prefs = getSharedPreferences("sinara_prefs", MODE_PRIVATE);
-            prefs.edit().putString("cnpj", cnpjRecebido).apply();
-            Log.d("LOGIN_ADM2", "CNPJ salvo no SharedPreferences: " + cnpjRecebido);
-        }
-
-        // Configuração dos campos de código (6 dígitos)
         EditText[] edits = {
                 findViewById(R.id.editText1),
                 findViewById(R.id.editText2),

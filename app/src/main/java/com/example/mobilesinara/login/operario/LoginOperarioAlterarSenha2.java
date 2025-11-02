@@ -16,10 +16,16 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilesinara.HomeOperario;
+import com.example.mobilesinara.Interface.SQL.IOperario;
+import com.example.mobilesinara.Models.Operario;
+import com.example.mobilesinara.Models.SenhaRequestDTO;
 import com.example.mobilesinara.R;
+import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.ui.home.HomeFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import retrofit2.Call;
 
 public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
 
@@ -45,23 +51,85 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
         Bundle info = getIntent().getExtras();
         int id = info.getInt("idUser");
 
+//        btContinuar.setOnClickListener(v -> {
+//            if (editTextSenha1.getText().toString().isEmpty()
+//                    || editTextSenha2.getText().toString().isEmpty()
+//                    || editTextSenha3.getText().toString().isEmpty()) {
+//                Toast.makeText(LoginOperarioAlterarSenha2.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
+//            } else if (!editTextSenha2.getText().toString().equals(editTextSenha3.getText().toString())) {
+//                Toast.makeText(LoginOperarioAlterarSenha2.this, "As senhas não correspondem", Toast.LENGTH_SHORT).show();
+//            }
+//            else{
+//                Intent intent = new Intent(LoginOperarioAlterarSenha2.this, HomeOperario.class);
+//                intent.putExtra("idUser", id);
+//                HomeFragment homeOperario = new HomeFragment();
+//                homeOperario.setArguments(info);
+//                startActivity(intent);
+//                overridePendingTransition(0, 0);
+//            }
+//        });
         btContinuar.setOnClickListener(v -> {
-            if (editTextSenha1.getText().toString().isEmpty()
-                    || editTextSenha2.getText().toString().isEmpty()
-                    || editTextSenha3.getText().toString().isEmpty()) {
+            String senhaAtual = editTextSenha1.getText().toString();
+            String senhaNova = editTextSenha2.getText().toString();
+            String confirmarSenha = editTextSenha3.getText().toString();
+
+            if (senhaAtual.isEmpty() || senhaNova.isEmpty() || confirmarSenha.isEmpty()) {
                 Toast.makeText(LoginOperarioAlterarSenha2.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-            } else if (!editTextSenha2.getText().toString().equals(editTextSenha3.getText().toString())) {
+                return;
+            }
+
+            if (!senhaNova.equals(confirmarSenha)) {
                 Toast.makeText(LoginOperarioAlterarSenha2.this, "As senhas não correspondem", Toast.LENGTH_SHORT).show();
+                return;
             }
-            else{
-                Intent intent = new Intent(LoginOperarioAlterarSenha2.this, HomeOperario.class);
-                intent.putExtra("idUser", id);
-                HomeFragment homeOperario = new HomeFragment();
-                homeOperario.setArguments(info);
-                startActivity(intent);
-                overridePendingTransition(0, 0);
-            }
+
+            IOperario apiService = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
+
+            Call<Boolean> verificarCall = apiService.verificarSenha(id, senhaAtual);
+            verificarCall.enqueue(new retrofit2.Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        if (response.body()) {
+                            SenhaRequestDTO request = new SenhaRequestDTO(senhaAtual);
+                            request.setNovaSenha(senhaNova);
+
+                            Call<Operario> atualizarCall = apiService.atualizarSenha(id, request);
+                            atualizarCall.enqueue(new retrofit2.Callback<Operario>() {
+                                @Override
+                                public void onResponse(Call<Operario> call, retrofit2.Response<Operario> response) {
+                                    if (response.isSuccessful() && response.body() != null) {
+                                        Toast.makeText(LoginOperarioAlterarSenha2.this, "Senha atualizada com sucesso!", Toast.LENGTH_SHORT).show();
+                                        Intent intent = new Intent(LoginOperarioAlterarSenha2.this, HomeOperario.class);
+                                        intent.putExtra("idUser", id);
+                                        startActivity(intent);
+                                        overridePendingTransition(0, 0);
+                                    } else {
+                                        Toast.makeText(LoginOperarioAlterarSenha2.this, "Falha ao atualizar a senha", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Operario> call, Throwable t) {
+                                    Toast.makeText(LoginOperarioAlterarSenha2.this, "Erro: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        } else {
+                            Toast.makeText(LoginOperarioAlterarSenha2.this, "Senha atual incorreta", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(LoginOperarioAlterarSenha2.this, "Erro na verificação da senha", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Toast.makeText(LoginOperarioAlterarSenha2.this, "Falha na conexão: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
         });
+
 
         //botão de voltar
         btVoltar.setOnClickListener(view -> {

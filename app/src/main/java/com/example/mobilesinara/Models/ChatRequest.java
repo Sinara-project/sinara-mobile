@@ -1,13 +1,17 @@
 package com.example.mobilesinara.Models;
 
 public class ChatRequest {
-    private String message;
+    private String query;
 
-    public ChatRequest(String message) {
-        this.message = message;
+    public ChatRequest(String query) {
+        this.query = query;
     }
 
-    public String getMessage() {
-        return message;
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
     }
 }
