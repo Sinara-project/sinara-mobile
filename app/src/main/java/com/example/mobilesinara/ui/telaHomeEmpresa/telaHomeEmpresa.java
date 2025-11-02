@@ -43,7 +43,6 @@ public class telaHomeEmpresa extends Fragment {
         binding = FragmentTelaHomeEmpresaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Recupera o CNPJ
         Bundle args = getArguments();
         String cnpj = null;
 
@@ -63,20 +62,17 @@ public class telaHomeEmpresa extends Fragment {
             return root;
         }
 
-        // Inicializa os componentes da tela
         Button btCriarFormulario = root.findViewById(R.id.button13);
         Button btHistorico = root.findViewById(R.id.button16);
         ImageView iconEmpresa = root.findViewById(R.id.imgEmpresa);
         TextView relatoriosRegistrados = root.findViewById(R.id.relatoriosRegistrados);
 
-        // Navegações
         btHistorico.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_notifications_empresa));
 
         btCriarFormulario.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_formulario_empresa));
 
-        // Chama as APIs
         chamarApi(iconEmpresa, relatoriosRegistrados, cnpj);
 
         return root;
