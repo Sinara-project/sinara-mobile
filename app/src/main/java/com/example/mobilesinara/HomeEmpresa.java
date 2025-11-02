@@ -11,7 +11,6 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.mobilesinara.databinding.ActivityHomeEmpresaBinding;
-import com.example.mobilesinara.ui.telaHomeEmpresa.telaHomeEmpresa;
 
 public class HomeEmpresa extends AppCompatActivity {
 
@@ -21,16 +20,7 @@ public class HomeEmpresa extends AppCompatActivity {
         ActivityHomeEmpresaBinding binding = ActivityHomeEmpresaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home_operario,
-                R.id.navigation_forms_operario,
-                R.id.navigation_notifications_operario,
-                R.id.navigation_profile_operario
-        ).build();
-
-        // Recupera o CNPJ enviado pelo LoginADM2
         String cnpj = getIntent().getStringExtra("cnpj");
-        Log.d("HOME_EMPRESA", "CNPJ recebido no HomeEmpresa: " + cnpj);
         String email = getIntent().getStringExtra("email");
 
         if (cnpj == null) {
@@ -38,17 +28,23 @@ public class HomeEmpresa extends AppCompatActivity {
             return;
         }
 
-        // Passa o CNPJ (e o e-mail, se quiser) para o fragmento telaHomeEmpresa
-        Bundle bundle = new Bundle();
-        bundle.putString("cnpj", cnpj);
-        bundle.putString("email", email);
+        Log.d("HOME_EMPRESA", "CNPJ recebido no HomeEmpresa: " + cnpj);
+
+        // Salva o CNPJ para os fragments poderem acessar
         SharedPreferences prefs = getSharedPreferences("sinara_prefs", MODE_PRIVATE);
         prefs.edit().putString("cnpj", cnpj).apply();
 
-        telaHomeEmpresa fragment = new telaHomeEmpresa();
-        fragment.setArguments(bundle);
+        // Configuração correta da navegação
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home_empresa,
+                R.id.navigation_formulario_empresa,
+                R.id.navigation_notifications_empresa,
+                R.id.profileEmpresa
+        ).build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_home_empresa);
-        navController.setGraph(R.navigation.mobile_navigation2, bundle);
+
+        // ⚠️ NÃO use navController.setGraph(...) aqui!
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 }
