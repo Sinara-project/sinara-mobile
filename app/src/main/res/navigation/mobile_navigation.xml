@@ -135,6 +135,10 @@
         android:name="com.example.mobilesinara.ui.configuration.Configuration"
         android:label="fragment_configuration"
         tools:layout="@layout/fragment_configuration" >
+        <argument
+            android:name="idUser"
+            app:argType="integer"
+            android:defaultValue="-1" />
         <action
             android:id="@+id/action_configuration_to_navigation_home"
             app:destination="@id/navigation_home_operario" />
