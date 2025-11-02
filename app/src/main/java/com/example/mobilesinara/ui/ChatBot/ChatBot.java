@@ -1,5 +1,7 @@
     package com.example.mobilesinara.ui.ChatBot;
 
+    import android.content.Context;
+    import android.content.SharedPreferences;
     import android.os.Bundle;
     import android.util.Log;
     import android.view.LayoutInflater;
@@ -16,10 +18,16 @@
     import androidx.fragment.app.Fragment;
     import androidx.lifecycle.ViewModelProvider;
 
+    import com.bumptech.glide.Glide;
     import com.example.mobilesinara.Interface.IChatBotAPI;
+    import com.example.mobilesinara.Interface.SQL.IEmpresa;
+    import com.example.mobilesinara.Interface.SQL.IOperario;
     import com.example.mobilesinara.Models.ChatRequest;
     import com.example.mobilesinara.Models.ChatResponse;
+    import com.example.mobilesinara.Models.Empresa;
+    import com.example.mobilesinara.Models.Operario;
     import com.example.mobilesinara.R;
+    import com.example.mobilesinara.adapter.ApiClientAdapter;
     import com.example.mobilesinara.adapter.RetrofitClient;
     import com.example.mobilesinara.databinding.FragmentChatBotBinding;
 
@@ -40,8 +48,19 @@
             binding = FragmentChatBotBinding.inflate(inflater, container, false);
             View root = binding.getRoot();
 
+            SharedPreferences prefs = requireContext().getSharedPreferences("sinara_prefs", Context.MODE_PRIVATE);
+            int idUser = prefs.getInt("idUser", -1);
+
+            if (idUser == -1) {
+                Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
+                Log.e("NotificationsFragment", "ID do usuário não encontrado nas SharedPreferences");
+                return root;
+            }
+
             EditText input = root.findViewById(R.id.text_pesquisa);
             ImageView sendButton = root.findViewById(R.id.imageView14);
+            ImageView imgUser = root.findViewById(R.id.imgUser);
+            ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
             LinearLayout layoutMessages = root.findViewById(R.id.layoutMessages);
             ScrollView scrollView = root.findViewById(R.id.scrollViewChat);
 
@@ -58,6 +77,58 @@
                     sendMessageToBot(message, layoutMessages, inflater, scrollView);
                 } else {
                     Log.w(TAG, "Campo de texto vazio, nada enviado.");
+                }
+            });
+            IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
+            iOperario.getOperarioPorId(idUser).enqueue(new Callback<Operario>() {
+                @Override
+                public void onResponse(Call<Operario> call, Response<Operario> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        Operario operario = response.body();
+                        String urlOperario = operario.getImagemUrl();
+                        if (urlOperario == null || urlOperario.isEmpty()) {
+                            Glide.with(requireContext()).load(R.drawable.profile_pic_default).into(imgUser);
+                        } else {
+                            Glide.with(requireContext()).load(urlOperario).circleCrop().into(imgUser);
+                        }
+
+                        // Empresa
+                        int idEmpresa = operario.getIdEmpresa();
+                        IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
+                        iEmpresa.getEmpresaPorId(idEmpresa).enqueue(new Callback<Empresa>() {
+                            @Override
+                            public void onResponse(Call<Empresa> call, Response<Empresa> response) {
+                                if (response.isSuccessful() && response.body() != null) {
+                                    String urlEmpresa = response.body().getImagemUrl();
+
+                                    // Carrega imagem da empresa (ou padrão)
+                                    if (urlEmpresa == null || urlEmpresa.isEmpty()) {
+                                        Glide.with(requireContext())
+                                                .load(R.drawable.profile_pic_default)
+                                                .circleCrop()
+                                                .placeholder(R.drawable.profile_pic_default)
+                                                .error(R.drawable.profile_pic_default)
+                                                .into(imgEmpresa);
+                                    } else {
+                                        Glide.with(requireContext())
+                                                .load(urlEmpresa)
+                                                .circleCrop()
+                                                .placeholder(R.drawable.profile_pic_default)
+                                                .error(R.drawable.profile_pic_default)
+                                                .into(imgEmpresa);
+                                    }
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Empresa> call, Throwable t) { }
+                        });
+                    } else {
+                        Log.e("API", "Erro de resposta: " + response.code());
+                    }
+                }
+                @Override
+                public void onFailure(Call<Operario> call, Throwable t) {
+                    Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
                 }
             });
 

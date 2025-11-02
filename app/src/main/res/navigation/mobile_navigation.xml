@@ -148,5 +148,10 @@
         android:id="@+id/ChatBot"
         android:name="com.example.mobilesinara.ui.ChatBot.ChatBot"
         android:label="fragment_chat_bot"
-        tools:layout="@layout/fragment_chat_bot" />
-</navigation>
+        tools:layout="@layout/fragment_chat_bot">
+    <argument
+        android:name="idUser"
+        app:argType="integer" />
+</fragment>
+
+    </navigation>
