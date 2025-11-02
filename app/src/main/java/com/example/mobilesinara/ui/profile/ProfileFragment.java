@@ -145,8 +145,9 @@ public class ProfileFragment extends Fragment {
                     estaDeFerias.setText(operario.isFerias() ? "Está de férias" : "Não está de férias");
 
                     if (getContext() != null) {
-                        Glide.with(requireContext())
-                                .load(operario.getImageUrl())
+                        Glide.with(getContext())
+                                .load(operario.getImagemUrl())
+                                .circleCrop()
                                 .into(img_pfp);
                     }
 

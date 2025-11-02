@@ -140,9 +140,10 @@ public class telaHomeEmpresa extends Fragment {
         callGetEmpresa.enqueue(new Callback<Empresa>() {
             @Override
             public void onResponse(Call<Empresa> call, Response<Empresa> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Glide.with(requireContext())
-                            .load(response.body().getImageUrl())
+                if(response.isSuccessful() && response.body() != null) {
+                    Glide.with(getContext())
+                            .load(response.body().getImagemUrl())
+                            .circleCrop()
                             .into(iconEmpresa);
                 } else {
                     Log.e("API", "Erro de resposta ao carregar imagem: " + response.code());

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.mobilesinara.Interface.Mongo.INotificacao;
 import com.example.mobilesinara.Interface.SQL.IOperario;
 import com.example.mobilesinara.Models.Notificacao;
@@ -42,6 +44,7 @@ public class NotificationsFragment extends Fragment {
 
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        ImageView imgUser = root.findViewById(R.id.imgUser);
 
         SharedPreferences prefs = requireContext().getSharedPreferences("sinara_prefs", Context.MODE_PRIVATE);
         int idUser = prefs.getInt("idUser", -1);
@@ -63,11 +66,22 @@ public class NotificationsFragment extends Fragment {
         callOperario.enqueue(new Callback<Operario>() {
             @Override
             public void onResponse(Call<Operario> call, Response<Operario> response) {
+                if (!isAdded()) return;
+
                 if (response.isSuccessful() && response.body() != null) {
+                    Operario operario = response.body();
+
+                    // Carrega imagem do usuário
+                    if (isAdded()) {
+                        Glide.with(requireContext())
+                                .load(operario.getImagemUrl())
+                                .circleCrop()
+                                .into(imgUser);
+                    }
+
                     int idEmpresa = response.body().getIdEmpresa();
                     Log.d("NotificationsFragment", "Empresa do usuário: " + idEmpresa);
 
-                    // Agora sim, fazemos a chamada de notificações com o ID certo
                     INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
                     Call<List<Notificacao>> callNotificacoes = iNotificacao.getNotificacaoPorEmpresa(idEmpresa);
 

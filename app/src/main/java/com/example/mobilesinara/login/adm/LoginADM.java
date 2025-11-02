@@ -3,7 +3,6 @@ package com.example.mobilesinara.login.adm;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,16 +15,18 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.mobilesinara.HomeEmpresa;
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
 import com.example.mobilesinara.Models.Empresa;
+import com.example.mobilesinara.Models.EmpresaLoginResponseDTO;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.Models.EmpresaLoginRequestDTO;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,7 +47,7 @@ public class LoginADM extends AppCompatActivity {
         TextInputLayout textInputLayout = findViewById(R.id.textInputLayoutSenha);
         TextInputEditText editTextCnpj = findViewById(R.id.text_cnpj);
         TextInputEditText editTextSenha = findViewById(R.id.text_senha);
-        Button btLogin = findViewById(R.id.bt_fazer_login);
+        MaterialButton btLogin = findViewById(R.id.bt_fazer_login);
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
 
         //botão de voltar
@@ -64,7 +65,6 @@ public class LoginADM extends AppCompatActivity {
             String senha = editTextSenha.getText().toString().trim();
 
             if (!cnpj.isEmpty() && !senha.isEmpty()) {
-                // Cria objeto de request
                 EmpresaLoginRequestDTO request = new EmpresaLoginRequestDTO(cnpj, senha);
                 IEmpresa empresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
 
@@ -78,13 +78,34 @@ public class LoginADM extends AppCompatActivity {
                             intent.putExtra("cnpj", cnpj);
                             intent.putExtra("email", response.body().getEmail());
                             Log.d("LOGIN_ADM", "CNPJ digitado: " + cnpj);
+                Call<EmpresaLoginResponseDTO> call = empresa.loginEmpresa(request);
+                call.enqueue(new Callback<EmpresaLoginResponseDTO>() {
+                    @Override
+                    public void onResponse(Call<EmpresaLoginResponseDTO> call, Response<EmpresaLoginResponseDTO> response) {
+
+                        if (response.isSuccessful() && response.body() != null) {
+                            EmpresaLoginResponseDTO dados = response.body();
+
+                            // Salva id, nome, email, imagemUrl nas SharedPreferences
+                            getSharedPreferences("empresaPrefs", MODE_PRIVATE)
+                                    .edit()
+                                    .putLong("idEmpresa", dados.getId() == null ? -1L : dados.getId())
+                                    .putString("nomeEmpresa", dados.getNome())
+                                    .putString("emailEmpresa", dados.getEmail())
+                                    .putString("imagemUrlEmpresa", dados.getImagemUrl())
+                                    .apply();
+
+                            Toast.makeText(LoginADM.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
+
+                            // Abre a HomeEmpresa (ou a activity que você usa após login)
+                            Intent intent = new Intent(LoginADM.this, LoginADM2.class);
                             startActivity(intent);
                             overridePendingTransition(0, 0);
                         }
-                    }
 
+                    }
                     @Override
-                    public void onFailure(Call<Empresa> call, Throwable t) {
+                    public void onFailure(Call<EmpresaLoginResponseDTO> call, Throwable t) {
                         Toast.makeText(LoginADM.this, "Falha na conexão: " + t.getMessage(), Toast.LENGTH_LONG).show();
                         Log.e("LOGIN", "Falha na conexão: " + t.getMessage());
 

@@ -1,12 +1,12 @@
 package com.example.mobilesinara.Models;
 
 public class PerfilOperario {
-    private String imageUrl;
+    private String imagemUrl;
     private int horasPrevistas;
     private String nome;
     public PerfilOperario(){}
-    public PerfilOperario(String imageUrl, int horasPrevistas, String nome){
-        this.imageUrl = imageUrl;
+    public PerfilOperario(String imagemUrl, int horasPrevistas, String nome){
+        this.imagemUrl = imagemUrl;
         this.horasPrevistas = horasPrevistas;
         this.nome = nome;
     }
@@ -15,12 +15,12 @@ public class PerfilOperario {
         this.horasPrevistas = horasPrevistas;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setimagemUrl(String imagemUrl) {
+        this.imagemUrl = imagemUrl;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getimagemUrl() {
+        return imagemUrl;
     }
 
     public void setNome(String nome) {

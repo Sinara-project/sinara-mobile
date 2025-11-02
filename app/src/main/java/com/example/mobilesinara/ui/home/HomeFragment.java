@@ -15,8 +15,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import com.example.mobilesinara.R;
 import com.bumptech.glide.Glide;
+import com.example.mobilesinara.R;
 import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
 import com.example.mobilesinara.Interface.Mongo.IRespostaFormularioPersonalizado;
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
@@ -47,143 +47,152 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
         Bundle args = getArguments();
         if (args == null || !args.containsKey("idUser")) {
+            Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
+            return root;
         }
         int idUser = args.getInt("idUser");
 
+        // Botão de registro de ponto
         Button botaoPonto = root.findViewById(R.id.button2);
-        botaoPonto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_registroPonto);
-                getActivity().overridePendingTransition(0, 0);
-            }
+        botaoPonto.setOnClickListener(view -> {
+            Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_registroPonto);
+            getActivity().overridePendingTransition(0, 0);
         });
-       
+
+        // Componentes UI
         Button bt_status = root.findViewById(R.id.button7);
         TextView formsPendentes = root.findViewById(R.id.formsPendentes);
         TextView formsRespondidos = root.findViewById(R.id.formsRespondidos);
-        ImageView iconUser = root.findViewById(R.id.imgEmpresa);
+        ImageView iconUser = root.findViewById(R.id.imgUser);
         ImageView iconEmpresa = root.findViewById(R.id.imgEmpresa);
+
+        // Botão Sinara AI
         Button bt_sinaraAi = root.findViewById(R.id.button);
-        bt_sinaraAi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.ChatBot);
-            }
-        });
+        bt_sinaraAi.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.ChatBot));
+
+        // Botão Formulários
         Button bt_forms = root.findViewById(R.id.button3);
-        bt_forms.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.navigation_forms_operario);
-            }
-        });
+        bt_forms.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.navigation_forms_operario));
+
+        // Botão Configuração
         ImageView bt_configuration = root.findViewById(R.id.imageView13);
-        bt_configuration.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.action_navigation_home_to_configuration);
-            }
-        });
+        bt_configuration.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.action_navigation_home_to_configuration));
+
+        // Chamar API para carregar dados
         chamarApi(formsPendentes, formsRespondidos, iconUser, iconEmpresa, bt_status, idUser);
+
         return root;
     }
 
-    private void chamarApi(TextView formsPendentes, TextView formsRespondidos, ImageView iconUser, ImageView iconEmpresa, Button btStatus, int idUser) {
-        String url = "https://ms-sinara-sql-oox0.onrender.com/api/user/";
+    private void chamarApi(TextView formsPendentes, TextView formsRespondidos,
+                           ImageView iconUser, ImageView iconEmpresa,
+                           Button btStatus, int idUser) {
+
         retrofit = new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl("https://ms-sinara-sql-oox0.onrender.com/api/user/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
+
         IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
         IRegistroPonto iRegistroPonto = ApiClientAdapter.getRetrofitInstance().create(IRegistroPonto.class);
         IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IRespostaFormularioPersonalizado.class);
         IFormularioPersonalizado iFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IFormularioPersonalizado.class);
-        Call<Boolean> callStatus = iRegistroPonto.getStatusOperario(idUser);
-        callStatus.enqueue(new Callback<Boolean>() {
+
+        // Status Operário
+        iRegistroPonto.getStatusOperario(idUser).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    if(response.body()){
-                        btStatus.setText("Online");
+                    btStatus.setText(response.body() ? "Online" : "Offline");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) { }
+        });
+
+        // Formulários respondidos
+        iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(idUser)
+                .enqueue(new Callback<Integer>() {
+                    @Override
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            formsRespondidos.setText(String.valueOf(response.body()));
+                            Log.e("Respondidos", "ID: " + idUser);
+                        }
                     }
-                    else{
-                        btStatus.setText("Offline");
+                    @Override
+                    public void onFailure(Call<Integer> call, Throwable t) { }
+                });
+
+        // Formulários pendentes
+        iFormularioPersonalizado.getQtdFormulariosPendentes(idUser)
+                .enqueue(new Callback<Integer>() {
+                    @Override
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            formsPendentes.setText(String.valueOf(response.body()));
+                            Log.e("Pendentes", "ID: " + idUser);
+                        }
                     }
-                }
-            }
+                    @Override
+                    public void onFailure(Call<Integer> call, Throwable t) { }
+                });
 
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-
-            }
-        });
-        Call<Integer> callRespondidos = iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(idUser);
-        callRespondidos.enqueue(new Callback<Integer>() {
-            @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                  formsRespondidos.setText(String.valueOf(response.body()));
-                  Log.e("Respondidos: ", "Chegou em respondidos com o id: "+idUser);
-                }
-            }
-            @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
-
-            }
-        });
-        Call<Integer> callPendentes = iFormularioPersonalizado.getQtdFormulariosPendentes(idUser);
-        callPendentes.enqueue(new Callback<Integer>() {
-            @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    formsPendentes.setText(String.valueOf(response.body()));
-                    Log.e("Pendentes: ", "Chegou em pendentes com o id: "+idUser);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
-
-            }
-        });
-        Call<Operario> callGetOperario = iOperario.getOperarioPorId(idUser);
-        callGetOperario.enqueue(new Callback<Operario>() {
+        // Dados do Operário
+        iOperario.getOperarioPorId(idUser).enqueue(new Callback<Operario>() {
             @Override
             public void onResponse(Call<Operario> call, Response<Operario> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.e("Operarios: ", "Chegou em operarios com o id: "+idUser);
-                    Glide.with(requireContext())
-                            .load(response.body().getImageUrl())
-                            .into(iconUser);
-                    int idEmpresa = response.body().getIdEmpresa();
+                    Operario operario = response.body();
+                    String urlOperario = operario.getImagemUrl();
+                    if (urlOperario == null || urlOperario.isEmpty()) {
+                        Glide.with(getContext()).load(R.drawable.profile_pic_default).into(iconUser);
+                    } else {
+                        Glide.with(getContext()).load(urlOperario).circleCrop().into(iconUser);
+                    }
+
+                    // Empresa
+                    int idEmpresa = operario.getIdEmpresa();
                     IEmpresa iEmpresa = retrofit.create(IEmpresa.class);
-                    Call<Empresa> callGetEmpresa = iEmpresa.getEmpresaPorId(idEmpresa);
-                    callGetEmpresa.enqueue(new Callback<Empresa>() {
+                    iEmpresa.getEmpresaPorId(idEmpresa).enqueue(new Callback<Empresa>() {
                         @Override
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
-                            if(response.isSuccessful() && response.body() != null) {
-                                Log.e("Empresas: ", "Chegou em empresas com o id: "+idUser);
-                                Glide.with(requireContext())
-                                        .load(response.body().getImageUrl())
-                                        .into(iconEmpresa);
+                            if (response.isSuccessful() && response.body() != null) {
+                                String urlEmpresa = response.body().getImagemUrl();
+                                Log.e("URL_EMPRESA", "URL recebida: " + urlEmpresa);
+                                if (urlEmpresa == null || urlEmpresa.isEmpty()) {
+                                    Glide.with(requireContext())
+                                            .load(R.drawable.profile_pic_default)
+                                            .circleCrop()
+                                            .placeholder(R.drawable.profile_pic_default)
+                                            .error(R.drawable.profile_pic_default)
+                                            .into(iconEmpresa);
+                                } else {
+                                    Glide.with(requireContext())
+                                            .load(urlEmpresa)
+                                            .circleCrop()
+                                            .placeholder(R.drawable.profile_pic_default)
+                                            .error(R.drawable.profile_pic_default)
+                                            .into(iconEmpresa);
+                                }
                             }
                         }
                         @Override
-                        public void onFailure(Call<Empresa> call, Throwable t) {
-
-                        }
+                        public void onFailure(Call<Empresa> call, Throwable t) { }
                     });
-                }
-                else{
+                } else {
                     Log.e("API", "Erro de resposta: " + response.code());
                 }
             }
-
             @Override
             public void onFailure(Call<Operario> call, Throwable t) {
                 Log.e("RetrofitError", "Erro: " + t.getMessage(), t);
-            }});
+            }
+        });
     }
 
     @Override

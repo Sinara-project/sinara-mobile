@@ -71,15 +71,20 @@ public class notificacaoEmpresa extends Fragment {
             public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     id[0] = response.body().getId();
-                    Glide.with(requireContext())
-                            .load(response.body().getImageUrl())
-                            .into(imgEmpresa);
+                    Glide.with(getContext())
+                            .load(response.body().getImagemUrl())
+                            .circleCrop()
+                            .into(imgUser);
                     INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
                     Call<List<Notificacao>> callNotificacao = iNotificacao.getNotificacaoPorEmpresa(id[0]);
                     callNotificacao.enqueue(new Callback<>() {
                         @Override
                         public void onResponse(Call<List<Notificacao>> call, Response<List<Notificacao>> response) {
                             if (response.isSuccessful() && response.body() != null) {
+                              Glide.with(getContext())
+                                        .load(response.body().getImagemUrl())
+                                        .circleCrop()
+                                        .into(imgEmpresa);
                                 List<Notificacao> lista = response.body();
                                 NotificacaoAdapter notificacaoAdapter = new NotificacaoAdapter(lista);
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -106,7 +106,8 @@ public class DashboardFragment extends Fragment {
                     // Carrega imagem do usuário
                     if (isAdded()) {
                         Glide.with(requireContext())
-                                .load(operario.getImageUrl())
+                                .load(operario.getImagemUrl())
+                                .circleCrop()
                                 .into(imgUser);
                     }
 
@@ -120,7 +121,8 @@ public class DashboardFragment extends Fragment {
                             if (!isAdded()) return;
                             if (response.isSuccessful() && response.body() != null) {
                                 Glide.with(requireContext())
-                                        .load(response.body().getImageUrl())
+                                        .load(response.body().getImagemUrl())
+                                        .circleCrop()
                                         .into(imgEmpresa);
                             } else {
                                 Log.e("API", "Erro empresa: " + response.code());

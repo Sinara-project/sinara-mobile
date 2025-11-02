@@ -5,21 +5,22 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".cadastro.operario.CadastroOperario">
+    tools:context=".login.operario.LoginOperarioCadastroRosto">
 
     <ImageView
         android:id="@+id/imageView8"
-        android:layout_width="150dp"
-        android:layout_height="97dp"
-        android:layout_marginTop="65dp"
-        android:src="@drawable/icone_tela_opcoes"
+        android:layout_width="249dp"
+        android:layout_height="167dp"
+        android:layout_marginTop="80dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icone_tela_opcoes" />
 
     <TextView
         android:id="@+id/textView12"
-        android:layout_width="268dp"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:fontFamily="@font/montserrat_medium"
@@ -27,26 +28,25 @@
         android:letterSpacing="@dimen/material_emphasis_disabled_background"
         android:text="Cadastre seu rosto"
         android:textColor="@color/md_theme_onPrimary"
-        android:textSize="22sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/bt_avancar"
-        android:layout_width="300dp"
+        android:id="@+id/bt_tirar_foto"
+        android:layout_width="350dp"
         android:layout_height="62dp"
         android:layout_marginBottom="73dp"
         android:fontFamily="@font/montserrat_bold"
-        android:text="Avançar"
+        android:text="Tirar foto"
         android:textColor="@color/md_theme_surfaceVariant"
         android:textSize="18sp"
         app:backgroundTint="@color/md_theme_primaryFixed_highContrast"
         app:cornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.549"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
@@ -62,5 +62,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bt_voltar"
         tools:ignore="SpeakableTextPresentCheck" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="223dp"
+        android:layout_height="315dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12"
+        app:srcCompat="@drawable/bater_ponto_cadastro" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

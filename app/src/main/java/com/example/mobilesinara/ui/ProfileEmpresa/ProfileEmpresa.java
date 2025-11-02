@@ -91,13 +91,14 @@ public class ProfileEmpresa extends Fragment {
                         @Override
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if(response.isSuccessful() && response.body() != null) {
-                                Glide.with(requireContext())
-                                        .load(response.body().getImageUrl())
-                                        .into(icEmpresa);
-                                nomeEmpresa.setText(response.body().getNome());
-                                codigoEmpresa.setText("Código da empresa: "+response.body().getCodigo());
-                                email.setText(response.body().getEmail());
-                                ramo.setText(response.body().getRamoAtuacao());
+                                                    Glide.with(getContext())
+                                                      .load(response.body().getImagemUrl())
+                                                      .circleCrop()
+                                                      .into(icEmpresa);
+                                              nomeEmpresa.setText(response.body().getNome());
+                                              codigoEmpresa.setText("Código da empresa: "+response.body().getCodigo());
+                                              email.setText(response.body().getEmail());
+                                              ramo.setText(response.body().getRamoAtuacao());
                             }
                             else{
                                 Log.e("API", "Erro de resposta: " + response.code());

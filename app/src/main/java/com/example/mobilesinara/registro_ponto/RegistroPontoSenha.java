@@ -6,19 +6,28 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.mobilesinara.Interface.SQL.IOperario;
+import com.example.mobilesinara.Models.SenhaRequest;
 import com.example.mobilesinara.R;
+import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegistroPontoSenha extends Fragment {
 
@@ -27,6 +36,8 @@ public class RegistroPontoSenha extends Fragment {
 
     private String mParam1;
     private String mParam2;
+
+    private int idUser = -1;
 
     public RegistroPontoSenha() {
         // Required empty public constructor
@@ -54,6 +65,17 @@ public class RegistroPontoSenha extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        Bundle args = getArguments();
+        idUser = -1;
+
+        if (args != null && args.containsKey("idUser")) {
+            idUser = args.getInt("idUser");
+            Log.e("RegistroPontoSenha", "ID do usuário recebido: " + idUser);
+        } else {
+            Log.e("RegistroPontoSenha", "Erro: usuário não identificado (Bundle null ou sem idUser)");
+            Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
+        }
+
         View view = inflater.inflate(R.layout.fragment_registro_ponto_senha, container, false);
 
         TextView textViewHora = view.findViewById(R.id.textView21);
@@ -77,10 +99,49 @@ public class RegistroPontoSenha extends Fragment {
 
         btRegistroPonto.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_registroPontoSenha_to_registroPontoConfirmar);
+            public void onClick(View v) {
+                String senhaDigitada = editTextSenha.getText().toString();
+
+                if (senhaDigitada.isEmpty()) {
+                    Toast.makeText(getContext(), "Digite a senha", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                if (idUser == -1) {
+                    Toast.makeText(getContext(), "Usuário inválido", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // Cria o objeto da requisição
+                SenhaRequest request = new SenhaRequest(idUser, senhaDigitada);
+
+                // Instancia o Retrofit e a interface
+                IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
+
+                Call<Boolean> call = iOperario.verificarSenha(request);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
+                            // Senha correta → navega para confirmar ponto
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("idUser", idUser);
+
+                            Navigation.findNavController(v)
+                                    .navigate(R.id.action_registroPontoSenha_to_registroPontoConfirmar, bundle);
+                        } else {
+                            Toast.makeText(getContext(), "Senha incorreta!", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        Toast.makeText(getContext(), "Erro de conexão: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
             }
         });
+
 
         textoRegistroRosto.setOnClickListener(new View.OnClickListener() {
             @Override

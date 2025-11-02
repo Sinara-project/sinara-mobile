@@ -2,6 +2,7 @@ package com.example.mobilesinara.login.operario;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -18,7 +19,7 @@ import com.example.mobilesinara.R;
 
 public class LoginOperarioAlterarSenha extends AppCompatActivity {
 
-    private int idUser = -1; // padrão: inválido
+    private int idUser = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,28 +37,25 @@ public class LoginOperarioAlterarSenha extends AppCompatActivity {
         Button btSim = findViewById(R.id.bt_sim);
         Button btNao = findViewById(R.id.bt_nao);
 
-        // 🔹 Recupera o ID do usuário com segurança
         Bundle info = getIntent().getExtras();
         if (info != null && info.containsKey("idUser")) {
             idUser = info.getInt("idUser");
         } else {
             Toast.makeText(this, "Erro: usuário não identificado!", Toast.LENGTH_SHORT).show();
-            android.util.Log.e("LoginOperarioAlterarSenha", "⚠️ Nenhum idUser recebido pelo Intent!");
+            android.util.Log.e("LoginOperarioAlterarSenha", "⚠Nenhum idUser recebido pelo Intent!");
         }
 
-        // 🔹 Botão de voltar
         btVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginOperarioAlterarSenha.this, LoginOperarioCadastroRosto2.class);
-                intent.putExtra("idUser", idUser); // <-- mantém o id ao voltar também
+                intent.putExtra("idUser", idUser);
                 startActivity(intent);
                 finish();
                 overridePendingTransition(0, 0);
             }
         });
 
-        // 🔹 Botão "Sim"
         btSim.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -68,7 +66,6 @@ public class LoginOperarioAlterarSenha extends AppCompatActivity {
             }
         });
 
-        // 🔹 Botão "Não" → vai para HomeOperario com idUser
         btNao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

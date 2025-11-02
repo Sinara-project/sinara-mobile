@@ -1,6 +1,7 @@
 package com.example.mobilesinara.Interface.SQL;
 
 import com.example.mobilesinara.Models.Empresa;
+import com.example.mobilesinara.Models.EmpresaLoginResponseDTO;
 import com.example.mobilesinara.Models.PerfilEmpresa;
 import com.example.mobilesinara.Models.EmpresaLoginRequestDTO;
 
@@ -24,7 +25,8 @@ public interface IEmpresa {
     Call<String> mudarPlano(@Body int idEmpresa, int idCartao);
     @POST("/api/admin/empresa/rebaixarPlanos/")
     Call<String> rebaixarPlanos();
-
     @POST("/api/admin/empresa/loginEmpresa")
-    Call<Empresa> loginEmpresa(@Body EmpresaLoginRequestDTO loginRequest);
+    Call<EmpresaLoginResponseDTO> loginEmpresa(@Body EmpresaLoginRequestDTO loginRequest);
+    @POST("/api/admin/empresa/validarCodigo")
+    Call<Boolean> validarCodigo(@Body String cnpj, String senha);
 }

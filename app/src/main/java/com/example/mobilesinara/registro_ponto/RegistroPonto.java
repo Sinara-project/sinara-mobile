@@ -24,6 +24,8 @@ public class RegistroPonto extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private int usuarioId;
+
     public RegistroPonto() {}
 
     public static RegistroPonto newInstance(String param1, String param2) {
@@ -42,6 +44,7 @@ public class RegistroPonto extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        usuarioId = getArguments().getInt("idUser", -1);
     }
 
     @Override
@@ -83,7 +86,10 @@ public class RegistroPonto extends Fragment {
         btRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_registroPonto_to_registroPontoCamera);
+                Bundle bundle = new Bundle();
+                bundle.putInt("idUser", usuarioId);
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_registroPonto_to_registroPontoCamera, bundle);
             }
         });
 
