@@ -3,28 +3,46 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation2"
-    app:startDestination="@+id/navigation_home_empresa">
+    app:startDestination="@id/navigation_home_empresa">
 
     <fragment
         android:id="@+id/navigation_home_empresa"
         android:name="com.example.mobilesinara.ui.telaHomeEmpresa.telaHomeEmpresa"
         android:label="@string/title_home"
-        tools:layout="@layout/fragment_tela_home_empresa" />
+        tools:layout="@layout/fragment_tela_home_empresa">
+        <argument
+            android:name="cnpj"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_formulario_empresa"
         android:name="com.example.mobilesinara.ui.formulariosEmpresa.formulariosEmpresa"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_formularios_empresa" />
+        tools:layout="@layout/fragment_formularios_empresa">
+        <argument
+            android:name="cnpj"
+            app:argType="string" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications_empresa"
         android:name="com.example.mobilesinara.ui.notificacaoEmpresa.notificacaoEmpresa"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notificacao_empresa" />
+        tools:layout="@layout/fragment_notificacao_empresa">
+        <argument
+            android:name="cnpj"
+            app:argType="string" />
+    </fragment>
+
     <fragment
         android:id="@+id/profileEmpresa"
         android:name="com.example.mobilesinara.ui.ProfileEmpresa.ProfileEmpresa"
         android:label="fragment_profile_empresa"
-        tools:layout="@layout/fragment_profile_empresa" />
+        tools:layout="@layout/fragment_profile_empresa">
+        <argument
+            android:name="cnpj"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

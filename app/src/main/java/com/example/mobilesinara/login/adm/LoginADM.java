@@ -17,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.mobilesinara.HomeEmpresa;
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
+import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.EmpresaLoginResponseDTO;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.TelaOpcoes;
@@ -67,28 +68,21 @@ public class LoginADM extends AppCompatActivity {
                 EmpresaLoginRequestDTO request = new EmpresaLoginRequestDTO(cnpj, senha);
                 IEmpresa empresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
 
+                Call<Empresa> call = empresa.loginEmpresa(request);
+                call.enqueue(new Callback<Empresa>() {
+                    @Override
+                    public void onResponse(Call<Empresa> call, Response<Empresa> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            Toast.makeText(LoginADM.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginADM.this, LoginADM2.class);
+                            intent.putExtra("cnpj", cnpj);
+                            intent.putExtra("email", response.body().getEmail());
+                            Log.d("LOGIN_ADM", "CNPJ digitado: " + cnpj);
                 Call<EmpresaLoginResponseDTO> call = empresa.loginEmpresa(request);
                 call.enqueue(new Callback<EmpresaLoginResponseDTO>() {
                     @Override
                     public void onResponse(Call<EmpresaLoginResponseDTO> call, Response<EmpresaLoginResponseDTO> response) {
-//                        if (response.isSuccessful() && response.body() != null) {
-//                            EmpresaLoginResponseDTO dados = response.body();
-//                            Toast.makeText(LoginADM.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
-//
-//                            Intent intent = new Intent(LoginADM.this, LoginADM2.class);
-//                            intent.putExtra("cnpj", dados.getCnpj());
-//                            intent.putExtra("nome", dados.getNome());
-//                            intent.putExtra("email", dados.getEmail());
-//                            startActivity(intent);
-//                            overridePendingTransition(0, 0);
-//                        } else {
-//                            if (response.code() == 404) {
-//                                Toast.makeText(LoginADM.this, "Empresa não encontrada.", Toast.LENGTH_SHORT).show();
-//                            } else {
-//                                Toast.makeText(LoginADM.this, "Erro no servidor: " + response.code(), Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-                        // dentro do onResponse do call.enqueue(...)
+
                         if (response.isSuccessful() && response.body() != null) {
                             EmpresaLoginResponseDTO dados = response.body();
 
@@ -113,6 +107,8 @@ public class LoginADM extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<EmpresaLoginResponseDTO> call, Throwable t) {
                         Toast.makeText(LoginADM.this, "Falha na conexão: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                        Log.e("LOGIN", "Falha na conexão: " + t.getMessage());
+
                     }
                 });
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,123 +30,67 @@ public class LoginADM2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String cnpjRecebido = getIntent().getStringExtra("cnpj");
+        Log.d("LOGIN_ADM2", "CNPJ recebido: " + cnpjRecebido);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_adm2);
+
+        // Ajuste automático para respeitar áreas de sistema (status bar, nav bar)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        ((EditText) findViewById(R.id.editText1)).addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+        String emailRecebido = getIntent().getStringExtra("email");
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        Log.d("LOGIN_ADM2", "CNPJ recebido: " + cnpjRecebido);
+        Log.d("LOGIN_ADM2", "Email recebido: " + emailRecebido);
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    findViewById(R.id.editText2).requestFocus();
+        // Exibe o e-mail na tela
+        TextView txtEmail = findViewById(R.id.mostrar_email);
+        if (emailRecebido != null) {
+            txtEmail.setText(emailRecebido);
+        }
+
+        // Campos de código (exemplo: autenticação de 6 dígitos)
+        EditText[] edits = {
+                findViewById(R.id.editText1),
+                findViewById(R.id.editText2),
+                findViewById(R.id.editText3),
+                findViewById(R.id.editText4),
+                findViewById(R.id.editText5),
+                findViewById(R.id.editText6)
+        };
+
+        // Configura comportamento de foco automático entre os campos
+        for (int i = 0; i < edits.length; i++) {
+            int finalI = i;
+            edits[i].addTextChangedListener(new TextWatcher() {
+                @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (s.length() > 0 && finalI < edits.length - 1) {
+                        edits[finalI + 1].requestFocus();
+                    } else if (s.length() == 0 && finalI > 0) {
+                        edits[finalI - 1].requestFocus();
+                    }
                 }
-            }
-        });
+            });
+        }
 
-        ((EditText) findViewById(R.id.editText2)).addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    findViewById(R.id.editText3).requestFocus();
-                }
-                else{
-                    findViewById(R.id.editText1).requestFocus();
-                }
-            }
-        });
-        ((EditText) findViewById(R.id.editText3)).addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    findViewById(R.id.editText4).requestFocus();
-                }
-                else{
-                    findViewById(R.id.editText2).requestFocus();
-                }
-            }
-        });
-        ((EditText) findViewById(R.id.editText4)).addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    findViewById(R.id.editText5).requestFocus();
-                }
-                else{
-                    findViewById(R.id.editText3).requestFocus();
-                }
-            }
-        });
-        ((EditText) findViewById(R.id.editText5)).addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() > 0) {
-                    findViewById(R.id.editText6).requestFocus();
-                }
-                else{
-                    findViewById(R.id.editText4).requestFocus();
-                }
-            }
-        });
-        ((EditText) findViewById(R.id.editText6)).addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() <= 0) {
-                    findViewById(R.id.editText5).requestFocus();
-                }
-            }
-        });
-
+        // Botão voltar
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
-        Button btLogin = findViewById(R.id.bt_login);
-
-        btVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(LoginADM2.this, LoginADM.class));
-                overridePendingTransition(0, 0);
-            }
+        btVoltar.setOnClickListener(v -> {
+            startActivity(new Intent(LoginADM2.this, LoginADM.class));
+            overridePendingTransition(0, 0);
+            finish();
         });
 
+        // Botão login
+        Button btLogin = findViewById(R.id.bt_login);
         btLogin.setOnClickListener(view -> {
             String codigo = "" +
                     ((EditText) findViewById(R.id.editText1)).getText().toString().trim() +
@@ -177,8 +122,15 @@ public class LoginADM2 extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
                         boolean valido = response.body();
                         if (valido) {
-                            startActivity(new Intent(LoginADM2.this, HomeEmpresa.class));
+                           if (cnpjRecebido == null || cnpjRecebido.isEmpty()) {
+                                Log.e("LOGIN_ADM2", "CNPJ não recebido — não é possível prosseguir");
+                                return;
+                            }
+                            Intent intent = new Intent(LoginADM2.this, HomeEmpresa.class);
+                            intent.putExtra("cnpj", cnpjRecebido);
+                            startActivity(intent);
                             overridePendingTransition(0, 0);
+                            finish();
                         } else {
                             Toast.makeText(LoginADM2.this, "Código inválido!", Toast.LENGTH_SHORT).show();
                         }
