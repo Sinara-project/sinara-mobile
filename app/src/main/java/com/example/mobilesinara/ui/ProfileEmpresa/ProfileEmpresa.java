@@ -91,11 +91,23 @@ public class ProfileEmpresa extends Fragment {
                         @Override
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if(response.isSuccessful() && response.body() != null) {
-                                                    Glide.with(getContext())
-                                                      .load(response.body().getImagemUrl())
-                                                      .circleCrop()
-                                                      .into(icEmpresa);
-                                              nomeEmpresa.setText(response.body().getNome());
+                                String urlEmpresa = response.body().getImagemUrl();
+                                if (urlEmpresa == null || urlEmpresa.isEmpty()) {
+                                    Glide.with(requireContext())
+                                            .load(R.drawable.profile_pic_default)
+                                            .circleCrop()
+                                            .placeholder(R.drawable.profile_pic_default)
+                                            .error(R.drawable.profile_pic_default)
+                                            .into(icEmpresa);
+                                } else {
+                                    Glide.with(requireContext())
+                                            .load(urlEmpresa)
+                                            .circleCrop()
+                                            .placeholder(R.drawable.profile_pic_default)
+                                            .error(R.drawable.profile_pic_default)
+                                            .into(icEmpresa);
+                                }
+                                nomeEmpresa.setText(response.body().getNome());
                                               codigoEmpresa.setText("Código da empresa: "+response.body().getCodigo());
                                               email.setText(response.body().getEmail());
                                               ramo.setText(response.body().getRamoAtuacao());

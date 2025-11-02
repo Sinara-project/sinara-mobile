@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
@@ -61,16 +60,13 @@ public class LoginADM extends AppCompatActivity {
             senhaVisivel[0] = !senhaVisivel[0];
 
             if (senhaVisivel[0]) {
-                // Mostra a senha
                 editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_fechado));
             } else {
-                // Esconde a senha
                 editTextSenha.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 textInputLayout.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_aberto));
             }
 
-            // Mantém o cursor no fim
             if (editTextSenha.getText() != null) {
                 editTextSenha.setSelection(editTextSenha.getText().length());
             }
@@ -92,6 +88,10 @@ public class LoginADM extends AppCompatActivity {
                         if (response.isSuccessful() && response.body() != null) {
                             EmpresaLoginResponseDTO dados = response.body();
 
+                            // Log para debug
+                            Log.d("LOGIN_ADM", "Login bem-sucedido para CNPJ: " + cnpj);
+                            Log.d("LOGIN_ADM", "Email retornado: " + dados.getEmail());
+
                             // Salva dados nas SharedPreferences
                             getSharedPreferences("empresaPrefs", MODE_PRIVATE)
                                     .edit()
@@ -99,12 +99,14 @@ public class LoginADM extends AppCompatActivity {
                                     .putString("nomeEmpresa", dados.getNome())
                                     .putString("emailEmpresa", dados.getEmail())
                                     .putString("imagemUrlEmpresa", dados.getImagemUrl())
+                                    .putString("cnpjEmpresa", cnpj)
                                     .apply();
 
                             Toast.makeText(LoginADM.this, "Login realizado com sucesso!", Toast.LENGTH_SHORT).show();
 
-                            // Vai para próxima tela
+                            // Vai para próxima tela e passa dados
                             Intent intent = new Intent(LoginADM.this, LoginADM2.class);
+                            intent.putExtra("cnpj", cnpj);
                             startActivity(intent);
                             overridePendingTransition(0, 0);
                         } else {
@@ -115,7 +117,7 @@ public class LoginADM extends AppCompatActivity {
                     @Override
                     public void onFailure(Call<EmpresaLoginResponseDTO> call, Throwable t) {
                         Toast.makeText(LoginADM.this, "Falha na conexão: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.e("LOGIN", "Falha na conexão: " + t.getMessage());
+                        Log.e("LOGIN_ADM", "Erro de rede: " + t.getMessage());
                     }
                 });
             } else {

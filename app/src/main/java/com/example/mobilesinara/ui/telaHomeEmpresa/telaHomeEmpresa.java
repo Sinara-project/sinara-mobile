@@ -141,10 +141,22 @@ public class telaHomeEmpresa extends Fragment {
             @Override
             public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                 if(response.isSuccessful() && response.body() != null) {
-                    Glide.with(getContext())
-                            .load(response.body().getImagemUrl())
-                            .circleCrop()
-                            .into(iconEmpresa);
+                    String urlEmpresa = response.body().getImagemUrl();
+                    if (urlEmpresa == null || urlEmpresa.isEmpty()) {
+                        Glide.with(requireContext())
+                                .load(R.drawable.profile_pic_default)
+                                .circleCrop()
+                                .placeholder(R.drawable.profile_pic_default)
+                                .error(R.drawable.profile_pic_default)
+                                .into(iconEmpresa);
+                    } else {
+                        Glide.with(requireContext())
+                                .load(urlEmpresa)
+                                .circleCrop()
+                                .placeholder(R.drawable.profile_pic_default)
+                                .error(R.drawable.profile_pic_default)
+                                .into(iconEmpresa);
+                    }
                 } else {
                     Log.e("API", "Erro de resposta ao carregar imagem: " + response.code());
                 }

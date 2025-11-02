@@ -18,7 +18,7 @@
     <fragment
         android:id="@+id/navigation_formulario_empresa"
         android:name="com.example.mobilesinara.ui.formulariosEmpresa.formulariosEmpresa"
-        android:label="@string/title_dashboard"
+        android:label="Formulários"
         tools:layout="@layout/fragment_formularios_empresa">
         <argument
             android:name="cnpj"
@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/profileEmpresa"
         android:name="com.example.mobilesinara.ui.ProfileEmpresa.ProfileEmpresa"
-        android:label="fragment_profile_empresa"
+        android:label="Perfil"
         tools:layout="@layout/fragment_profile_empresa">
         <argument
             android:name="cnpj"

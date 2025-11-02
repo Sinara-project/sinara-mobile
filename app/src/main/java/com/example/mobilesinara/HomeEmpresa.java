@@ -2,53 +2,53 @@ package com.example.mobilesinara;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.mobilesinara.databinding.ActivityHomeEmpresaBinding;
-import com.example.mobilesinara.ui.telaHomeEmpresa.telaHomeEmpresa;
 
 public class HomeEmpresa extends AppCompatActivity {
+
+    private ActivityHomeEmpresaBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivityHomeEmpresaBinding binding = ActivityHomeEmpresaBinding.inflate(getLayoutInflater());
+        binding = ActivityHomeEmpresaBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home_operario,
-                R.id.navigation_forms_operario,
-                R.id.navigation_notifications_operario,
-                R.id.navigation_profile_operario
-        ).build();
-
-        // Recupera o CNPJ enviado pelo LoginADM2
-        String cnpj = getIntent().getStringExtra("cnpj");
-        Log.d("HOME_EMPRESA", "CNPJ recebido no HomeEmpresa: " + cnpj);
-        String email = getIntent().getStringExtra("email");
-
-        if (cnpj == null) {
-            Log.e("HOME_EMPRESA", "CNPJ recebido é null! Não é possível continuar.");
-            return;
+        // Recupera o CNPJ vindo da Intent
+        Bundle info = getIntent().getExtras();
+        String cnpj = null;
+        if (info != null && info.containsKey("cnpj")) {
+            cnpj = info.getString("cnpj");
         }
 
-        // Passa o CNPJ (e o e-mail, se quiser) para o fragmento telaHomeEmpresa
-        Bundle bundle = new Bundle();
-        bundle.putString("cnpj", cnpj);
-        bundle.putString("email", email);
+        // Salva no SharedPreferences
         SharedPreferences prefs = getSharedPreferences("sinara_prefs", MODE_PRIVATE);
         prefs.edit().putString("cnpj", cnpj).apply();
 
-        telaHomeEmpresa fragment = new telaHomeEmpresa();
-        fragment.setArguments(bundle);
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_home_empresa);
-        navController.setGraph(R.navigation.mobile_navigation2, bundle);
+        // Obtém o NavHostFragment diretamente (forma mais segura)
+        NavHostFragment navHostFragment = (NavHostFragment)
+                getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_home_empresa);
+        NavController navController = navHostFragment.getNavController();
+
+        // Define o grafo e os argumentos
+        navController.setGraph(R.navigation.mobile_navigation2, info != null ? info : new Bundle());
+
+        // Configura os destinos principais
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home_empresa,
+                R.id.navigation_formulario_empresa,
+                R.id.navigation_notifications_empresa,
+                R.id.profileEmpresa
+        ).build();
+
+        // Conecta a BottomNavigationView
         NavigationUI.setupWithNavController(binding.navView, navController);
     }
 }

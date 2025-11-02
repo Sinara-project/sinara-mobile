@@ -18,7 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mobilesinara.Interface.Mongo.INotificacao;
+import com.example.mobilesinara.Interface.SQL.IEmpresa;
 import com.example.mobilesinara.Interface.SQL.IOperario;
+import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Notificacao;
 import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
@@ -45,6 +47,7 @@ public class NotificationsFragment extends Fragment {
         binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         ImageView imgUser = root.findViewById(R.id.imgUser);
+        ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
 
         SharedPreferences prefs = requireContext().getSharedPreferences("sinara_prefs", Context.MODE_PRIVATE);
         int idUser = prefs.getInt("idUser", -1);
@@ -71,7 +74,6 @@ public class NotificationsFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     Operario operario = response.body();
 
-                    // Carrega imagem do usuário
                     if (isAdded()) {
                         Glide.with(requireContext())
                                 .load(operario.getImagemUrl())
@@ -80,6 +82,38 @@ public class NotificationsFragment extends Fragment {
                     }
 
                     int idEmpresa = response.body().getIdEmpresa();
+                    IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
+                    iEmpresa.getEmpresaPorId(idEmpresa).enqueue(new Callback<Empresa>() {
+                        @Override
+                        public void onResponse(Call<Empresa> call, Response<Empresa> response) {
+                            if (!isAdded()) return;
+                            if (response.isSuccessful() && response.body() != null) {
+                                String urlEmpresa = response.body().getImagemUrl();
+                                if (urlEmpresa == null || urlEmpresa.isEmpty()) {
+                                    Glide.with(requireContext())
+                                            .load(R.drawable.profile_pic_default)
+                                            .circleCrop()
+                                            .placeholder(R.drawable.profile_pic_default)
+                                            .error(R.drawable.profile_pic_default)
+                                            .into(imgEmpresa);
+                                } else {
+                                    Glide.with(requireContext())
+                                            .load(urlEmpresa)
+                                            .circleCrop()
+                                            .placeholder(R.drawable.profile_pic_default)
+                                            .error(R.drawable.profile_pic_default)
+                                            .into(imgEmpresa);
+                                }
+                            } else {
+                                Log.e("API", "Erro empresa: " + response.code());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Empresa> call, Throwable t) {
+                            Log.e("RetrofitError", "Erro empresa: " + t.getMessage(), t);
+                        }
+                    });
                     Log.d("NotificationsFragment", "Empresa do usuário: " + idEmpresa);
 
                     INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
