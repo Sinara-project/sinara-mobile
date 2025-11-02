@@ -106,8 +106,8 @@
         android:label="fragment_registro_ponto_sucesso"
         tools:layout="@layout/fragment_registro_ponto_sucesso" >
         <action
-            android:id="@+id/action_registroPontoSucesso_to_registroPontoConfirmar"
-            app:destination="@id/registroPontoConfirmar" />
+            android:id="@+id/action_registroPontoSucesso_to_navigation_home_operario"
+            app:destination="@id/navigation_home_operario" />
     </fragment>
     <fragment
         android:id="@+id/registroPontoCamera"

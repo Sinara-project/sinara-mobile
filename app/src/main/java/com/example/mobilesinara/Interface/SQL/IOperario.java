@@ -4,16 +4,24 @@ import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.Models.OperarioLoginRequestDTO;
 import com.example.mobilesinara.Models.PerfilOperario;
 import com.example.mobilesinara.Models.SenhaRequest;
+import com.example.mobilesinara.Models.SenhaRequestDTO;
 
+import java.util.Map;
+
+import kotlin.jvm.JvmSuppressWildcards;
 import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface IOperario {
     @GET("/api/user/operario/buscarPorId/{id}")
@@ -32,12 +40,17 @@ public interface IOperario {
     Call<String> uploadReconhecimento(@Path("id") int id, @Body Operario operario);
     @POST("/api/user/operario/loginOperario")
     Call<Boolean> loginOperario(@Body OperarioLoginRequestDTO loginRequest);
+    @PATCH("/api/user/operario/atualizarSenha/{id}")
+    Call<Operario> atualizarSenha(@Path("id") int id, @Body SenhaRequestDTO request);
     @POST("/api/user/operario/verificarSenha")
-    Call<Boolean> verificarSenha(@Body SenhaRequest request);
+    Call<Boolean> verificarSenha(@Query("idOperario") int idOperario, @Query("senha") String senha);
     @Multipart
     @POST("/api/user/operario/uploadReconhecimento/{id}")
     Call<String> uploadFotoReconhecimento(@Path("id") Integer id, @Part MultipartBody.Part file);
     @Multipart
-    @POST("/api/user/operario/verificarReconhecimento/{id}")
-    Call<Boolean> verificarReconhecimento(@Path("id") Integer id, @Part MultipartBody.Part file);
+    @POST("/api/user/operario/verificarFacial")
+    Call<Boolean> verificarReconhecimento(
+            @PartMap Map<String, RequestBody> params,
+            @Part MultipartBody.Part fotoTeste
+    );
 }

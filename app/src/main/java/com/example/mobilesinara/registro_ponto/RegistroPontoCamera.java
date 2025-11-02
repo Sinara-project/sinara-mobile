@@ -1,10 +1,12 @@
 package com.example.mobilesinara.registro_ponto;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +31,10 @@ import com.example.mobilesinara.adapter.RetrofitClient;
 import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import okhttp3.MediaType;
@@ -45,6 +50,7 @@ public class RegistroPontoCamera extends Fragment {
     private PreviewView previewView;
     private ImageCapture imageCapture;
     private Integer idUser;
+    private IOperario api; // Declarar a interface Retrofit
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,11 +63,15 @@ public class RegistroPontoCamera extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         previewView = view.findViewById(R.id.previewView);
 
-        Bundle args = getArguments();
-        if (args == null || !args.containsKey("idUser")) {
+        SharedPreferences prefs = requireContext().getSharedPreferences("sinara_prefs", getContext().MODE_PRIVATE);
+        idUser = prefs.getInt("idUser", -1);
+
+        if (idUser == -1) {
             Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
         }
-        idUser = args.getInt("idUser");
+
+        // Instancia o Retrofit e a interface
+        api = RetrofitClient.getInstance().create(IOperario.class);
 
         Button btTirarFoto = view.findViewById(R.id.bt_bater_ponto);
         btTirarFoto.setOnClickListener(v -> takePhoto());
@@ -119,17 +129,63 @@ public class RegistroPontoCamera extends Fragment {
             return;
         }
 
-        imageCapture.takePicture(ContextCompat.getMainExecutor(requireContext()), new ImageCapture.OnImageCapturedCallback() {
+        File photoFile = new File(requireContext().getCacheDir(), "foto_temp.jpg");
+
+        ImageCapture.OutputFileOptions outputOptions =
+                new ImageCapture.OutputFileOptions.Builder(photoFile).build();
+
+        imageCapture.takePicture(outputOptions, ContextCompat.getMainExecutor(requireContext()),
+                new ImageCapture.OnImageSavedCallback() {
+                    @Override
+                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(photoFile.getAbsolutePath());
+                        sendImageToBackend(bitmap);
+                    }
+
+                    @Override
+                    public void onError(@NonNull ImageCaptureException exception) {
+                        Toast.makeText(getContext(), "Erro ao salvar foto", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void sendImageToBackend(Bitmap bitmap) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        byte[] bitmapData = bos.toByteArray();
+
+        // RequestBody do userId
+        RequestBody idBody = RequestBody.create(String.valueOf(idUser), MediaType.parse("text/plain"));
+        Map<String, RequestBody> map = new HashMap<>();
+        map.put("userId", idBody);
+
+        MultipartBody.Part filePart = MultipartBody.Part.createFormData(
+                "fotoTeste",
+                "foto.jpg",
+                RequestBody.create(bitmapData, MediaType.parse("image/jpeg"))
+        );
+
+        Call<Boolean> call = api.verificarReconhecimento(map, filePart);
+        call.enqueue(new Callback<Boolean>() {
             @Override
-            public void onCaptureSuccess(@NonNull ImageProxy image) {
-                Bitmap bitmap = imageProxyToBitmap(image);
-                image.close();
-                sendImageToBackend(bitmap);
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    boolean reconhecido = response.body();
+                    Toast.makeText(getContext(), reconhecido ? "Reconhecimento OK" : "Não reconhecido", Toast.LENGTH_SHORT).show();
+                } else {
+                    try {
+                        Log.e("Retrofit", "Erro servidor: " + response.code() + " " + response.errorBody().string());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    Toast.makeText(getContext(), "Erro no servidor", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
-            public void onError(@NonNull ImageCaptureException exception) {
-                Toast.makeText(getContext(), "Erro ao capturar imagem", Toast.LENGTH_SHORT).show();
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e("Retrofit", "Falha: ", t);
+                Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -140,41 +196,5 @@ public class RegistroPontoCamera extends Fragment {
         byte[] bytes = new byte[buffer.remaining()];
         buffer.get(bytes);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-    }
-
-    private void sendImageToBackend(Bitmap bitmap) {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
-        byte[] bitmapData = bos.toByteArray();
-
-        MultipartBody.Part filePart = MultipartBody.Part.createFormData(
-                "file",
-                "foto.jpg",
-                RequestBody.create(bitmapData, MediaType.parse("image/jpeg"))
-        );
-
-        IOperario api = RetrofitClient.getInstance().create(IOperario.class);
-
-        Call<Boolean> call = api.verificarReconhecimento(idUser, filePart);
-        call.enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    boolean reconhecido = response.body();
-                    if (reconhecido) {
-                        Toast.makeText(getContext(), "Reconhecimento OK", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getContext(), "Não reconhecido", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    Toast.makeText(getContext(), "Erro no servidor", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-                Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

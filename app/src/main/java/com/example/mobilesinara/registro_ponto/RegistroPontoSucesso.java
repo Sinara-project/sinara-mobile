@@ -77,7 +77,7 @@ public class RegistroPontoSucesso extends Fragment {
         btVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_registroPontoSucesso_to_registroPontoConfirmar);
+                Navigation.findNavController(view).navigate(R.id.action_registroPontoSucesso_to_navigation_home_operario);
             }
         });
         return view;

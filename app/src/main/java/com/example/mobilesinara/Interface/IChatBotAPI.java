@@ -5,11 +5,16 @@ import com.example.mobilesinara.Models.ChatResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface IChatBotAPI {
-    @Headers("Content-Type: application/json")
-    @POST("docs/chat_bot/chat_real/sinara/main.py")
-    Call<ChatResponse> sendMessage(@Body ChatRequest request);
+    @GET(".")
+    Call<ChatResponse> sendMessage(
+            @Query("query") String query,
+            @Query("session_id") String sessionId,
+            @Query("agent") String agent
+    );
 }

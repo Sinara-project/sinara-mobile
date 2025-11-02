@@ -47,13 +47,6 @@ public class LoginADM2 extends AppCompatActivity {
         Log.d("LOGIN_ADM2", "CNPJ recebido: " + cnpjRecebido);
         Log.d("LOGIN_ADM2", "Email recebido: " + emailRecebido);
 
-        // Exibe o e-mail na tela
-        TextView txtEmail = findViewById(R.id.mostrar_email);
-        if (emailRecebido != null) {
-            txtEmail.setText(emailRecebido);
-        }
-
-        // Campos de código (exemplo: autenticação de 6 dígitos)
         EditText[] edits = {
                 findViewById(R.id.editText1),
                 findViewById(R.id.editText2),
@@ -63,7 +56,6 @@ public class LoginADM2 extends AppCompatActivity {
                 findViewById(R.id.editText6)
         };
 
-        // Configura comportamento de foco automático entre os campos
         for (int i = 0; i < edits.length; i++) {
             int finalI = i;
             edits[i].addTextChangedListener(new TextWatcher() {

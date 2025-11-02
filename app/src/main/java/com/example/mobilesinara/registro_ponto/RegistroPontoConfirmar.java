@@ -12,12 +12,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.mobilesinara.Interface.SQL.IRegistroPonto;
+import com.example.mobilesinara.Models.RegistroPontoRequest;
 import com.example.mobilesinara.R;
+import com.example.mobilesinara.adapter.ApiClientAdapter;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -104,3 +113,152 @@ public class RegistroPontoConfirmar extends Fragment {
         return view;
     }
 }
+
+//package com.example.mobilesinara.registro_ponto;
+//
+//import android.content.SharedPreferences;
+//import android.os.Bundle;
+//
+//import androidx.fragment.app.Fragment;
+//import androidx.navigation.Navigation;
+//
+//import android.os.Handler;
+//import android.view.LayoutInflater;
+//import android.view.View;
+//import android.view.ViewGroup;
+//import android.widget.Button;
+//import android.widget.ImageView;
+//import android.widget.TextView;
+//import android.widget.Toast;
+//
+//import com.example.mobilesinara.Interface.SQL.IRegistroPonto;
+//import com.example.mobilesinara.Models.RegistroPontoRequest;
+//import com.example.mobilesinara.R;
+//import com.example.mobilesinara.adapter.ApiClientAdapter;
+//
+//import java.time.LocalDateTime;
+//import java.util.Locale;
+//
+//import retrofit2.Call;
+//import retrofit2.Callback;
+//import retrofit2.Response;
+//
+//public class RegistroPontoConfirmar extends Fragment {
+//
+//    private static final String ARG_PARAM1 = "param1";
+//    private static final String ARG_PARAM2 = "param2";
+//
+//    private String mParam1;
+//    private String mParam2;
+//    private int idUser = -1;
+//
+//    public RegistroPontoConfirmar() {
+//        // Required empty public constructor
+//    }
+//
+//    public static RegistroPontoConfirmar newInstance(String param1, String param2) {
+//        RegistroPontoConfirmar fragment = new RegistroPontoConfirmar();
+//        Bundle args = new Bundle();
+//        args.putString(ARG_PARAM1, param1);
+//        args.putString(ARG_PARAM2, param2);
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        if (getArguments() != null) {
+//            mParam1 = getArguments().getString(ARG_PARAM1);
+//            mParam2 = getArguments().getString(ARG_PARAM2);
+//            idUser = getArguments().getInt("idUser", -1);
+//        }
+//    }
+//
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        View view = inflater.inflate(R.layout.fragment_registro_ponto_confirmar, container, false);
+//
+//        TextView textViewHora = view.findViewById(R.id.textView21);
+//        Handler handler = new Handler();
+//        Runnable runnable = new Runnable() {
+//            @Override
+//            public void run() {
+//                LocalDateTime agora = LocalDateTime.now();
+//                String horaAtual = String.format(Locale.getDefault(), "%02d:%02d", agora.getHour(), agora.getMinute());
+//                textViewHora.setText(horaAtual);
+//                handler.postDelayed(this, 1000);
+//            }
+//        };
+//        handler.post(runnable);
+//
+//        Button btRegistroPonto = view.findViewById(R.id.bt_confirmar);
+//        Button btCancelar = view.findViewById(R.id.bt_cancelar);
+//
+//        btCancelar.setOnClickListener(v ->
+//                Navigation.findNavController(v).navigate(R.id.action_registroPontoConfirmar_to_registroPonto)
+//        );
+//
+//        btRegistroPonto.setOnClickListener(v -> {
+//            if (idUser == -1) {
+//                Toast.makeText(getContext(), "Usuário não identificado", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//
+//            IRegistroPonto registroPontoAPI = ApiClientAdapter.getRetrofitInstance().create(IRegistroPonto.class);
+//
+//            // Primeiro, pegar a quantidade de registros do dia
+//            registroPontoAPI.getQuantidadeRegistroPonto(idUser).enqueue(new Callback<Integer>() {
+//                @Override
+//                public void onResponse(Call<Integer> call, Response<Integer> responseQtd) {
+//                    if (responseQtd.isSuccessful() && responseQtd.body() != null) {
+//                        int qtd = responseQtd.body();
+//                        LocalDateTime agora = LocalDateTime.now();
+//
+//                        // NÃO é mais necessário declarar entrada e saida
+//                        // LocalDateTime entrada = null;
+//                        // LocalDateTime saida = null;
+//
+//                        // Aqui você cria o objeto correto para enviar
+//                        RegistroPontoRequest req;
+//                        if (qtd == 0) {
+//                            req = new RegistroPontoRequest(agora, null, idUser, idEmpresa); // envia só entrada
+//                        } else {
+//                            req = new RegistroPontoRequest(null, agora, idUser, idEmpresa); // envia só saída
+//                        }
+//
+//                        // Chamada para inserir
+//                        registroPontoAPI.inserirRegistroPonto(req).enqueue(new Callback<String>() {
+//                            @Override
+//                            public void onResponse(Call<String> call, Response<String> responseInsert) {
+//                                if (responseInsert.isSuccessful()) {
+//                                    Toast.makeText(getContext(), "Ponto registrado com sucesso!", Toast.LENGTH_SHORT).show();
+//                                    Navigation.findNavController(view)
+//                                            .navigate(R.id.action_registroPontoConfirmar_to_registroPontoSucesso);
+//                                } else {
+//                                    Toast.makeText(getContext(), "Erro ao registrar ponto", Toast.LENGTH_SHORT).show();
+//                                }
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<String> call, Throwable t) {
+//                                Toast.makeText(getContext(), "Erro de conexão: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//
+//                    } else {
+//                        Toast.makeText(getContext(), "Não foi possível verificar registros do dia", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Integer> call, Throwable t) {
+//                    Toast.makeText(getContext(), "Erro de conexão: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        });
+//
+//        return view;
+//    }
+//}
