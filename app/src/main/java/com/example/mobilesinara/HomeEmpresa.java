@@ -54,7 +54,6 @@ public class HomeEmpresa extends AppCompatActivity {
         if (savedInstanceState == null && cnpj != null) {
             Bundle bundle = new Bundle();
             bundle.putString("cnpj", cnpj);
-            bundle.putString("email", email);
 
             navController.setGraph(R.navigation.mobile_navigation2, bundle);
         }

@@ -94,6 +94,8 @@ public class RegistroPontoSenha extends Fragment {
         TextInputEditText editTextSenha = view.findViewById(R.id.text_senha);
         TextView textoRegistroRosto = view.findViewById(R.id.txt_registro_rosto);
         Button btRegistroPonto = view.findViewById(R.id.bt_registro_ponto);
+        ImageView imgUser = view.findViewById(R.id.iconUser);
+        ImageView imgEmpresa = view.findViewById(R.id.iconEmpresa);
         ImageView voltar = view.findViewById(R.id.voltar);
         IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
         iOperario.getOperarioPorId(idUser).enqueue(new Callback<Operario>() {
@@ -162,8 +164,6 @@ public class RegistroPontoSenha extends Fragment {
             }
 
             SenhaRequest request = new SenhaRequest(idUser, senhaDigitada);
-
-            IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
 
             Call<Boolean> call = iOperario.verificarSenha(idUser, senhaDigitada);
             call.enqueue(new Callback<Boolean>() {
