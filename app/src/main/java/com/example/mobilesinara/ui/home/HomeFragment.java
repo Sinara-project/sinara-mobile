@@ -163,7 +163,8 @@ public class HomeFragment extends Fragment {
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if (response.isSuccessful() && response.body() != null) {
                                 String urlEmpresa = response.body().getImagemUrl();
-                                Log.e("URL_EMPRESA", "URL recebida: " + urlEmpresa);
+
+                                // Carrega imagem da empresa (ou padrão)
                                 if (urlEmpresa == null || urlEmpresa.isEmpty()) {
                                     Glide.with(requireContext())
                                             .load(R.drawable.profile_pic_default)

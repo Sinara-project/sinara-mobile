@@ -3,19 +3,18 @@ package com.example.mobilesinara.ui.notificacaoEmpresa;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mobilesinara.Interface.Mongo.INotificacao;
@@ -36,13 +35,17 @@ public class notificacaoEmpresa extends Fragment {
 
     private FragmentNotificacaoEmpresaBinding binding;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificacaoEmpresaViewModel NotificacaoEmpresaViewModel =
+
+        NotificacaoEmpresaViewModel notificacaoEmpresaViewModel =
                 new ViewModelProvider(this).get(NotificacaoEmpresaViewModel.class);
 
         binding = FragmentNotificacaoEmpresaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        // Recupera o CNPJ
         Bundle args = getArguments();
         String cnpj = null;
         final int[] id = new int[1];
@@ -57,13 +60,18 @@ public class notificacaoEmpresa extends Fragment {
             Log.d("TELA_HOME_EMPRESA", "CNPJ recuperado do SharedPreferences: " + cnpj);
         }
 
+        // Caso o CNPJ seja nulo
         if (cnpj == null || cnpj.isEmpty()) {
             Log.e("API", "CNPJ é null ou vazio! Não é possível chamar a API.");
             Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
             return root;
         }
+
+        // Configuração da RecyclerView
         RecyclerView recyclerView = root.findViewById(R.id.recyclerNotification);
         ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
+
+        // Chamada API Empresa
         IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
         Call<Empresa> callEmpresaPorCnpj = iEmpresa.getEmpresaPorCnpj(cnpj);
         callEmpresaPorCnpj.enqueue(new Callback<Empresa>() {
@@ -71,13 +79,29 @@ public class notificacaoEmpresa extends Fragment {
             public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     id[0] = response.body().getId();
-                    Glide.with(getContext())
-                            .load(response.body().getImagemUrl())
-                            .circleCrop()
-                            .into(imgEmpresa);
+                    String urlEmpresa = response.body().getImagemUrl();
+
+                    // Carrega imagem da empresa (ou padrão)
+                    if (urlEmpresa == null || urlEmpresa.isEmpty()) {
+                        Glide.with(requireContext())
+                                .load(R.drawable.profile_pic_default)
+                                .circleCrop()
+                                .placeholder(R.drawable.profile_pic_default)
+                                .error(R.drawable.profile_pic_default)
+                                .into(imgEmpresa);
+                    } else {
+                        Glide.with(requireContext())
+                                .load(urlEmpresa)
+                                .circleCrop()
+                                .placeholder(R.drawable.profile_pic_default)
+                                .error(R.drawable.profile_pic_default)
+                                .into(imgEmpresa);
+                    }
+
+                    // Busca notificações
                     INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
                     Call<List<Notificacao>> callNotificacao = iNotificacao.getNotificacaoPorEmpresa(id[0]);
-                    callNotificacao.enqueue(new Callback<>() {
+                    callNotificacao.enqueue(new Callback<List<Notificacao>>() {
                         @Override
                         public void onResponse(Call<List<Notificacao>> call, Response<List<Notificacao>> response) {
                             if (response.isSuccessful() && response.body() != null) {
@@ -86,23 +110,28 @@ public class notificacaoEmpresa extends Fragment {
                                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                                 recyclerView.setAdapter(notificacaoAdapter);
                             } else {
-                                Toast.makeText(getContext(), "Não deu certo", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Falha ao carregar notificações", Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(Call<List<Notificacao>> call, Throwable t) {
-                            Toast.makeText(getContext(), "Não deu certo 2", Toast.LENGTH_SHORT).show();
+                            Log.e("API", "Erro ao buscar notificações", t);
+                            Toast.makeText(getContext(), "Erro ao carregar notificações", Toast.LENGTH_SHORT).show();
                         }
                     });
+                } else {
+                    Toast.makeText(getContext(), "Empresa não encontrada", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Empresa> call, Throwable t) {
-
+                Log.e("API", "Erro ao buscar empresa por CNPJ", t);
+                Toast.makeText(getContext(), "Erro ao carregar empresa", Toast.LENGTH_SHORT).show();
             }
         });
+
         return root;
     }
 

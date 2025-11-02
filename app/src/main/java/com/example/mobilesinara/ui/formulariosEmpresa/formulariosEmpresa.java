@@ -31,10 +31,13 @@ import com.example.mobilesinara.R;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.databinding.FragmentFormulariosEmpresaBinding;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,6 +46,7 @@ public class formulariosEmpresa extends Fragment {
 
     private FragmentFormulariosEmpresaBinding binding;
     private String idPermissaoSelecionada = "1";
+    private static final String TAG = "DEBUG_API";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -52,9 +56,9 @@ public class formulariosEmpresa extends Fragment {
         binding = FragmentFormulariosEmpresaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
         Log.d("DEBUG_FORM", "onCreateView iniciado");
 
+        // 🔹 Recupera o CNPJ
         Bundle args = getArguments();
         String cnpj = null;
 
@@ -83,21 +87,7 @@ public class formulariosEmpresa extends Fragment {
         Button btCadastrar = root.findViewById(R.id.bt_cadastrar);
         ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
 
-        String permissoes = "";
-
-        // Diagnóstico dos botões
-        if (btnAdicionarCampo == null) {
-            Log.e("DEBUG_BTN", "btnAdicionarCampo == null (verifique ID button13 no layout)");
-            Toast.makeText(getContext(), "Botão 'Adicionar Campo' não encontrado", Toast.LENGTH_LONG).show();
-        } else {
-            Log.d("DEBUG_BTN", "btnAdicionarCampo encontrado, configurando listener...");
-        }
-
-        if (cardContainer == null) {
-            Log.e("DEBUG_BTN", "cardContainer == null (verifique ID cardContainer no layout)");
-        }
-
-        // Mostrar / ocultar opções extras
+        // Mostrar / ocultar permissões
         String finalCnpj1 = cnpj;
         btnMostrarOpcoes.setOnClickListener(v -> {
             if (layoutOpcoes.getVisibility() == View.VISIBLE) {
@@ -106,9 +96,8 @@ public class formulariosEmpresa extends Fragment {
             }
 
             layoutOpcoes.setVisibility(View.VISIBLE);
-            layoutOpcoes.removeAllViews(); // limpa opções anteriores
+            layoutOpcoes.removeAllViews();
 
-            // Buscar permissões via Retrofit
             IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
             Call<Empresa> callEmpresaPorCnpj = iEmpresa.getEmpresaPorCnpj(finalCnpj1);
 
@@ -135,14 +124,12 @@ public class formulariosEmpresa extends Fragment {
                                         btnPermissao.setBackgroundColor(Color.parseColor("#FF8669"));
                                         btnPermissao.setPadding(16, 8, 16, 8);
 
-                                        // Ação ao clicar
                                         btnPermissao.setOnClickListener(v2 -> {
                                             idPermissaoSelecionada = p.getId();
                                             Toast.makeText(getContext(),
                                                     "Permissão selecionada: " + p.getNomePermissao(),
                                                     Toast.LENGTH_SHORT).show();
 
-                                            // Marcar visualmente
                                             for (int i = 0; i < layoutOpcoes.getChildCount(); i++) {
                                                 View child = layoutOpcoes.getChildAt(i);
                                                 if (child instanceof Button) {
@@ -177,38 +164,21 @@ public class formulariosEmpresa extends Fragment {
             });
         });
 
-
-        // Listener do botão "Adicionar Campo" com logs
+        // Botão adicionar campo
         if (btnAdicionarCampo != null) {
-            btnAdicionarCampo.setEnabled(true);
-            btnAdicionarCampo.setClickable(true);
-
-            btnAdicionarCampo.setOnClickListener(v -> {
-                Log.d("DEBUG_BTN", "Botão 'Adicionar Campo' clicado!");
-                Toast.makeText(getContext(), "Botão clicado!", Toast.LENGTH_SHORT).show();
-
-                try {
-                    adicionarNovoCard(inflater, cardContainer);
-                } catch (Exception e) {
-                    Log.e("DEBUG_BTN", "Erro ao chamar adicionarNovoCard", e);
-                    Toast.makeText(getContext(), "Erro ao adicionar card: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-            });
+            btnAdicionarCampo.setOnClickListener(v -> adicionarNovoCard(inflater, cardContainer));
         }
 
-        // Botão cadastrar
+        // Botão cadastrar formulário
         String finalCnpj = cnpj;
         btCadastrar.setOnClickListener(v -> {
-            Log.d("DEBUG_FORM", "Botão cadastrar clicado");
             List<campos> camposList = new ArrayList<>();
 
             for (int i = 0; i < cardContainer.getChildCount(); i++) {
                 View card = cardContainer.getChildAt(i);
-
                 EditText editNomeCampo = card.findViewById(R.id.text_desc);
                 RadioButton radioObrigatorio = card.findViewById(R.id.radioButton2);
                 LinearLayout opcoesContainer = card.findViewById(R.id.opcoesContainer);
-
                 Button btnEscrita = card.findViewById(R.id.button17);
                 Button btnEscolha = card.findViewById(R.id.button18);
 
@@ -230,166 +200,154 @@ public class formulariosEmpresa extends Fragment {
                         obrigatorio,
                         opcoes
                 );
-
                 camposList.add(campo);
-                Log.d("DEBUG_FORM", "Campo adicionado: " + campo.getLabel() + " tipo=" + campo.getTipo());
             }
 
-            criarFormulario(
-                    titulo.getText().toString(),
-                    descricao.getText().toString(),
-                    camposList,
-                    idPermissaoSelecionada,
-                    finalCnpj
-            );
+            criarFormulario(titulo, descricao, camposList, Collections.singletonList(idPermissaoSelecionada), finalCnpj, cardContainer, layoutOpcoes);
         });
 
         chamarEmpresa(cnpj, imgEmpresa);
-
         return root;
     }
 
     private void chamarEmpresa(String cnpj, ImageView imgEmpresa) {
         IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
         Call<Empresa> callEmpresaPorCnpj = iEmpresa.getEmpresaPorCnpj(cnpj);
+
         callEmpresaPorCnpj.enqueue(new Callback<Empresa>() {
             @Override
             public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    int idEmpresa = response.body().getId();
-                    Log.d("DEBUG_API", "Empresa encontrada. ID = " + idEmpresa);
-                    Glide.with(requireContext())
-                            .load(response.body().getImagemUrl())
-                            .into(imgEmpresa);
-                } else {
-                    Toast.makeText(getContext(), "Empresa não encontrada pelo CNPJ", Toast.LENGTH_SHORT).show();
-                    Log.e("DEBUG_API", "Empresa não encontrada. Código: " + response.code());
+                    String urlEmpresa = response.body().getImagemUrl();
+                    if (urlEmpresa == null || urlEmpresa.isEmpty()) {
+                        Glide.with(requireContext())
+                                .load(R.drawable.profile_pic_default)
+                                .circleCrop()
+                                .placeholder(R.drawable.profile_pic_default)
+                                .error(R.drawable.profile_pic_default)
+                                .into(imgEmpresa);
+                    } else {
+                        Glide.with(requireContext())
+                                .load(urlEmpresa)
+                                .circleCrop()
+                                .placeholder(R.drawable.profile_pic_default)
+                                .error(R.drawable.profile_pic_default)
+                                .into(imgEmpresa);
+                    }
                 }
             }
 
             @Override
             public void onFailure(Call<Empresa> call, Throwable t) {
-                Toast.makeText(getContext(), "Erro de conexão (empresa)", Toast.LENGTH_SHORT).show();
-                Log.e("DEBUG_API", "Falha empresa: " + t.getMessage(), t);
+                Log.e(TAG, "Erro ao carregar empresa", t);
             }
         });
     }
 
-    private void criarFormulario(String titulo, String descricao, List<campos> campos, String permissoes, String cnpj) {
-        Log.d("DEBUG_API", "Chamando criarFormulario com " + campos.size() + " campos");
+    // ✅ agora com reset da tela após sucesso
+    private void criarFormulario(TextInputEditText titulo, TextInputEditText descricao,
+                                 List<campos> campos, List<String> permissoes,
+                                 String cnpj, LinearLayout cardContainer, LinearLayout layoutOpcoes) {
+
         IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
         Call<Empresa> callEmpresaPorCnpj = iEmpresa.getEmpresaPorCnpj(cnpj);
+
         callEmpresaPorCnpj.enqueue(new Callback<Empresa>() {
             @Override
             public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     int idEmpresa = response.body().getId();
-                    Log.d("DEBUG_API", "Empresa encontrada. ID = " + idEmpresa);
 
                     IFormularioPersonalizado iFormularioPersonalizado =
                             ApiClientAdapter.getRetrofitInstance().create(IFormularioPersonalizado.class);
-                    FormularioPersonalizado formularioPersonalizado = new FormularioPersonalizado(idEmpresa, titulo, descricao, campos, permissoes);
 
-                    Call<FormularioPersonalizado> callForm =
-                            iFormularioPersonalizado.InsertFormularioPersonalizado(formularioPersonalizado);
+                    FormularioPersonalizado formularioPersonalizado =
+                            new FormularioPersonalizado(idEmpresa, titulo.getText().toString(),
+                                    descricao.getText().toString(), campos, permissoes);
 
-                    callForm.enqueue(new Callback<FormularioPersonalizado>() {
-                        @Override
-                        public void onResponse(Call<FormularioPersonalizado> call, Response<FormularioPersonalizado> response) {
-                            if (response.isSuccessful() && response.body() != null) {
-                                Toast.makeText(requireContext(), "Formulário criado com sucesso!", Toast.LENGTH_SHORT).show();
-                                Log.d("DEBUG_API", "Formulário criado com sucesso");
-                            } else {
-                                Toast.makeText(requireContext(), "Erro ao criar formulário", Toast.LENGTH_SHORT).show();
-                                Log.e("DEBUG_API", "Erro response: " + response.errorBody());
-                            }
-                        }
+                    Log.d(TAG, "Form body: " + new Gson().toJson(formularioPersonalizado));
 
-                        @Override
-                        public void onFailure(Call<FormularioPersonalizado> call, Throwable t) {
-                            Toast.makeText(getContext(), "Falha de conexão (form)", Toast.LENGTH_SHORT).show();
-                            Log.e("DEBUG_API", "Falha no formulário: " + t.getMessage(), t);
-                        }
-                    });
+                    iFormularioPersonalizado.InsertFormularioPersonalizado(formularioPersonalizado)
+                            .enqueue(new Callback<ResponseBody>() {
+                                @Override
+                                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                                    if (response.isSuccessful()) {
+                                        Toast.makeText(requireContext(), "Formulário criado com sucesso!", Toast.LENGTH_SHORT).show();
+
+                                        // 🔹 RESETA a tela
+                                        titulo.setText("");
+                                        descricao.setText("");
+                                        cardContainer.removeAllViews();
+                                        layoutOpcoes.setVisibility(View.GONE);
+                                        idPermissaoSelecionada = "1";
+                                        Log.d(TAG, "Tela resetada após sucesso");
+                                    } else {
+                                        try {
+                                            String erro = response.errorBody() != null ? response.errorBody().string() : "(sem corpo)";
+                                            Log.e(TAG, "Erro (" + response.code() + "): " + erro);
+                                            Toast.makeText(requireContext(), "Erro: " + response.code(), Toast.LENGTH_SHORT).show();
+                                        } catch (Exception e) {
+                                            Log.e(TAG, "Erro ao ler corpo de erro", e);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                                    Log.e(TAG, "Falha no formulário", t);
+                                    Toast.makeText(requireContext(), "Falha na conexão com o servidor", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                 } else {
-                    Toast.makeText(getContext(), "Empresa não encontrada pelo CNPJ", Toast.LENGTH_SHORT).show();
-                    Log.e("DEBUG_API", "Empresa não encontrada. Código: " + response.code());
+                    Log.e(TAG, "Empresa não encontrada. Código: " + response.code());
                 }
             }
 
             @Override
             public void onFailure(Call<Empresa> call, Throwable t) {
-                Toast.makeText(getContext(), "Erro de conexão (empresa)", Toast.LENGTH_SHORT).show();
-                Log.e("DEBUG_API", "Falha empresa: " + t.getMessage(), t);
+                Log.e(TAG, "Erro ao buscar empresa", t);
             }
         });
     }
 
     private void adicionarNovoCard(LayoutInflater inflater, LinearLayout container) {
         try {
-            Log.d("DEBUG_ADD_CARD", "Tentando inflar item_card_formulario...");
             View novoCard = inflater.inflate(R.layout.item_card_formulario, container, false);
-
-            if (novoCard == null) {
-                Log.e("DEBUG_ADD_CARD", "novoCard == null");
-                return;
-            }
-
             Button btnEscrita = novoCard.findViewById(R.id.button17);
             Button btnEscolha = novoCard.findViewById(R.id.button18);
             Button btnAdicionarOpcao = novoCard.findViewById(R.id.btnAdicionarOpcao);
             LinearLayout opcoesContainer = novoCard.findViewById(R.id.opcoesContainer);
 
-            if (btnEscrita == null || btnEscolha == null) {
-                Log.e("DEBUG_ADD_CARD", "IDs dentro do card não encontrados. Verifique item_card_formulario.xml");
-            }
-
-            // Configuração inicial do card
             btnEscrita.setBackgroundColor(Color.parseColor("#FF8669"));
             btnEscrita.setTextColor(Color.WHITE);
-            btnEscolha.setBackgroundColor(Color.WHITE);
-            btnEscolha.setTextColor(Color.parseColor("#FF8669"));
-            if (btnAdicionarOpcao != null) btnAdicionarOpcao.setVisibility(View.GONE);
-            if (opcoesContainer != null) opcoesContainer.setVisibility(View.GONE);
-
-            // Alternar tipo de campo
-            btnEscrita.setOnClickListener(v -> {
-                btnEscrita.setBackgroundColor(Color.parseColor("#FF8669"));
-                btnEscrita.setTextColor(Color.WHITE);
-                btnEscolha.setBackgroundColor(Color.WHITE);
-                btnEscolha.setTextColor(Color.parseColor("#FF8669"));
-                if (btnAdicionarOpcao != null) btnAdicionarOpcao.setVisibility(View.GONE);
-                if (opcoesContainer != null) {
-                    opcoesContainer.setVisibility(View.GONE);
-                    opcoesContainer.removeAllViews();
-                }
-            });
 
             btnEscolha.setOnClickListener(v -> {
                 btnEscolha.setBackgroundColor(Color.parseColor("#FF8669"));
                 btnEscolha.setTextColor(Color.WHITE);
                 btnEscrita.setBackgroundColor(Color.WHITE);
                 btnEscrita.setTextColor(Color.parseColor("#FF8669"));
-                if (btnAdicionarOpcao != null) btnAdicionarOpcao.setVisibility(View.VISIBLE);
-                if (opcoesContainer != null) opcoesContainer.setVisibility(View.VISIBLE);
+                btnAdicionarOpcao.setVisibility(View.VISIBLE);
+                opcoesContainer.setVisibility(View.VISIBLE);
             });
 
-            // Adicionar novas opções dinamicamente
-            if (btnAdicionarOpcao != null) {
-                btnAdicionarOpcao.setOnClickListener(v -> {
-                    View novaOpcao = inflater.inflate(R.layout.item_opcao_formulario, opcoesContainer, false);
-                    opcoesContainer.addView(novaOpcao);
-                    Log.d("DEBUG_ADD_CARD", "Nova opção adicionada ao card");
-                });
-            }
+            btnEscrita.setOnClickListener(v -> {
+                btnEscrita.setBackgroundColor(Color.parseColor("#FF8669"));
+                btnEscrita.setTextColor(Color.WHITE);
+                btnEscolha.setBackgroundColor(Color.WHITE);
+                btnEscolha.setTextColor(Color.parseColor("#FF8669"));
+                btnAdicionarOpcao.setVisibility(View.GONE);
+                opcoesContainer.setVisibility(View.GONE);
+            });
+
+            btnAdicionarOpcao.setOnClickListener(v -> {
+                View novaOpcao = inflater.inflate(R.layout.item_opcao_formulario, opcoesContainer, false);
+                opcoesContainer.addView(novaOpcao);
+            });
 
             container.addView(novoCard);
-            Log.d("DEBUG_ADD_CARD", "Card adicionado. Total agora: " + container.getChildCount());
-            Toast.makeText(getContext(), "Card adicionado!", Toast.LENGTH_SHORT).show();
-
         } catch (Exception e) {
             Log.e("DEBUG_ADD_CARD", "Erro ao adicionar card", e);
-            Toast.makeText(getContext(), "Erro ao adicionar card: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
 
