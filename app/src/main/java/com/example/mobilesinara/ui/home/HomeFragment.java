@@ -47,7 +47,6 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
         Bundle args = getArguments();
         if (args == null || !args.containsKey("idUser")) {
-            Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
         }
         int idUser = args.getInt("idUser");
 
@@ -154,7 +153,7 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<Operario> call, Response<Operario> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.e("Operarios: ", "Chegou em operarios com o id: "+idUser);
-                    Glide.with(getContext())
+                    Glide.with(requireContext())
                             .load(response.body().getImageUrl())
                             .into(iconUser);
                     int idEmpresa = response.body().getIdEmpresa();
@@ -165,7 +164,7 @@ public class HomeFragment extends Fragment {
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if(response.isSuccessful() && response.body() != null) {
                                 Log.e("Empresas: ", "Chegou em empresas com o id: "+idUser);
-                                Glide.with(getContext())
+                                Glide.with(requireContext())
                                         .load(response.body().getImageUrl())
                                         .into(iconEmpresa);
                             }

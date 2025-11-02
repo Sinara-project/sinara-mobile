@@ -27,6 +27,8 @@ import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.databinding.FragmentProfileEmpresaBinding;
 
 
+import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -89,7 +91,7 @@ public class ProfileEmpresa extends Fragment {
                         @Override
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if(response.isSuccessful() && response.body() != null) {
-                                Glide.with(getContext())
+                                Glide.with(requireContext())
                                         .load(response.body().getImageUrl())
                                         .into(icEmpresa);
                                 nomeEmpresa.setText(response.body().getNome());

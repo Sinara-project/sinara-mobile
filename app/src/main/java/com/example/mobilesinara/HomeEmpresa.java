@@ -1,5 +1,6 @@
 package com.example.mobilesinara;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -41,6 +42,8 @@ public class HomeEmpresa extends AppCompatActivity {
         Bundle bundle = new Bundle();
         bundle.putString("cnpj", cnpj);
         bundle.putString("email", email);
+        SharedPreferences prefs = getSharedPreferences("sinara_prefs", MODE_PRIVATE);
+        prefs.edit().putString("cnpj", cnpj).apply();
 
         telaHomeEmpresa fragment = new telaHomeEmpresa();
         fragment.setArguments(bundle);

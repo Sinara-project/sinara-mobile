@@ -10,6 +10,6 @@ import retrofit2.http.POST;
 
 public interface IChatBotAPI {
     @Headers("Content-Type: application/json")
-    @POST("docs")
+    @POST("docs/chat_bot/chat_real/sinara/main.py")
     Call<ChatResponse> sendMessage(@Body ChatRequest request);
 }
