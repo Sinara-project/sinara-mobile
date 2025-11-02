@@ -1,6 +1,7 @@
 package com.example.mobilesinara.registro_ponto;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -57,11 +58,13 @@ public class RegistroPontoCamera extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         previewView = view.findViewById(R.id.previewView);
 
-        Bundle args = getArguments();
-        if (args == null || !args.containsKey("idUser")) {
+        SharedPreferences prefs = requireContext().getSharedPreferences("sinara_prefs", getContext().MODE_PRIVATE);
+        idUser = prefs.getInt("idUser", -1);
+
+        if (idUser == -1) {
             Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
         }
-        idUser = args.getInt("idUser");
+
 
         Button btTirarFoto = view.findViewById(R.id.bt_bater_ponto);
         btTirarFoto.setOnClickListener(v -> takePhoto());

@@ -1,5 +1,6 @@
 package com.example.mobilesinara.registro_ponto;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -65,13 +66,12 @@ public class RegistroPontoSenha extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        Bundle args = getArguments();
-        idUser = -1;
+        SharedPreferences prefs = requireContext().getSharedPreferences("sinara_prefs", getContext().MODE_PRIVATE);
+        idUser = prefs.getInt("idUser", -1);
 
-        if (args == null || !args.containsKey("idUser")) {
+        if (idUser == -1) {
             Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
         }
-        idUser = args.getInt("idUser");
 
         View view = inflater.inflate(R.layout.fragment_registro_ponto_senha, container, false);
 
