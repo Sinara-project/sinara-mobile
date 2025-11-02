@@ -6,6 +6,7 @@ import com.example.mobilesinara.Models.FormularioPersonalizado;
 import java.util.List;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -22,13 +23,9 @@ public interface IFormularioPersonalizado {
 
     @GET("https://ms-sinara-mongo.onrender.com/formulario-personalizado/contar-formularios-pendentes/{idPermissao}")
     Call<Integer> getQtdFormulariosPendentes(@Path("idPermissao") int id);
-    @FormUrlEncoded
     @POST("https://ms-sinara-mongo.onrender.com/formulario-personalizado/inserir")
     Call<FormularioPersonalizado> InsertFormularioPersonalizado(
-            @Field("idCriador") int idCriador,
-            @Field("titulo") String titulo,
-            @Field("descricao") String descricao,
-            @Field("campos") List<campos> campos,
-            @Field("permissoes") List<String> permissoes
+            @Body FormularioPersonalizado formulario
     );
+
 }

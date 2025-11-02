@@ -1,16 +1,19 @@
 package com.example.mobilesinara.Models;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class FormularioPersonalizado {
     private String id;
+    @SerializedName("idEmpresa")
     private int idCriador;
     private String titulo;
     private String descricao;
     private List<campos> campos;
-    private List<String> idPermissao;
+    private String idPermissao;
     public FormularioPersonalizado(){}
-    public FormularioPersonalizado(int idCriador, String titulo, String descricao, List<campos> campos, List<String> idPermissao){
+    public FormularioPersonalizado(int idCriador, String titulo, String descricao, List<campos> campos, String idPermissao){
         this.idCriador = idCriador;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -34,7 +37,7 @@ public class FormularioPersonalizado {
         return campos;
     }
 
-    public List<String> getIdPermissao() {
+    public String getIdPermissao() {
         return idPermissao;
     }
 
@@ -54,7 +57,7 @@ public class FormularioPersonalizado {
         this.campos = campos;
     }
 
-    public void setIdPermissao(List<String> idPermissao) {
+    public void setIdPermissao(String idPermissao) {
         this.idPermissao = idPermissao;
     }
 }

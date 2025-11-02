@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -18,10 +19,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
 import com.example.mobilesinara.Interface.Mongo.IFormularioPersonalizado;
+import com.example.mobilesinara.Interface.Mongo.IPermissoes;
 import com.example.mobilesinara.Interface.SQL.IEmpresa;
 import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.FormularioPersonalizado;
+import com.example.mobilesinara.Models.Permissao;
 import com.example.mobilesinara.Models.campos;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
@@ -38,6 +42,7 @@ import retrofit2.Response;
 public class formulariosEmpresa extends Fragment {
 
     private FragmentFormulariosEmpresaBinding binding;
+    private String idPermissaoSelecionada = "1";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -46,6 +51,7 @@ public class formulariosEmpresa extends Fragment {
         new ViewModelProvider(this).get(FormulariosEmpresaViewModel.class);
         binding = FragmentFormulariosEmpresaBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
 
         Log.d("DEBUG_FORM", "onCreateView iniciado");
 
@@ -75,8 +81,9 @@ public class formulariosEmpresa extends Fragment {
         Button btnAdicionarCampo = root.findViewById(R.id.button13);
         LinearLayout cardContainer = root.findViewById(R.id.cardContainer);
         Button btCadastrar = root.findViewById(R.id.bt_cadastrar);
+        ImageView imgEmpresa = root.findViewById(R.id.imgEmpresa);
 
-        List<String> permissoes = new ArrayList<>();
+        String permissoes = "";
 
         // Diagnóstico dos botões
         if (btnAdicionarCampo == null) {
@@ -91,11 +98,85 @@ public class formulariosEmpresa extends Fragment {
         }
 
         // Mostrar / ocultar opções extras
+        String finalCnpj1 = cnpj;
         btnMostrarOpcoes.setOnClickListener(v -> {
-            layoutOpcoes.setVisibility(
-                    layoutOpcoes.getVisibility() == View.GONE ? View.VISIBLE : View.GONE
-            );
+            if (layoutOpcoes.getVisibility() == View.VISIBLE) {
+                layoutOpcoes.setVisibility(View.GONE);
+                return;
+            }
+
+            layoutOpcoes.setVisibility(View.VISIBLE);
+            layoutOpcoes.removeAllViews(); // limpa opções anteriores
+
+            // Buscar permissões via Retrofit
+            IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
+            Call<Empresa> callEmpresaPorCnpj = iEmpresa.getEmpresaPorCnpj(finalCnpj1);
+
+            callEmpresaPorCnpj.enqueue(new Callback<Empresa>() {
+                @Override
+                public void onResponse(Call<Empresa> call, Response<Empresa> response) {
+                    if (response.isSuccessful() && response.body() != null) {
+                        int idEmpresa = response.body().getId();
+
+                        IPermissoes iPermissoes = ApiClientAdapter.getRetrofitInstance().create(IPermissoes.class);
+                        Call<List<Permissao>> callPermissoes = iPermissoes.getPermissaoPorEmpresa(idEmpresa);
+
+                        callPermissoes.enqueue(new Callback<List<Permissao>>() {
+                            @Override
+                            public void onResponse(Call<List<Permissao>> call, Response<List<Permissao>> response) {
+                                if (response.isSuccessful() && response.body() != null) {
+                                    List<Permissao> permissoes = response.body();
+
+                                    for (Permissao p : permissoes) {
+                                        Button btnPermissao = new Button(requireContext());
+                                        btnPermissao.setText(p.getNomePermissao());
+                                        btnPermissao.setAllCaps(false);
+                                        btnPermissao.setTextColor(Color.WHITE);
+                                        btnPermissao.setBackgroundColor(Color.parseColor("#FF8669"));
+                                        btnPermissao.setPadding(16, 8, 16, 8);
+
+                                        // Ação ao clicar
+                                        btnPermissao.setOnClickListener(v2 -> {
+                                            idPermissaoSelecionada = p.getId();
+                                            Toast.makeText(getContext(),
+                                                    "Permissão selecionada: " + p.getNomePermissao(),
+                                                    Toast.LENGTH_SHORT).show();
+
+                                            // Marcar visualmente
+                                            for (int i = 0; i < layoutOpcoes.getChildCount(); i++) {
+                                                View child = layoutOpcoes.getChildAt(i);
+                                                if (child instanceof Button) {
+                                                    child.setBackgroundColor(Color.parseColor("#FF8669"));
+                                                }
+                                            }
+                                            btnPermissao.setBackgroundColor(Color.parseColor("#E65100"));
+                                        });
+
+                                        layoutOpcoes.addView(btnPermissao);
+                                    }
+
+                                } else {
+                                    Toast.makeText(getContext(), "Nenhuma permissão encontrada", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<Permissao>> call, Throwable t) {
+                                Toast.makeText(getContext(), "Erro ao carregar permissões", Toast.LENGTH_SHORT).show();
+                                Log.e("DEBUG_PERMISSOES", "Erro: " + t.getMessage(), t);
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Empresa> call, Throwable t) {
+                    Toast.makeText(getContext(), "Erro ao buscar empresa", Toast.LENGTH_SHORT).show();
+                    Log.e("DEBUG_EMPRESA", "Erro: " + t.getMessage(), t);
+                }
+            });
         });
+
 
         // Listener do botão "Adicionar Campo" com logs
         if (btnAdicionarCampo != null) {
@@ -158,20 +239,46 @@ public class formulariosEmpresa extends Fragment {
                     titulo.getText().toString(),
                     descricao.getText().toString(),
                     camposList,
-                    permissoes,
+                    idPermissaoSelecionada,
                     finalCnpj
             );
         });
 
+        chamarEmpresa(cnpj, imgEmpresa);
+
         return root;
     }
 
-    private void criarFormulario(String titulo, String descricao, List<campos> campos, List<String> permissoes, String cnpj) {
-        Log.d("DEBUG_API", "Chamando criarFormulario com " + campos.size() + " campos");
-
+    private void chamarEmpresa(String cnpj, ImageView imgEmpresa) {
         IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
         Call<Empresa> callEmpresaPorCnpj = iEmpresa.getEmpresaPorCnpj(cnpj);
+        callEmpresaPorCnpj.enqueue(new Callback<Empresa>() {
+            @Override
+            public void onResponse(Call<Empresa> call, Response<Empresa> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int idEmpresa = response.body().getId();
+                    Log.d("DEBUG_API", "Empresa encontrada. ID = " + idEmpresa);
+                    Glide.with(requireContext())
+                            .load(response.body().getImageUrl())
+                            .into(imgEmpresa);
+                } else {
+                    Toast.makeText(getContext(), "Empresa não encontrada pelo CNPJ", Toast.LENGTH_SHORT).show();
+                    Log.e("DEBUG_API", "Empresa não encontrada. Código: " + response.code());
+                }
+            }
 
+            @Override
+            public void onFailure(Call<Empresa> call, Throwable t) {
+                Toast.makeText(getContext(), "Erro de conexão (empresa)", Toast.LENGTH_SHORT).show();
+                Log.e("DEBUG_API", "Falha empresa: " + t.getMessage(), t);
+            }
+        });
+    }
+
+    private void criarFormulario(String titulo, String descricao, List<campos> campos, String permissoes, String cnpj) {
+        Log.d("DEBUG_API", "Chamando criarFormulario com " + campos.size() + " campos");
+        IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
+        Call<Empresa> callEmpresaPorCnpj = iEmpresa.getEmpresaPorCnpj(cnpj);
         callEmpresaPorCnpj.enqueue(new Callback<Empresa>() {
             @Override
             public void onResponse(Call<Empresa> call, Response<Empresa> response) {
@@ -181,18 +288,19 @@ public class formulariosEmpresa extends Fragment {
 
                     IFormularioPersonalizado iFormularioPersonalizado =
                             ApiClientAdapter.getRetrofitInstance().create(IFormularioPersonalizado.class);
+                    FormularioPersonalizado formularioPersonalizado = new FormularioPersonalizado(idEmpresa, titulo, descricao, campos, permissoes);
 
                     Call<FormularioPersonalizado> callForm =
-                            iFormularioPersonalizado.InsertFormularioPersonalizado(idEmpresa, titulo, descricao, campos, permissoes);
+                            iFormularioPersonalizado.InsertFormularioPersonalizado(formularioPersonalizado);
 
                     callForm.enqueue(new Callback<FormularioPersonalizado>() {
                         @Override
                         public void onResponse(Call<FormularioPersonalizado> call, Response<FormularioPersonalizado> response) {
                             if (response.isSuccessful() && response.body() != null) {
-                                Toast.makeText(getContext(), "Formulário criado com sucesso!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(requireContext(), "Formulário criado com sucesso!", Toast.LENGTH_SHORT).show();
                                 Log.d("DEBUG_API", "Formulário criado com sucesso");
                             } else {
-                                Toast.makeText(getContext(), "Erro ao criar formulário", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(requireContext(), "Erro ao criar formulário", Toast.LENGTH_SHORT).show();
                                 Log.e("DEBUG_API", "Erro response: " + response.errorBody());
                             }
                         }
@@ -217,7 +325,6 @@ public class formulariosEmpresa extends Fragment {
         });
     }
 
-    // ------------------ ADICIONAR NOVO CARD ------------------
     private void adicionarNovoCard(LayoutInflater inflater, LinearLayout container) {
         try {
             Log.d("DEBUG_ADD_CARD", "Tentando inflar item_card_formulario...");

@@ -71,7 +71,7 @@ public class notificacaoEmpresa extends Fragment {
             public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     id[0] = response.body().getId();
-                    Glide.with(getContext())
+                    Glide.with(requireContext())
                             .load(response.body().getImageUrl())
                             .into(imgEmpresa);
                     INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
