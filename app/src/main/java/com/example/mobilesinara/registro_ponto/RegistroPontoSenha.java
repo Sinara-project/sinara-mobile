@@ -68,13 +68,10 @@ public class RegistroPontoSenha extends Fragment {
         Bundle args = getArguments();
         idUser = -1;
 
-        if (args != null && args.containsKey("idUser")) {
-            idUser = args.getInt("idUser");
-            Log.e("RegistroPontoSenha", "ID do usuário recebido: " + idUser);
-        } else {
-            Log.e("RegistroPontoSenha", "Erro: usuário não identificado (Bundle null ou sem idUser)");
+        if (args == null || !args.containsKey("idUser")) {
             Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
         }
+        idUser = args.getInt("idUser");
 
         View view = inflater.inflate(R.layout.fragment_registro_ponto_senha, container, false);
 
