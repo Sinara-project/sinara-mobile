@@ -1,6 +1,7 @@
 package com.example.mobilesinara.login.adm;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,30 +31,29 @@ public class LoginADM2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String cnpjRecebido = getIntent().getStringExtra("cnpj");
-        Log.d("LOGIN_ADM2", "CNPJ recebido: " + cnpjRecebido);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_adm2);
 
-        // Ajuste automático para respeitar áreas de sistema (status bar, nav bar)
+        // Ajuste de margens para status/nav bar
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        String emailRecebido = getIntent().getStringExtra("email");
+        // Recupera dados vindos da tela anterior
+        String cnpjRecebido = getIntent().getStringExtra("cnpj");
 
         Log.d("LOGIN_ADM2", "CNPJ recebido: " + cnpjRecebido);
-        Log.d("LOGIN_ADM2", "Email recebido: " + emailRecebido);
 
-        // Exibe o e-mail na tela
-        TextView txtEmail = findViewById(R.id.mostrar_email);
-        if (emailRecebido != null) {
-            txtEmail.setText(emailRecebido);
+        // Salva o CNPJ localmente para referência futura
+        if (cnpjRecebido != null && !cnpjRecebido.isEmpty()) {
+            SharedPreferences prefs = getSharedPreferences("sinara_prefs", MODE_PRIVATE);
+            prefs.edit().putString("cnpj", cnpjRecebido).apply();
+            Log.d("LOGIN_ADM2", "CNPJ salvo no SharedPreferences: " + cnpjRecebido);
         }
 
-        // Campos de código (exemplo: autenticação de 6 dígitos)
+        // Configuração dos campos de código (6 dígitos)
         EditText[] edits = {
                 findViewById(R.id.editText1),
                 findViewById(R.id.editText2),
@@ -63,7 +63,6 @@ public class LoginADM2 extends AppCompatActivity {
                 findViewById(R.id.editText6)
         };
 
-        // Configura comportamento de foco automático entre os campos
         for (int i = 0; i < edits.length; i++) {
             int finalI = i;
             edits[i].addTextChangedListener(new TextWatcher() {
@@ -89,7 +88,7 @@ public class LoginADM2 extends AppCompatActivity {
             finish();
         });
 
-        // Botão login
+        // Botão de login
         Button btLogin = findViewById(R.id.bt_login);
         btLogin.setOnClickListener(view -> {
             String codigo = "" +
@@ -100,21 +99,30 @@ public class LoginADM2 extends AppCompatActivity {
                     ((EditText) findViewById(R.id.editText5)).getText().toString().trim() +
                     ((EditText) findViewById(R.id.editText6)).getText().toString().trim();
 
-            String cnpj = getIntent().getStringExtra("cnpj");
-
             if (codigo.length() != 6) {
                 Toast.makeText(LoginADM2.this, "Digite o código completo", Toast.LENGTH_SHORT).show();
                 return;
             }
 
+            // CÓDIGO DE TESTE PADRÃO
             if (codigo.equals("962845")) {
-                startActivity(new Intent(LoginADM2.this, HomeEmpresa.class));
+                if (cnpjRecebido == null || cnpjRecebido.isEmpty()) {
+                    Log.e("LOGIN_ADM2", "CNPJ não recebido — não é possível abrir HomeEmpresa");
+                    Toast.makeText(LoginADM2.this, "Erro: CNPJ não encontrado.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Intent intent = new Intent(LoginADM2.this, HomeEmpresa.class);
+                intent.putExtra("cnpj", cnpjRecebido);
+                startActivity(intent);
                 overridePendingTransition(0, 0);
+                finish();
                 return;
             }
 
+            // Validação real via API
             IEmpresa empresaCodigo = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
-            Call<Boolean> call = empresaCodigo.validarCodigo(cnpj, codigo);
+            Call<Boolean> call = empresaCodigo.validarCodigo(cnpjRecebido, codigo);
 
             call.enqueue(new retrofit2.Callback<Boolean>() {
                 @Override
@@ -122,10 +130,6 @@ public class LoginADM2 extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null) {
                         boolean valido = response.body();
                         if (valido) {
-                           if (cnpjRecebido == null || cnpjRecebido.isEmpty()) {
-                                Log.e("LOGIN_ADM2", "CNPJ não recebido — não é possível prosseguir");
-                                return;
-                            }
                             Intent intent = new Intent(LoginADM2.this, HomeEmpresa.class);
                             intent.putExtra("cnpj", cnpjRecebido);
                             startActivity(intent);
@@ -145,6 +149,5 @@ public class LoginADM2 extends AppCompatActivity {
                 }
             });
         });
-
     }
 }
