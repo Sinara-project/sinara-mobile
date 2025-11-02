@@ -57,9 +57,11 @@ public class RegistroPontoCamera extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         previewView = view.findViewById(R.id.previewView);
 
-        if (getArguments() != null) {
-            usuarioId = getArguments().getInt("idUser", -1);
+        Bundle args = getArguments();
+        if (args == null || !args.containsKey("idUser")) {
+            Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
         }
+        int idUser = args.getInt("idUser");
 
         Button btTirarFoto = view.findViewById(R.id.bt_bater_ponto);
         btTirarFoto.setOnClickListener(v -> takePhoto());

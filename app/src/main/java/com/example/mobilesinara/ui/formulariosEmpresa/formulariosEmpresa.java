@@ -259,7 +259,7 @@ public class formulariosEmpresa extends Fragment {
                     int idEmpresa = response.body().getId();
                     Log.d("DEBUG_API", "Empresa encontrada. ID = " + idEmpresa);
                     Glide.with(requireContext())
-                            .load(response.body().getImageUrl())
+                            .load(response.body().getImagemUrl())
                             .into(imgEmpresa);
                 } else {
                     Toast.makeText(getContext(), "Empresa não encontrada pelo CNPJ", Toast.LENGTH_SHORT).show();
