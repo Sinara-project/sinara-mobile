@@ -1,5 +1,7 @@
 package com.example.mobilesinara.ui.notifications;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -78,10 +81,12 @@ public class NotificationsFragment extends Fragment {
                         Glide.with(requireContext())
                                 .load(operario.getImagemUrl())
                                 .circleCrop()
+                                .placeholder(R.drawable.profile_pic_default)
+                                .error(R.drawable.profile_pic_default)
                                 .into(imgUser);
                     }
 
-                    int idEmpresa = response.body().getIdEmpresa();
+                    int idEmpresa = operario.getIdEmpresa();
                     IEmpresa iEmpresa = ApiClientAdapter.getRetrofitInstance().create(IEmpresa.class);
                     iEmpresa.getEmpresaPorId(idEmpresa).enqueue(new Callback<Empresa>() {
                         @Override
@@ -93,8 +98,6 @@ public class NotificationsFragment extends Fragment {
                                     Glide.with(requireContext())
                                             .load(R.drawable.profile_pic_default)
                                             .circleCrop()
-                                            .placeholder(R.drawable.profile_pic_default)
-                                            .error(R.drawable.profile_pic_default)
                                             .into(imgEmpresa);
                                 } else {
                                     Glide.with(requireContext())
@@ -114,6 +117,7 @@ public class NotificationsFragment extends Fragment {
                             Log.e("RetrofitError", "Erro empresa: " + t.getMessage(), t);
                         }
                     });
+
                     Log.d("NotificationsFragment", "Empresa do usuário: " + idEmpresa);
 
                     INotificacao iNotificacao = ApiClientAdapter.getRetrofitInstance().create(INotificacao.class);
@@ -122,10 +126,29 @@ public class NotificationsFragment extends Fragment {
                     callNotificacoes.enqueue(new Callback<List<Notificacao>>() {
                         @Override
                         public void onResponse(Call<List<Notificacao>> call, Response<List<Notificacao>> response) {
+                            if (!isAdded()) return;
+
                             if (response.isSuccessful() && response.body() != null) {
                                 List<Notificacao> lista = response.body();
                                 NotificationAdapter notificationAdapter = new NotificationAdapter(lista);
                                 recyclerView.setAdapter(notificationAdapter);
+
+                                int totalAtual = lista.size();
+                                SharedPreferences prefsNotificacoes = requireContext().getSharedPreferences("sinara_prefs", Context.MODE_PRIVATE);
+                                int totalAnterior = prefsNotificacoes.getInt("total_notificacoes_" + idEmpresa, 0);
+
+                                Log.d("NotificationsFragment", "Total anterior: " + totalAnterior + " | Total atual: " + totalAtual);
+
+                                if (totalAtual > totalAnterior && totalAnterior > 0) {
+                                    int novas = totalAtual - totalAnterior;
+                                    mostrarNotificacaoLocal(novas);
+                                }
+
+                                // Atualiza o total salvo
+                                prefsNotificacoes.edit()
+                                        .putInt("total_notificacoes_" + idEmpresa, totalAtual)
+                                        .apply();
+
                             } else {
                                 Toast.makeText(getContext(), "Nenhuma notificação encontrada", Toast.LENGTH_SHORT).show();
                             }
@@ -133,6 +156,7 @@ public class NotificationsFragment extends Fragment {
 
                         @Override
                         public void onFailure(Call<List<Notificacao>> call, Throwable t) {
+                            if (!isAdded()) return;
                             Toast.makeText(getContext(), "Erro ao carregar notificações", Toast.LENGTH_SHORT).show();
                             Log.e("NotificationsFragment", "Erro: ", t);
                         }
@@ -151,6 +175,29 @@ public class NotificationsFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private void mostrarNotificacaoLocal(int novas) {
+        Context context = requireContext();
+        String CHANNEL_ID = "notificacoes_novas";
+
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationChannel channel = new NotificationChannel(
+                CHANNEL_ID,
+                "Novas Notificações",
+                NotificationManager.IMPORTANCE_DEFAULT
+        );
+        manager.createNotificationChannel(channel);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(R.mipmap.ic_launcher)
+                .setContentTitle("Novas notificações!")
+                .setContentText("Você tem " + novas + " novas notificações.")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setAutoCancel(true);
+
+        manager.notify(1001, builder.build());
     }
 
     @Override

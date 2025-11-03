@@ -46,8 +46,17 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
 
         ImageButton btVoltar = findViewById(R.id.bt_voltar);
         Button btContinuar = findViewById(R.id.bt_continuar);
+        int idUser;
         Bundle info = getIntent().getExtras();
-        int id = info.getInt("idUser");
+        if (info != null && info.containsKey("idUser")) {
+            idUser = info.getInt("idUser");
+        } else {
+            idUser = -1;
+            Toast.makeText(this, "Erro: ID do usuário não recebido.", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
+
 
         btContinuar.setOnClickListener(v -> {
             String senhaAtual = editTextSenha1.getText().toString();
@@ -66,7 +75,7 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
 
             IOperario apiService = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
 
-            Call<Boolean> verificarCall = apiService.verificarSenha(id, senhaAtual);
+            Call<Boolean> verificarCall = apiService.verificarSenha(idUser, senhaAtual);
             verificarCall.enqueue(new retrofit2.Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, retrofit2.Response<Boolean> response) {
@@ -75,14 +84,14 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
                             SenhaRequestDTO request = new SenhaRequestDTO(senhaAtual);
                             request.setNovaSenha(senhaNova);
 
-                            Call<Operario> atualizarCall = apiService.atualizarSenha(id, request);
+                            Call<Operario> atualizarCall = apiService.atualizarSenha(idUser, request);
                             atualizarCall.enqueue(new retrofit2.Callback<Operario>() {
                                 @Override
                                 public void onResponse(Call<Operario> call, retrofit2.Response<Operario> response) {
                                     if (response.isSuccessful() && response.body() != null) {
                                         Toast.makeText(LoginOperarioAlterarSenha2.this, "Senha atualizada com sucesso!", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(LoginOperarioAlterarSenha2.this, HomeOperario.class);
-                                        intent.putExtra("idUser", id);
+                                        intent.putExtra("idUser", idUser);
                                         startActivity(intent);
                                         overridePendingTransition(0, 0);
                                     } else {

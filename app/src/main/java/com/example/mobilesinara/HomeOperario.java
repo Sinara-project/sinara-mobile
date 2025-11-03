@@ -43,5 +43,35 @@ public class HomeOperario extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_home_operario);
         navController.setGraph(R.navigation.mobile_navigation, info != null ? info : new Bundle());
         NavigationUI.setupWithNavController(binding.navView, navController);
+
+        // ✅ Adiciona este trecho: força o bottom nav a limpar a pilha ao trocar de aba
+        navView.setOnItemSelectedListener(item -> {
+
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.navigation_home_operario) {
+                navController.popBackStack(R.id.navigation_home_operario, false);
+                return true;
+            } else if (itemId == R.id.navigation_forms_operario) {
+                navController.navigate(R.id.navigation_forms_operario);
+                return true;
+            } else if (itemId == R.id.navigation_notifications_operario) {
+                navController.navigate(R.id.navigation_notifications_operario);
+                return true;
+            } else if (itemId == R.id.navigation_profile_operario) {
+                navController.navigate(R.id.navigation_profile_operario);
+                return true;
+            }
+
+
+            // 🔥 limpa a pilha e navega para o destino raiz
+            navController.popBackStack(itemId, false);
+            if (navController.getCurrentDestination() == null ||
+                    navController.getCurrentDestination().getId() != itemId) {
+                navController.navigate(itemId);
+            }
+
+            return true;
+        });
     }
 }

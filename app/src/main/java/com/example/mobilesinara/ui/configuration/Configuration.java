@@ -6,6 +6,13 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -15,13 +22,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.databinding.FragmentConfigurationBinding;
 import com.example.mobilesinara.login.operario.LoginOperarioAlterarSenha2;
@@ -30,87 +30,112 @@ import com.example.mobilesinara.login.operario.LoginOperarioCadastroRosto;
 import java.util.Map;
 
 public class Configuration extends Fragment {
-    private ActivityResultLauncher<String[]> requestPermissions;
 
+    private ActivityResultLauncher<String[]> requestPermissions;
     private FragmentConfigurationBinding binding;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ConfigurationViewModel ConfigurationViewModel =
-                new ViewModelProvider(this).get(ConfigurationViewModel.class);
+
+        new ViewModelProvider(this).get(ConfigurationViewModel.class);
 
         binding = FragmentConfigurationBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
         ImageView bt_voltar = root.findViewById(R.id.imageView3);
         Button bt_cadastrar_rosto = root.findViewById(R.id.button11);
         Button bt_alterar_senha = root.findViewById(R.id.alterar_senha);
         Button bt_camera_permission = root.findViewById(R.id.button14);
         Button bt_sms_permission = root.findViewById(R.id.button15);
+
+        // Inicializa permissões
+        configurarPermissaoCamera();
+        configurarPermissaoSMS();
+
+        // Checa permissões
         verificarPermissaoSMS(getContext(), bt_sms_permission);
         verificarPermissaoCamera(getContext(), bt_camera_permission);
-        bt_cadastrar_rosto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoginOperarioCadastroRosto.class);
-                startActivity(intent);
-            }
+
+        // Recebe argumentos
+        Bundle args = getArguments();
+        if (args == null || !args.containsKey("idUser")) {
+            Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
+            return root;
+        }
+
+        int idUser = args.getInt("idUser");
+
+        // Botão para cadastrar rosto
+        bt_cadastrar_rosto.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), LoginOperarioCadastroRosto.class);
+            intent.putExtra("idUser", idUser);
+            startActivity(intent);
         });
-        bt_voltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.navigation_home_operario);
-            }
+
+        // Botão voltar
+        bt_voltar.setOnClickListener(v ->
+                Navigation.findNavController(v).navigate(R.id.navigation_home_operario)
+        );
+
+        // Botão para alterar senha
+        bt_alterar_senha.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), LoginOperarioAlterarSenha2.class);
+            intent.putExtra("idUser", idUser); // 🔥 Corrigido: envia o ID do usuário
+            startActivity(intent);
         });
-        bt_alterar_senha.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), LoginOperarioAlterarSenha2.class);
-                startActivity(intent);
-            }
-        });
+
         return root;
     }
 
-    private void verificarPermissaoCamera(Context context, Button btCameraPermission) {
-        requestPermissions = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-            for (Map.Entry<String, Boolean> entry : result.entrySet()) {
-                String permission = entry.getKey();
-                Boolean isGranted = entry.getValue();
-                if (isGranted) {
-                    Log.d("Permições", "Permissão concedida: " + permission);
-                } else {
-                    Log.d("Permições", "Permição negada: " + permission);
+    private void configurarPermissaoCamera() {
+        requestPermissions = registerForActivityResult(
+                new ActivityResultContracts.RequestMultiplePermissions(),
+                result -> {
+                    for (Map.Entry<String, Boolean> entry : result.entrySet()) {
+                        Log.d("Permissions", entry.getKey() + " = " + entry.getValue());
+                    }
                 }
-            }
-        });
+        );
+    }
+
+    private void configurarPermissaoSMS() {
+        requestPermissions = registerForActivityResult(
+                new ActivityResultContracts.RequestMultiplePermissions(),
+                result -> {
+                    for (Map.Entry<String, Boolean> entry : result.entrySet()) {
+                        Log.d("Permissions", entry.getKey() + " = " + entry.getValue());
+                    }
+                }
+        );
+    }
+
+    private void verificarPermissaoCamera(Context context, Button bt) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            bt.setText("ATIVAR");
+            bt.setBackgroundColor(Color.parseColor("#FF8669"));
+            bt.setTextColor(Color.WHITE);
+            bt.setOnClickListener(v -> requestPermissions.launch(new String[]{Manifest.permission.CAMERA}));
+
+        } else {
+            bt.setText("OK");
+            bt.setBackgroundColor(Color.parseColor("#7FD170"));
+            bt.setTextColor(Color.parseColor("#409346"));
+        }
     }
 
     private void verificarPermissaoSMS(Context context, Button bt) {
-        requestPermissions = registerForActivityResult(new ActivityResultContracts.RequestMultiplePermissions(), result -> {
-            for (Map.Entry<String, Boolean> entry : result.entrySet()) {
-                String permission = entry.getKey();
-                Boolean isGranted = entry.getValue();
-                if (isGranted) {
-                    Log.d("Permições", "Permissão concedida: " + permission);
-                } else {
-                    Log.d("Permições", "Permição negada: " + permission);
-                }
-            }
-        });
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+
             bt.setText("ATIVAR");
             bt.setBackgroundColor(Color.parseColor("#FF8669"));
-            bt.setTextColor(Color.parseColor("#FFFFFF"));
-            bt.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    requestPermissions.launch(new String[]{
-                            Manifest.permission.SEND_SMS
-                    });
-                }
-            });
-        }
-        if(ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED){
+            bt.setTextColor(Color.WHITE);
+            bt.setOnClickListener(v -> requestPermissions.launch(new String[]{Manifest.permission.SEND_SMS}));
+
+        } else {
             bt.setText("OK");
             bt.setBackgroundColor(Color.parseColor("#7FD170"));
             bt.setTextColor(Color.parseColor("#409346"));

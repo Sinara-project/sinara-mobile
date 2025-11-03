@@ -58,29 +58,24 @@ public class HomeFragment extends Fragment {
             getActivity().overridePendingTransition(0, 0);
         });
 
-        // Componentes UI
         Button bt_status = root.findViewById(R.id.button7);
         TextView formsPendentes = root.findViewById(R.id.formsPendentes);
         TextView formsRespondidos = root.findViewById(R.id.formsRespondidos);
         ImageView iconUser = root.findViewById(R.id.imgUser);
         ImageView iconEmpresa = root.findViewById(R.id.imgEmpresa);
 
-        // Botão Sinara AI
         Button bt_sinaraAi = root.findViewById(R.id.button);
         bt_sinaraAi.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.ChatBot));
 
-        // Botão Formulários
         Button bt_forms = root.findViewById(R.id.button3);
         bt_forms.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.navigation_forms_operario));
 
-        // Botão Configuração
         ImageView bt_configuration = root.findViewById(R.id.imageView13);
         bt_configuration.setOnClickListener(v ->
                 Navigation.findNavController(v).navigate(R.id.action_navigation_home_to_configuration));
 
-        // Chamar API para carregar dados
         chamarApi(formsPendentes, formsRespondidos, iconUser, iconEmpresa, bt_status, idUser);
 
         return root;
@@ -100,7 +95,6 @@ public class HomeFragment extends Fragment {
         IRespostaFormularioPersonalizado iRespostaFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IRespostaFormularioPersonalizado.class);
         IFormularioPersonalizado iFormularioPersonalizado = ApiClientAdapter.getRetrofitInstance().create(IFormularioPersonalizado.class);
 
-        // Status Operário
         iRegistroPonto.getStatusOperario(idUser).enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -113,7 +107,6 @@ public class HomeFragment extends Fragment {
             public void onFailure(Call<Boolean> call, Throwable t) { }
         });
 
-        // Formulários respondidos
         iRespostaFormularioPersonalizado.getQuantidadeRespostasPorUsuario(idUser)
                 .enqueue(new Callback<Integer>() {
                     @Override
@@ -127,7 +120,6 @@ public class HomeFragment extends Fragment {
                     public void onFailure(Call<Integer> call, Throwable t) { }
                 });
 
-        // Formulários pendentes
         iFormularioPersonalizado.getQtdFormulariosPendentes(idUser)
                 .enqueue(new Callback<Integer>() {
                     @Override
@@ -141,7 +133,6 @@ public class HomeFragment extends Fragment {
                     public void onFailure(Call<Integer> call, Throwable t) { }
                 });
 
-        // Dados do Operário
         iOperario.getOperarioPorId(idUser).enqueue(new Callback<Operario>() {
             @Override
             public void onResponse(Call<Operario> call, Response<Operario> response) {
@@ -154,7 +145,6 @@ public class HomeFragment extends Fragment {
                         Glide.with(getContext()).load(urlOperario).circleCrop().into(iconUser);
                     }
 
-                    // Empresa
                     int idEmpresa = operario.getIdEmpresa();
                     IEmpresa iEmpresa = retrofit.create(IEmpresa.class);
                     iEmpresa.getEmpresaPorId(idEmpresa).enqueue(new Callback<Empresa>() {
@@ -162,8 +152,7 @@ public class HomeFragment extends Fragment {
                         public void onResponse(Call<Empresa> call, Response<Empresa> response) {
                             if (response.isSuccessful() && response.body() != null) {
                                 String urlEmpresa = response.body().getImagemUrl();
-
-                                // Carrega imagem da empresa (ou padrão)
+                                Log.e("URL_EMPRESA", "URL recebida: " + urlEmpresa);
                                 if (urlEmpresa == null || urlEmpresa.isEmpty()) {
                                     Glide.with(requireContext())
                                             .load(R.drawable.profile_pic_default)
