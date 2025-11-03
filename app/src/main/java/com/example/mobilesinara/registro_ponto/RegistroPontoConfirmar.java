@@ -103,9 +103,58 @@ public class RegistroPontoConfirmar extends Fragment {
         btRegistroPonto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_registroPontoConfirmar_to_registroPontoSucesso);
+
+                IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
+                iOperario.getOperarioPorId(usuarioId).enqueue(new Callback<Operario>() {
+                    @Override
+                    public void onResponse(Call<Operario> call, Response<Operario> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            Operario operario = response.body();
+                            int idEmpresa = operario.getIdEmpresa();
+
+                            String dataHoraAtual = java.time.LocalDateTime.now().toString();
+
+                            RegistroPontoRequest registro = new RegistroPontoRequest(
+                                    dataHoraAtual,
+                                    null,
+                                    usuarioId,
+                                    idEmpresa
+                            );
+
+                            IRegistroPonto iRegistroPonto = ApiClientAdapter.getRetrofitInstance().create(IRegistroPonto.class);
+                            iRegistroPonto.inserirRegistroPonto(registro).enqueue(new Callback<String>() {
+                                @Override
+                                public void onResponse(Call<String> call, Response<String> response) {
+                                    if (response.isSuccessful()) {
+                                        Toast.makeText(getContext(), "Ponto registrado com sucesso!", Toast.LENGTH_SHORT).show();
+                                        Bundle bundle = new Bundle();
+                                        bundle.putBoolean("atualizarStatus", true);
+                                        Navigation.findNavController(view).navigate(R.id.action_registroPontoConfirmar_to_registroPontoSucesso, bundle);
+                                    } else {
+                                        Toast.makeText(getContext(), "Erro ao registrar ponto: " + response.code(), Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<String> call, Throwable t) {
+                                    Toast.makeText(getContext(), "Falha na comunicação: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                                    Log.e("RetrofitError", "Erro ao registrar ponto", t);
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getContext(), "Erro ao buscar empresa do operário", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Operario> call, Throwable t) {
+                        Toast.makeText(getContext(), "Erro ao buscar operário", Toast.LENGTH_SHORT).show();
+                        Log.e("RetrofitError", "Erro ao buscar operário", t);
+                    }
+                });
             }
         });
+
         IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
         iOperario.getOperarioPorId(usuarioId).enqueue(new Callback<Operario>() {
             @Override
