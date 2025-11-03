@@ -10,7 +10,7 @@
     android:layout_marginEnd="12dp"
     app:cardCornerRadius="20dp"
     app:cardElevation="4dp"
-    app:cardBackgroundColor="@color/md_theme_primaryContainer">
+    app:cardBackgroundColor="@color/md_theme_onPrimaryContainer">
 
     <TextView
     android:id="@+id/textViewUser"
@@ -18,7 +18,7 @@
     android:layout_height="wrap_content"
     android:fontFamily="@font/montserrat_medium"
     android:text="Mensagem do usuário"
-    android:textColor="@color/md_theme_onPrimaryContainer"
+    android:textColor="@color/md_theme_primaryContainer"
     android:textSize="16sp"
     android:padding="14dp" />
     </androidx.cardview.widget.CardView>
