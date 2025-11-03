@@ -18,9 +18,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.work.ExistingPeriodicWorkPolicy;
-import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkManager;
 
 import com.bumptech.glide.Glide;
 import com.example.mobilesinara.Interface.Mongo.INotificacao;
@@ -30,12 +27,10 @@ import com.example.mobilesinara.Models.Empresa;
 import com.example.mobilesinara.Models.Notificacao;
 import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.R;
-import com.example.mobilesinara.Worker.CheckNotificacoesWorker;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
 import com.example.mobilesinara.databinding.FragmentNotificationsBinding;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -73,16 +68,6 @@ public class NotificationsFragment extends Fragment {
 
         IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
         Call<Operario> callOperario = iOperario.getOperarioPorId(idUser);
-
-        PeriodicWorkRequest workRequest = new PeriodicWorkRequest.Builder(
-                CheckNotificacoesWorker.class,
-                15, TimeUnit.MINUTES
-        ).build();
-
-        WorkManager.getInstance(requireContext()).enqueueUniquePeriodicWork(
-                "verificar_notificacoes",
-                ExistingPeriodicWorkPolicy.KEEP,
-                workRequest);
 
         callOperario.enqueue(new Callback<Operario>() {
             @Override

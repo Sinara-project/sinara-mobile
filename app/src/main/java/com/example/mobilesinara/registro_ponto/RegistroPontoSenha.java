@@ -195,7 +195,7 @@ public class RegistroPontoSenha extends Fragment {
         );
 
         voltar.setOnClickListener(view12 ->
-                Navigation.findNavController(view12).navigate(R.id.action_registroPontoSenha_to_registroPonto2)
+                Navigation.findNavController(view12).navigate(R.id.registroPontoConfirmar)
         );
 
         return view;

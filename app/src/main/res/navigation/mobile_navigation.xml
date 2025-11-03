@@ -3,116 +3,148 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    android:label="Home"
-    app:startDestination="@+id/navigation_home_operario">
+    app:startDestination="@id/navigation_home_operario">
 
+    <!-- HOME -->
     <fragment
         android:id="@+id/navigation_home_operario"
         android:name="com.example.mobilesinara.ui.home.HomeFragment"
-        android:label=""
-        tools:layout="@layout/fragment_home" >
-        <argument
-            android:name="idUser"
-            app:argType="integer" />
-        <action
-            android:id="@+id/action_navigation_home_to_registroPonto"
-            app:destination="@id/registroPonto" />
-        <action
-            android:id="@+id/action_navigation_home_to_configuration"
-            app:destination="@id/configuration" />
-    </fragment>
+        android:label="Home"
+        tools:layout="@layout/fragment_home">
 
-    <fragment
-        android:id="@+id/navigation_forms_operario"
-        android:name="com.example.mobilesinara.ui.dashboard.DashboardFragment"
-        android:label="Formularios_Operario"
-        tools:layout="@layout/fragment_dashboard">
         <argument
             android:name="idUser"
             app:argType="integer"
             android:defaultValue="-1" />
+
+        <action
+            android:id="@+id/action_navigation_home_to_registroPonto"
+            app:destination="@id/registroPonto" />
+
+        <action
+            android:id="@+id/action_navigation_home_to_configuration"
+            app:destination="@id/configuration" />
+
+        <!-- ADICIONADO: ligação correta com o ChatBot -->
+        <action
+            android:id="@+id/action_navigation_home_to_chatBot"
+            app:destination="@id/ChatBot" />
+
+    </fragment>
+
+    <!-- FORMULÁRIOS -->
+    <fragment
+        android:id="@+id/navigation_forms_operario"
+        android:name="com.example.mobilesinara.ui.dashboard.DashboardFragment"
+        android:label="Formulários"
+        tools:layout="@layout/fragment_dashboard">
+
+        <argument
+            android:name="idUser"
+            app:argType="integer"
+            android:defaultValue="-1" />
+
         <action
             android:id="@+id/action_navigation_dashboard_to_monitoramentoAguardando"
             app:destination="@id/monitoramentoAguardando" />
     </fragment>
 
+    <!-- NOTIFICAÇÕES -->
     <fragment
         android:id="@+id/navigation_notifications_operario"
         android:name="com.example.mobilesinara.ui.notifications.NotificationsFragment"
         android:label="Notificações"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_notifications">
+
         <argument
             android:name="idUser"
             app:argType="integer"
             android:defaultValue="-1" />
+    </fragment>
+
+    <!-- PERFIL -->
     <fragment
         android:id="@+id/navigation_profile_operario"
         android:name="com.example.mobilesinara.ui.profile.ProfileFragment"
         android:label="Perfil"
-        tools:layout="@layout/fragment_profile"/>
+        tools:layout="@layout/fragment_profile">
+
         <argument
             android:name="idUser"
             app:argType="integer"
             android:defaultValue="-1" />
+    </fragment>
+
+    <!-- REGISTRO DE PONTO -->
     <fragment
         android:id="@+id/registroPonto"
         android:name="com.example.mobilesinara.registro_ponto.RegistroPonto"
-        android:label="fragment_registro_ponto"
-        tools:layout="@layout/fragment_registro_ponto" >
-        <action
-            android:id="@+id/action_registroPonto_to_registroPontoSenha"
-            app:destination="@id/registroPontoSenha" />
+        android:label="Registro de Ponto"
+        tools:layout="@layout/fragment_registro_ponto">
+
         <argument
             android:name="idUser"
             app:argType="integer"
             android:defaultValue="-1" />
+
+        <action
+            android:id="@+id/action_registroPonto_to_registroPontoSenha"
+            app:destination="@id/registroPontoSenha" />
+
         <action
             android:id="@+id/action_registroPonto_to_navigation_home"
             app:destination="@id/navigation_home_operario" />
+
         <action
             android:id="@+id/action_registroPonto_to_registroPontoCamera"
             app:destination="@id/registroPontoCamera" />
     </fragment>
+
     <fragment
         android:id="@+id/registroPontoSenha"
         android:name="com.example.mobilesinara.registro_ponto.RegistroPontoSenha"
-        android:label="fragment_registro_ponto_senha"
-        tools:layout="@layout/fragment_registro_ponto_senha" >
+        android:label="Senha"
+        tools:layout="@layout/fragment_registro_ponto_senha">
+
         <action
             android:id="@+id/action_registroPontoSenha_to_registroPonto"
             app:destination="@id/registroPonto" />
-        <action
-            android:id="@+id/action_registroPontoSenha_to_registroPonto2"
-            app:destination="@id/registroPonto" />
+
         <action
             android:id="@+id/action_registroPontoSenha_to_registroPontoConfirmar"
             app:destination="@id/registroPontoConfirmar" />
     </fragment>
+
     <fragment
         android:id="@+id/registroPontoConfirmar"
         android:name="com.example.mobilesinara.registro_ponto.RegistroPontoConfirmar"
-        android:label="fragment_registro_ponto_confirmar"
-        tools:layout="@layout/fragment_registro_ponto_confirmar" >
+        android:label="Confirmar Ponto"
+        tools:layout="@layout/fragment_registro_ponto_confirmar">
+
         <action
             android:id="@+id/action_registroPontoConfirmar_to_registroPontoSucesso"
             app:destination="@id/registroPontoSucesso" />
+
         <action
             android:id="@+id/action_registroPontoConfirmar_to_registroPonto"
             app:destination="@id/registroPonto" />
     </fragment>
+
     <fragment
         android:id="@+id/registroPontoSucesso"
         android:name="com.example.mobilesinara.registro_ponto.RegistroPontoSucesso"
-        android:label="fragment_registro_ponto_sucesso"
-        tools:layout="@layout/fragment_registro_ponto_sucesso" >
+        android:label="Ponto Registrado"
+        tools:layout="@layout/fragment_registro_ponto_sucesso">
+
         <action
             android:id="@+id/action_registroPontoSucesso_to_navigation_home_operario"
             app:destination="@id/navigation_home_operario" />
     </fragment>
+
     <fragment
         android:id="@+id/registroPontoCamera"
         android:name="com.example.mobilesinara.registro_ponto.RegistroPontoCamera"
-        android:label="fragment_registro_ponto_camera"
+        android:label="Câmera"
         tools:layout="@layout/fragment_registro_ponto_camera">
 
         <argument
@@ -121,41 +153,58 @@
             android:defaultValue="-1" />
     </fragment>
 
+    <!-- MONITORAMENTO -->
     <fragment
         android:id="@+id/monitoramentoAguardando"
         android:name="com.example.mobilesinara.ui.monitoramentoAguardando.monitoramentoAguardando"
-        android:label="fragment_monitoramento_aguardando"
-        tools:layout="@layout/fragment_monitoramento_aguardando" >
+        android:label="Monitoramento"
+        tools:layout="@layout/fragment_monitoramento_aguardando">
+
         <action
             android:id="@+id/action_monitoramentoAguardando_to_formularioRespondido"
             app:destination="@id/formularioRespondido" />
     </fragment>
+
+    <!-- CONFIGURAÇÕES -->
     <fragment
         android:id="@+id/configuration"
         android:name="com.example.mobilesinara.ui.configuration.Configuration"
-        android:label="fragment_configuration"
-        tools:layout="@layout/fragment_configuration" >
+        android:label="Configurações"
+        tools:layout="@layout/fragment_configuration">
+
         <argument
             android:name="idUser"
             app:argType="integer"
             android:defaultValue="-1" />
+
         <action
             android:id="@+id/action_configuration_to_navigation_home"
             app:destination="@id/navigation_home_operario" />
     </fragment>
+
+    <!-- FORMULÁRIO RESPONDIDO -->
     <fragment
         android:id="@+id/formularioRespondido"
         android:name="com.example.mobilesinara.ui.formularioRespondido.FormularioRespondido"
-        android:label="fragment_formulario_respondido"
+        android:label="Formulário Respondido"
         tools:layout="@layout/fragment_formulario_respondido" />
+
+    <!-- CHATBOT -->
     <fragment
         android:id="@+id/ChatBot"
         android:name="com.example.mobilesinara.ui.ChatBot.ChatBot"
-        android:label="fragment_chat_bot"
+        android:label="ChatBot"
         tools:layout="@layout/fragment_chat_bot">
-    <argument
-        android:name="idUser"
-        app:argType="integer" />
-</fragment>
 
-    </navigation>
+        <argument
+            android:name="idUser"
+            app:argType="integer"
+            android:defaultValue="-1" />
+
+        <!-- Permite voltar para Home -->
+        <action
+            android:id="@+id/action_chatBot_to_navigation_home"
+            app:destination="@id/navigation_home_operario" />
+    </fragment>
+
+</navigation>

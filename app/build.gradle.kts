@@ -64,5 +64,4 @@ dependencies {
     implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
     implementation("com.google.guava:guava:32.1.3-android")
     implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
-    implementation("androidx.work:work-runtime:2.9.1")
 }
