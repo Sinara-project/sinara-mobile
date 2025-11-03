@@ -47,9 +47,14 @@ public class HomeEmpresa extends AppCompatActivity {
         }
         NavController navController = navHostFragment.getNavController();
 
-        Bundle startArgs = new Bundle();
-        if (cnpj != null) startArgs.putString("cnpj", cnpj);
-        navController.setGraph(R.navigation.mobile_navigation2, startArgs);
+        navController.setGraph(R.navigation.mobile_navigation2, info != null ? info : new Bundle());
+
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_home_empresa,
+                R.id.navigation_formulario_empresa,
+                R.id.navigation_notifications_empresa,
+                R.id.profileEmpresa
+        ).build();
 
         NavigationUI.setupWithNavController(binding.navView, navController);
 

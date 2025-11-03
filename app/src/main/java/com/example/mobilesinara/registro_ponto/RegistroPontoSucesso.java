@@ -42,9 +42,7 @@ public class RegistroPontoSucesso extends Fragment {
     private int idUser = -1;
 
 
-    public RegistroPontoSucesso() {
-        // Required empty public constructor
-    }
+    public RegistroPontoSucesso() {}
 
     public static RegistroPontoSucesso newInstance(String param1, String param2) {
         RegistroPontoSucesso fragment = new RegistroPontoSucesso();

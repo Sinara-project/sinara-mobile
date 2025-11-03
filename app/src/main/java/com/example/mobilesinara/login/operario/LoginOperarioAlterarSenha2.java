@@ -3,7 +3,6 @@ package com.example.mobilesinara.login.operario;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -21,7 +20,6 @@ import com.example.mobilesinara.Models.Operario;
 import com.example.mobilesinara.Models.SenhaRequestDTO;
 import com.example.mobilesinara.R;
 import com.example.mobilesinara.adapter.ApiClientAdapter;
-import com.example.mobilesinara.ui.home.HomeFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -60,23 +58,6 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
         }
 
 
-//        btContinuar.setOnClickListener(v -> {
-//            if (editTextSenha1.getText().toString().isEmpty()
-//                    || editTextSenha2.getText().toString().isEmpty()
-//                    || editTextSenha3.getText().toString().isEmpty()) {
-//                Toast.makeText(LoginOperarioAlterarSenha2.this, "Preencha todos os campos", Toast.LENGTH_SHORT).show();
-//            } else if (!editTextSenha2.getText().toString().equals(editTextSenha3.getText().toString())) {
-//                Toast.makeText(LoginOperarioAlterarSenha2.this, "As senhas não correspondem", Toast.LENGTH_SHORT).show();
-//            }
-//            else{
-//                Intent intent = new Intent(LoginOperarioAlterarSenha2.this, HomeOperario.class);
-//                intent.putExtra("idUser", id);
-//                HomeFragment homeOperario = new HomeFragment();
-//                homeOperario.setArguments(info);
-//                startActivity(intent);
-//                overridePendingTransition(0, 0);
-//            }
-//        });
         btContinuar.setOnClickListener(v -> {
             String senhaAtual = editTextSenha1.getText().toString();
             String senhaNova = editTextSenha2.getText().toString();
@@ -195,16 +176,16 @@ public class LoginOperarioAlterarSenha2 extends AppCompatActivity {
             senhaVisivel3[0] = !senhaVisivel3[0];
 
             if (senhaVisivel3[0]) {
-                // Mostra a senha
+                // mostra a senha
                 editTextSenha3.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 textInputLayout3.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_fechado));
             } else {
-                // Esconde a senha
+                // esconde a senha
                 editTextSenha3.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 textInputLayout3.setEndIconDrawable(ContextCompat.getDrawable(this, R.drawable.olho_aberto));
             }
 
-            // Mantém o cursor no fim
+            // mantém o cursor no fim
             if (editTextSenha3.getText() != null) {
                 editTextSenha3.setSelection(editTextSenha3.getText().length());
             }

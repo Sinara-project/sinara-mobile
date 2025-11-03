@@ -52,7 +52,6 @@ public class HomeFragment extends Fragment {
         }
         int idUser = args.getInt("idUser");
 
-        // Botão de registro de ponto
         Button botaoPonto = root.findViewById(R.id.button2);
         botaoPonto.setOnClickListener(view -> {
             Navigation.findNavController(view).navigate(R.id.action_navigation_home_to_registroPonto);

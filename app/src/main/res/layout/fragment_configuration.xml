@@ -100,11 +100,11 @@
         android:textSize="20dp"
         app:cornerRadius="10dp"
         app:icon="@drawable/ic_cadastrar_rosto"
-        app:layout_constraintBottom_toTopOf="@+id/button12"
+        app:layout_constraintBottom_toTopOf="@+id/alterar_senha"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button12"
+        android:id="@+id/alterar_senha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="48dp"

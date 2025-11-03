@@ -18,7 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.camera.core.CameraSelector;
 import androidx.camera.core.ImageCapture;
 import androidx.camera.core.ImageCaptureException;
-import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
@@ -32,7 +31,6 @@ import com.google.common.util.concurrent.ListenableFuture;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -50,7 +48,7 @@ public class RegistroPontoCamera extends Fragment {
     private PreviewView previewView;
     private ImageCapture imageCapture;
     private Integer idUser;
-    private IOperario api; // Declarar a interface Retrofit
+    private IOperario api;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,13 +68,11 @@ public class RegistroPontoCamera extends Fragment {
             Toast.makeText(getContext(), "Erro: usuário não identificado", Toast.LENGTH_SHORT).show();
         }
 
-        // Instancia o Retrofit e a interface
         api = RetrofitClient.getInstance().create(IOperario.class);
 
         Button btTirarFoto = view.findViewById(R.id.bt_bater_ponto);
         btTirarFoto.setOnClickListener(v -> takePhoto());
 
-        // Verifica permissão
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
                 == PackageManager.PERMISSION_GRANTED) {
             startCamera();
@@ -154,7 +150,6 @@ public class RegistroPontoCamera extends Fragment {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
         byte[] bitmapData = bos.toByteArray();
 
-        // RequestBody do userId
         RequestBody idBody = RequestBody.create(String.valueOf(idUser), MediaType.parse("text/plain"));
         Map<String, RequestBody> map = new HashMap<>();
         map.put("userId", idBody);
@@ -188,13 +183,5 @@ public class RegistroPontoCamera extends Fragment {
                 Toast.makeText(getContext(), "Falha: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private Bitmap imageProxyToBitmap(ImageProxy image) {
-        ImageProxy.PlaneProxy plane = image.getPlanes()[0];
-        ByteBuffer buffer = plane.getBuffer();
-        byte[] bytes = new byte[buffer.remaining()];
-        buffer.get(bytes);
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }

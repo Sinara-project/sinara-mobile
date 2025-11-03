@@ -45,7 +45,7 @@ public class Configuration extends Fragment {
 
         ImageView bt_voltar = root.findViewById(R.id.imageView3);
         Button bt_cadastrar_rosto = root.findViewById(R.id.button11);
-        Button bt_alterar_senha = root.findViewById(R.id.button12);
+        Button bt_alterar_senha = root.findViewById(R.id.alterar_senha);
         Button bt_camera_permission = root.findViewById(R.id.button14);
         Button bt_sms_permission = root.findViewById(R.id.button15);
 
