@@ -92,12 +92,14 @@ public class RegistroPontoSucesso extends Fragment {
 
         Button btVoltar = view.findViewById(R.id.bt_voltar);
 
-        btVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_registroPontoSucesso_to_navigation_home_operario);
-            }
+        btVoltar.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putInt("idUser", idUser);
+            bundle.putBoolean("atualizarStatus", true);
+            Navigation.findNavController(v)
+                    .navigate(R.id.action_registroPontoSucesso_to_navigation_home_operario, bundle);
         });
+
         IOperario iOperario = ApiClientAdapter.getRetrofitInstance().create(IOperario.class);
         iOperario.getOperarioPorId(idUser).enqueue(new Callback<Operario>() {
             @Override
