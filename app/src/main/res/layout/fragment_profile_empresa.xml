@@ -37,7 +37,7 @@
         android:fontFamily="@font/montserrat_bold"
         android:text="Empresa"
         android:textColor="@color/md_theme_primaryContainer"
-        android:textSize="34sp"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -49,7 +49,7 @@
         android:fontFamily="@font/montserrat_medium"
         android:text="Empresa"
         android:textColor="@color/md_theme_primaryContainer"
-        android:textSize="34sp"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView10" />
